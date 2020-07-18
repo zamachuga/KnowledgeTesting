@@ -10,6 +10,7 @@ namespace KnowledgeTesting.BL.DAO
 	/// </summary>
 	public class ClassQuestion
 	{
+		public int Id { get; set; }
 		public string Text { get; set; }
 		public List<ClassAnswer> Answers { get; }
 		public ClassAnswer CorrectAnswer { get; set; }

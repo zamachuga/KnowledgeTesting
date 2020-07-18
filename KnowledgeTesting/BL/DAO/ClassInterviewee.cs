@@ -6,11 +6,10 @@ using System.Web;
 namespace KnowledgeTesting.BL.DAO
 {
 	/// <summary>
-	/// Ответ.
+	/// Тестируемый.
 	/// </summary>
-	public class ClassAnswer
+	public class ClassInterviewee
 	{
 		public int Id { get; set; }
-		public string Text { get; set; }
 	}
 }

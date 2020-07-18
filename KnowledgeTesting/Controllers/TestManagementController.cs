@@ -12,5 +12,25 @@ namespace KnowledgeTesting.Controllers
 		{
 			return View();
 		}
+
+		public ActionResult CreateTest()
+		{
+			return View();
+		}
+
+		public ActionResult AddAnswer()
+		{
+			return View();
+		}
+
+		public ActionResult DeleteTest()
+		{
+			return View();
+		}
+
+		public ActionResult SaveTest()
+		{
+			return View();
+		}
 	}
 }

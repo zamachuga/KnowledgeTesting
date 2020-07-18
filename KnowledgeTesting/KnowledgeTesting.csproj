@@ -128,16 +128,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BL\DAO\ClassAnswer.cs" />
+    <Compile Include="BL\DAO\ClassInterviewee.cs" />
     <Compile Include="BL\DAO\ClassQuestion.cs" />
     <Compile Include="BL\DAO\ClassTest.cs" />
     <Compile Include="BL\ClassTestManagement.cs" />
-    <Compile Include="BL\DTO\ClassCreateTestParameters.cs" />
+    <Compile Include="BL\DAO\ClassTesting.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TestingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreateTestModel.cs" />
+    <Compile Include="Models\TestManagementViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,10 +291,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Testing\Index.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
+    <Content Include="Views\TestManagement\CreateTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="BL\DTO\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
