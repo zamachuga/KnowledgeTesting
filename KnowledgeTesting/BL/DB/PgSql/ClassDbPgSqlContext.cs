@@ -9,5 +9,18 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		public DbSet<DAO.ClassQuestion> Questions { get; set; }
 		public DbSet<DAO.ClassTest> Tests { get; set; }
 		public DbSet<DAO.ClassTesting> Testings { get; set; }
+
+		public ClassDbPgSqlContext() : base("NpgsqlConnectionString")
+		{
+		}
+
+		/// <summary>
+		/// Проверить установку базы данных.
+		/// </summary>
+		/// <returns></returns>
+		public bool CheckInstalledDb()
+		{
+			return false;
+		}
 	}
 }
