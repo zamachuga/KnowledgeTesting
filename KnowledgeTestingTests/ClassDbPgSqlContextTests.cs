@@ -1,10 +1,11 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KnowledgeTesting.BL.DB.PgSql;
+using System.Data.Entity;
+using System.Linq;
 
 namespace KnowledgeTestingTests
 {
@@ -17,10 +18,9 @@ namespace KnowledgeTestingTests
 		}
 
 		[Test]
-		public void CheckInstalledDbTest()
+		public void SeedDataTest()
 		{
-			ClassDbPgSqlContext _ClassDbPgSqlContext = new ClassDbPgSqlContext();
-			_ClassDbPgSqlContext.CheckInstalledDb();
+			Assert.Fail();
 		}
 	}
 }

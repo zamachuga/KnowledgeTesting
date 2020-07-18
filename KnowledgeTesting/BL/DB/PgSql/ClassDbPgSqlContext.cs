@@ -14,15 +14,5 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		public ClassDbPgSqlContext() : base("NpgsqlConnectionString")
 		{
 		}
-
-		/// <summary>
-		/// Проверить установку базы данных.
-		/// </summary>
-		/// <returns></returns>
-		public bool CheckInstalledDb()
-		{
-			var ListAnswers = Answers.ToList();
-			return false;
-		}
 	}
 }

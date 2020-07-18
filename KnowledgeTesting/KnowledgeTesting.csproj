@@ -182,6 +182,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007182151028_InitDB.cs" />
+    <Compile Include="Migrations\202007182151028_InitDB.designer.cs">
+      <DependentUpon>202007182151028_InitDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007182226205_ChangeAnswrs.cs" />
+    <Compile Include="Migrations\202007182226205_ChangeAnswrs.designer.cs">
+      <DependentUpon>202007182226205_ChangeAnswrs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
     <Compile Include="Models\TestManagementViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -350,6 +359,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007182151028_InitDB.resx">
+      <DependentUpon>202007182151028_InitDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007182226205_ChangeAnswrs.resx">
+      <DependentUpon>202007182226205_ChangeAnswrs.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

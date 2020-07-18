@@ -12,7 +12,7 @@ namespace KnowledgeTesting.BL.DAO
 	{
 		public int Id { get; set; }
 		public string Text { get; set; }
-		public List<ClassAnswer> Answers { get; }
+		public List<ClassAnswer> Answers { get; set; }
 		public ClassAnswer CorrectAnswer { get; set; }
 
 		public ClassQuestion()
