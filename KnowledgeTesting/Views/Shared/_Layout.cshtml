@@ -26,14 +26,14 @@
             <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
           </ul>
         </div>*@
-
-      @Html.ActionLink("Главная", "Index", "Home", new { area = "" }, new { @class = "btn btn-default" })
-      @Html.ActionLink("Тестирование", "Index", "Testing", new { area = "" }, new { @class = "btn btn-default" })
+      <div class="btn-group" role="group" aria-label="...">
+        @Html.ActionLink("Управление тестами", "Index", "Home", new { area = "" }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Тестирование", "Index", "Testing", new { area = "" }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Статистика", "Index", "Statistics", new { area = "" }, new { @class = "btn btn-default" })
+      </div>
     </div>
   </div>
-  <div>
 
-  </div>
   <div class="container body-content">
     @RenderBody()
     <hr />
