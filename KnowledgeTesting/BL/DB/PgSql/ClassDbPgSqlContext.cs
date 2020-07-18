@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 
 namespace KnowledgeTesting.BL.DB.PgSql
 {
@@ -20,6 +21,7 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// <returns></returns>
 		public bool CheckInstalledDb()
 		{
+			var ListAnswers = Answers.ToList();
 			return false;
 		}
 	}
