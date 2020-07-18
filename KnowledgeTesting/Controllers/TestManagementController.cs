@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace KnowledgeTesting.Controllers
 {
-	public class HomeController : Controller
+	public class TestManagementController : Controller
 	{
 		public ActionResult Index()
 		{
