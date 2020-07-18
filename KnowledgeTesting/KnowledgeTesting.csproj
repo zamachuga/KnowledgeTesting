@@ -175,6 +175,7 @@
     <Compile Include="BL\DAO\ClassTest.cs" />
     <Compile Include="BL\ClassTestManagement.cs" />
     <Compile Include="BL\DAO\ClassTesting.cs" />
+    <Compile Include="BL\DB\PgSql\ClassDbPgSqlContext.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TestingController.cs" />
