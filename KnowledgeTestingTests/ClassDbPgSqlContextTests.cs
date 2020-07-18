@@ -12,10 +12,15 @@ namespace KnowledgeTestingTests
 	class ClassDbPgSqlContextTests
 	{
 		[Test]
+		public void InstanceTest() {
+			ClassDbPgSqlContext _ClassDbPgSqlContext = new ClassDbPgSqlContext();
+		}
+
+		[Test]
 		public void CheckInstalledDbTest()
 		{
 			ClassDbPgSqlContext _ClassDbPgSqlContext = new ClassDbPgSqlContext();
-
+			_ClassDbPgSqlContext.CheckInstalledDb();
 		}
 	}
 }
