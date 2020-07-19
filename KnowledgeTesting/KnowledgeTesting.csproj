@@ -173,9 +173,12 @@
     <Compile Include="BL\DAO\Interviewee.cs" />
     <Compile Include="BL\DAO\Question.cs" />
     <Compile Include="BL\DAO\Test.cs" />
-    <Compile Include="BL\ClassTestManagement.cs" />
+    <Compile Include="BL\DTO\Question.cs" />
+    <Compile Include="BL\DTO\Test.cs" />
+    <Compile Include="BL\TestManagement.cs" />
     <Compile Include="BL\DAO\Testing.cs" />
     <Compile Include="BL\DB\PgSql\ClassDbPgSqlContext.cs" />
+    <Compile Include="BL\Utils.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TestingController.cs" />
@@ -187,7 +190,7 @@
       <DependentUpon>202007190847044_InitDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\CreateTestModel.cs" />
+    <Compile Include="Models\CreateTestViewModel.cs" />
     <Compile Include="Models\TestManagementViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -343,7 +346,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BL\DTO\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

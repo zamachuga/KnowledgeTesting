@@ -1,19 +1,17 @@
 ﻿using KnowledgeTesting.BL.DAO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace KnowledgeTesting.BL
 {
 	/// <summary>
 	/// Управление тестами.
 	/// </summary>
-	public class ClassTestManagement
+	public class TestManagement
 	{
-		public void CreateTest(Test Test)
+		public Test CreateTest()
 		{
-			if (Test.Id != 0) return;
+			DB.PgSql.ClassDbPgSqlContext _DbContext = new DB.PgSql.ClassDbPgSqlContext();
+
+			return _DbContext.Tests.Create();
 		}
 
 		public Test ReadTest(int Id)
@@ -21,7 +19,7 @@ namespace KnowledgeTesting.BL
 			return null;
 		}
 
-		public void UpdateTest(Test Test)
+		public void UpdateTest(DTO.Test Test)
 		{
 			if (Test.Id == 0) return;
 		}

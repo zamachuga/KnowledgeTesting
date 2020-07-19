@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace KnowledgeTesting.Models
+namespace KnowledgeTesting.BL.DTO
 {
-	public class CreateTestModel
+	public class Question
 	{
 	}
 }

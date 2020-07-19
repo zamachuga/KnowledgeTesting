@@ -14,6 +14,5 @@ namespace KnowledgeTesting.BL.DAO
 		public int Id { get; set; }
 		public string Text { get; set; }
 		public List<Question> Questions { get; set; }
-		//public List<Question> CorrectQuestions { get; set; }
 	}
 }
