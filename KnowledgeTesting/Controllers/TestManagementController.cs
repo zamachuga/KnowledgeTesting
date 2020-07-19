@@ -36,7 +36,7 @@ namespace KnowledgeTesting.Controllers
 		/// <returns></returns>
 		public ActionResult AddAnswer(CreateTestModel Model)
 		{
-			CreateTestModel _Model = ViewBag.CreateTestViewModel;
+			CreateTestModel _Model = Model;
 
 			string _Notification = "";
 

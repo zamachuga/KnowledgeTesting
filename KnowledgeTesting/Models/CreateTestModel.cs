@@ -14,8 +14,7 @@ namespace KnowledgeTesting.Models
 			Test = new DTO.Test();
 		}
 
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public DTO.Test Test { get; set; }
 		/// <summary>
 		/// Выбранный вопрос для добавления.
 		/// </summary>

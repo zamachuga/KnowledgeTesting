@@ -10,7 +10,12 @@
 <form id="createtestmodel">
   <p>Название: @Html.EditorFor(Model => Model.Test.Name)</p>
   <p>Краткое описание: @Html.EditorFor(Model => Model.Test.Description)</p>
-  <p>Выберите вопрос: @Html.DropDownListFor(l => Model.SelectedQuestionId, (SelectList)ViewBag.Questions)</p>
+  <p>Вопросы:</p>
+  @foreach (var Question in Model.Test.Questions)
+  {
+    <p>@Question.Text <button id="btn_removequestion" questionid="@Question.Id" value="X" /></p>
+  }
+  <p>Выберите вопрос: @Html.DropDownListFor(l => Model.SelectedQuestionId, ViewBag.Questions as SelectList)</p>
 </form>
 
 <input id="btn_addanswer" type="submit" value="Добавить вопрос" />
