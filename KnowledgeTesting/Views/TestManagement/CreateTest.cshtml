@@ -3,19 +3,16 @@
 }
 <h2>Создать тест:</h2>
 
-<div>@Model.Notification</div>
-
 <div id="testdata">
   <p><label>Название:</label><input type="text" id="Name" /></p>
   <p><label>Краткое описание:</label><input type="text" id="Description" /></p>
 </div>
 
-<p>Вопросы:</p>
-@foreach (var Question in Model.Test.Questions)
-{
-  <p>@Question.Text <button id="btn_removequestion" questionid="@Question.Id" value="X" /></p>
-}
-<p>Выберите вопрос: @Html.DropDownListFor(l => Model.SelectedQuestionId, ViewBag.Questions as SelectList)</p>
+<div id="testquestions"></div>
 
-<input id="btn_addanswer" type="submit" value="Добавить вопрос" />
+<div id="addquestion">
+  <div id="selectboxquestions"></div>
+  <input id="btn_addquestion" type="submit" value="Добавить вопрос"/>
+</div>
+
 <input id="btn_savetest" type="submit" value="Сохранить тест" />
