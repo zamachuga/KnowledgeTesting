@@ -1,4 +1,7 @@
-﻿using KnowledgeTesting.BL.DAO;
+﻿using System;
+using DAO = KnowledgeTesting.BL.DAO;
+using DTO = KnowledgeTesting.BL.DTO;
+using System.Linq;
 
 namespace KnowledgeTesting.BL
 {
@@ -7,26 +10,23 @@ namespace KnowledgeTesting.BL
 	/// </summary>
 	public class TestManagement
 	{
-		public Test CreateTest()
+		public TestManagement()
 		{
-			DB.PgSql.ClassDbPgSqlContext _DbContext = new DB.PgSql.ClassDbPgSqlContext();
-
-			return _DbContext.Tests.Create();
+			_DbContext = new DB.PgSql.ClassDbPgSqlContext();
 		}
 
-		public Test ReadTest(int Id)
-		{
-			return null;
-		}
+		DB.PgSql.ClassDbPgSqlContext _DbContext;
 
-		public void UpdateTest(DTO.Test Test)
+		/// <summary>
+		/// Получить список вопросов.
+		/// </summary>
+		/// <returns>DTO представление вопросов.</returns>
+		internal DTO.Question[] GetQuestions()
 		{
-			if (Test.Id == 0) return;
-		}
+			DAO.Question[] _DaoQuestions = _DbContext.Questions.Select(x => x).ToArray();
+			DTO.Question[] _DtoQuestions = Utils.ConverArrayObjectsByJson<DTO.Question>(_DaoQuestions);
 
-		public void DeleteTest(int Id)
-		{
-			if (Id == 0) return;
+			return _DtoQuestions;
 		}
 	}
 }

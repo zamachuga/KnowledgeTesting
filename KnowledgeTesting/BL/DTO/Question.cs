@@ -7,5 +7,7 @@ namespace KnowledgeTesting.BL.DTO
 {
 	public class Question
 	{
+		public int Id { get; set; }
+		public string Text { get; set; }
 	}
 }

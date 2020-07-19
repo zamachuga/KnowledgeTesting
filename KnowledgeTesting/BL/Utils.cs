@@ -18,5 +18,23 @@ namespace KnowledgeTesting.BL
 		{
 			return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(Object));
 		}
+
+		/// <summary>
+		/// Перенести данные из одного объекта в другой сериализацией через Json.
+		/// </summary>
+		/// <typeparam name="T">Новый тип объекта.</typeparam>
+		/// <param name="Object">Текущий объект</param>
+		/// <returns></returns>
+		public static T[] ConverArrayObjectsByJson<T>(object[] Objects)
+		{
+			List<T> _Result = new List<T>();
+			foreach (var item in Objects)
+			{
+				var _ResultObject = JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(item));
+				_Result.Add(_ResultObject);
+			}
+
+			return _Result.ToArray();
+		}
 	}
 }
