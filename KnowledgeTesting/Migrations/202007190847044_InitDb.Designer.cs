@@ -7,13 +7,13 @@ namespace KnowledgeTesting.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class InitDB : IMigrationMetadata
+    public sealed partial class InitDb : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitDB));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitDb));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007182151028_InitDB"; }
+            get { return "202007190847044_InitDb"; }
         }
         
         string IMigrationMetadata.Source

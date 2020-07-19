@@ -6,12 +6,10 @@ using System.Web;
 namespace KnowledgeTesting.BL.DAO
 {
 	/// <summary>
-	/// Проведение тестирования.
+	/// Тестируемый.
 	/// </summary>
-	public class ClassTesting
+	public class Interviewee
 	{
 		public int Id { get; set; }
-		public List<ClassInterviewee> Interviewees { get; set; }
-		public List<ClassQuestion> Questions { get; set; }
 	}
 }

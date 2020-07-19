@@ -11,17 +11,17 @@ namespace KnowledgeTesting.BL
 	/// </summary>
 	public class ClassTestManagement
 	{
-		public void CreateTest(ClassTest Test)
+		public void CreateTest(Test Test)
 		{
 			if (Test.Id != 0) return;
 		}
 
-		public ClassTest ReadTest(int Id)
+		public Test ReadTest(int Id)
 		{
 			return null;
 		}
 
-		public void UpdateTest(ClassTest Test)
+		public void UpdateTest(Test Test)
 		{
 			if (Test.Id == 0) return;
 		}

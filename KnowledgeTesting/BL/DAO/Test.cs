@@ -8,16 +8,16 @@ namespace KnowledgeTesting.BL.DAO
 	/// <summary>
 	/// Тест.
 	/// </summary>
-	public class ClassTest
+	public class Test
 	{
+		public Test()
+		{
+			Questions = new List<Question>();
+		}
+
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public List<ClassQuestion> Questions { get; }
-
-		public ClassTest()
-		{
-			Questions = new List<ClassQuestion>();
-		}
+		public List<Question> Questions { get; private set; }
 	}
 }
