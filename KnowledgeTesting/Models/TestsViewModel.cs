@@ -9,12 +9,11 @@ namespace KnowledgeTesting.Models
 	/// <summary>
 	/// Просмотр существующих тестов.
 	/// </summary>
-	public class TestManagementViewModel
+	public class TestsViewModel
 	{
 		public List<Test> Tests { get; set; }
-		public Test CurrentSelectedTest { get; set; }
 
-		public TestManagementViewModel()
+		public TestsViewModel()
 		{
 			Tests = new List<Test>();
 		}

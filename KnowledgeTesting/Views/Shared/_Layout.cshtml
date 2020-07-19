@@ -31,5 +31,38 @@
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/bootstrap")
   @RenderSection("scripts", required: false)
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#btn_addanswer").click(function () {
+        $.ajax({
+          type: "POST",
+          url: '/TestManagement/AddAnswer', //your action
+          data: $('#createtestmodel').serialize(), //your form name.it takes all the values of model
+          dataType: 'json',
+          success: function (result) {
+            //console.log(result);
+          }
+        }).done(function (res) {
+          $('#createtestmodel').html(res);
+        });
+        return false;
+      });
+
+      $("#btn_savetest").click(function () {
+        $.ajax({
+          type: "POST",
+          url: '/TestManagement/SaveNewTest', //your action
+          data: $('#createtestmodel').serialize(), //your form name.it takes all the values of model
+          dataType: 'json',
+          success: function (result) {
+            //console.log(result);
+          }
+        }).done(function (res) {
+          $('#createtestmodel').html(res);
+        });
+        return false;
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
-﻿@{
+﻿@model KnowledgeTesting.Models.TestsViewModel
+
+@{
   ViewBag.Title = "Тестирование знаний";
-  KnowledgeTesting.Models.TestManagementViewModel _Model = ViewBag.TestManagementViewModel;
 
   <div class="jumbotron">
     <h1>Тестирование знаний</h1>
@@ -28,16 +29,10 @@
     <div class="col-md-4">
       Тесты:
       <div class="list-group">
-        @foreach (var _Test in _Model.Tests)
+        @foreach (var _Test in Model.Tests)
         {
           string _Class = "list-group-item";
 
-          if (_Test == _Model.CurrentSelectedTest)
-          {
-            _Class = "list-group-item active";
-          }
-
-          //<button id="@_Test.Id" type="button" class="@_Class">@_Test.Name</button>
           <a href="#" class="@_Class">@_Test.Name</a>
         }
       </div>

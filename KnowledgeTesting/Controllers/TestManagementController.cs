@@ -15,32 +15,18 @@ namespace KnowledgeTesting.Controllers
 	{
 		BL.TestManagement _TestManagement = new BL.TestManagement();
 
-		public ActionResult Index()
+		public ActionResult Index(TestsViewModel Model)
 		{
-			TestManagementViewModel _Model = ViewBag.TestManagementViewModel;
-
-			if(_Model== null) _Model = new TestManagementViewModel();
-
-			ViewBag.TestManagementViewModel = new TestManagementViewModel();
-			return View();
+			return View(Model);
 		}
 
-		public ActionResult CreateTest()
+		public ActionResult CreateTest(CreateTestModel Model)
 		{
-			CreateTestViewModel _Model = ViewBag.CreateTestViewModel;
+			CreateTestModel _Model = Model;
 
-			if (_Model == null) _Model = new CreateTestViewModel();
+			ViewBag.Questions = new SelectList(_TestManagement.GetQuestions(), "Id", "Text");
 
-			if (_Model.Test == null)
-			{
-				DTO.Test _DtoTest = new DTO.Test();
-				_Model.Test = _DtoTest;
-			}
-
-			_Model.Questions = new SelectList(_TestManagement.GetQuestions(), "Id", "Text");
-
-			ViewBag.CreateTestViewModel = _Model;
-			return View(_Model);
+			return View(Model);
 		}
 
 		/// <summary>
@@ -48,41 +34,69 @@ namespace KnowledgeTesting.Controllers
 		/// </summary>
 		/// <param name="Model"></param>
 		/// <returns></returns>
-		public ActionResult AddAnswer()
+		public ActionResult AddAnswer(CreateTestModel Model)
 		{
-			CreateTestViewModel _Model = ViewBag.CreateTestViewModel;
-			bool _IsValid = true;
+			CreateTestModel _Model = ViewBag.CreateTestViewModel;
 
-			if (_Model.Test.Questions.Count() >= 10)
-			{
-				_IsValid = false;
-				_Model.Notification = "Вопросов не должно быть больше 10.";
-			}
-
-			if (_IsValid)
-			{
-				DTO.Question _Question = _TestManagement.GetQuestions().First(x => x.Id == _Model.SelectedQuestionId);
-				_Model.Test.Questions.Add(_Question);
-			}
-
-			ViewBag.CreateTestViewModel = _Model;
-			return View("CreateTest");
-		}
-
-		public ActionResult SaveNewTest()
-		{
-			CreateTestViewModel _Model = ViewBag.CreateTestViewModel;
 			string _Notification = "";
 
-			if (true)
+			DTO.Question _Question = _TestManagement.GetQuestions().First(x => x.Id == _Model.SelectedQuestionId);
+			_Model.Test.Questions.Add(_Question);
+
+			_Model.Notification = _Notification;
+
+			return CreateTest(_Model);
+		}
+
+		public ActionResult SaveNewTest(CreateTestModel Model)
+		{
+			CreateTestModel _Model = Model;
+			string _Notification = "";
+
+			if (CheckTest(_Model.Test, out _Notification))
 			{
 				_Notification = $"Тест <{_Model.Test.Name}> сохранен.";
 			}
 
 			_Model.Notification = _Notification;
 
-			ViewBag.CreateTestViewModel = _Model;
-			return View("CreateTest");
+			return CreateTest(_Model);
+		}
+
+		private bool CheckTest(DTO.Test Test, out string Log)
+		{
+			bool _IsValid = true;
+			string _Log = "";
+			int _MaxLengthName = 254;
+			int _MaxLengthDescription = 500;
+			int _MaxQuestions = 10;
+
+			if (string.IsNullOrEmpty(Test.Name))
+			{
+				_IsValid = false;
+				_Log += "Название должно быть заполнено.";
+			}
+
+			if (Test.Name?.Length > _MaxLengthName)
+			{
+				_IsValid = false;
+				_Log += $"Название не должно быть больше {_MaxLengthName} символов, сейчас <{Test.Name.Length}>.";
+			}
+
+			if (Test.Description?.Length > _MaxLengthName)
+			{
+				_IsValid = false;
+				_Log += $"Название не должно быть больше {_MaxLengthDescription} символов, сейчас <{Test.Description.Length}>.";
+			}
+
+			if(Test.Questions?.Count() > _MaxQuestions)
+			{
+				_IsValid = false;
+				_Log += $"Вопросов не должно быть больше {_MaxQuestions} символов, сейчас <{Test.Questions.Count()}>.";
+			}
+
+			Log = _Log;
+			return _IsValid;
 		}
 	}
 }

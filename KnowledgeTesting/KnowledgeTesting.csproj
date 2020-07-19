@@ -190,8 +190,8 @@
       <DependentUpon>202007190847044_InitDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\CreateTestViewModel.cs" />
-    <Compile Include="Models\TestManagementViewModel.cs" />
+    <Compile Include="Models\CreateTestModel.cs" />
+    <Compile Include="Models\TestsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

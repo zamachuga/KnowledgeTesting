@@ -1,29 +1,17 @@
-﻿
+﻿@model KnowledgeTesting.Models.CreateTestModel
+
 @{
   ViewBag.Title = "Создать тест";
-
-  KnowledgeTesting.Models.CreateTestViewModel _CreateTestViewModel = ViewBag.CreateTestViewModel;
-
-  using (Html.BeginForm())
-  {
-    Html.EditorFor(x => _CreateTestViewModel);
-  }
-
-  @*<h2>Создать тест:</h2>
-
-  <p>@Model.Notification</p>
-
-  <p>Название: @Html.EditorFor(Model => _CreateTestViewModel.Test.Name)</p>
-  <p>Краткое описание: @Html.EditorFor(Model => _CreateTestViewModel.Test.Description)</p>
-
-  <p>Вопросы:</p>
-  foreach (var _Question in _CreateTestViewModel.Test.Questions)
-  {
-    <p>_Question.Text</p>
-  }
-
-  <p>@Html.DropDownListFor(m => _CreateTestViewModel.SelectedQuestionId, _CreateTestViewModel.Questions)</p>
-  @Html.ActionLink("Добавить вопрос", "AddAnswer", "TestManagement", new { area = "" }, new { @class = "btn btn-default" })
-
-  @Html.ActionLink("Сохранить", "SaveNewTest", "TestManagement", new { area = "" }, new { @class = "btn btn-default" })*@
 }
+<h2>Создать тест:</h2>
+
+<div>@Model.Notification</div>
+
+<form id="createtestmodel">
+  <p>Название: @Html.EditorFor(Model => Model.Test.Name)</p>
+  <p>Краткое описание: @Html.EditorFor(Model => Model.Test.Description)</p>
+  <p>Выберите вопрос: @Html.DropDownListFor(l => Model.SelectedQuestionId, (SelectList)ViewBag.Questions)</p>
+</form>
+
+<input id="btn_addanswer" type="submit" value="Добавить вопрос" />
+<input id="btn_savetest" type="submit" value="Сохранить тест" />
