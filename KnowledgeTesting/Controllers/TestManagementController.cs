@@ -53,7 +53,7 @@ namespace KnowledgeTesting.Controllers
 			CreateTestModel _Model = Model;
 			string _Notification = "";
 
-			if (CheckTest(_Model.Test, out _Notification))
+			if (_TestManagement.CheckTestData(_Model.Test, out _Notification))
 			{
 				_Notification = $"Тест <{_Model.Test.Name}> сохранен.";
 			}
@@ -61,42 +61,6 @@ namespace KnowledgeTesting.Controllers
 			_Model.Notification = _Notification;
 
 			return CreateTest(_Model);
-		}
-
-		private bool CheckTest(DTO.Test Test, out string Log)
-		{
-			bool _IsValid = true;
-			string _Log = "";
-			int _MaxLengthName = 254;
-			int _MaxLengthDescription = 500;
-			int _MaxQuestions = 10;
-
-			if (string.IsNullOrEmpty(Test.Name))
-			{
-				_IsValid = false;
-				_Log += "Название должно быть заполнено.";
-			}
-
-			if (Test.Name?.Length > _MaxLengthName)
-			{
-				_IsValid = false;
-				_Log += $"Название не должно быть больше {_MaxLengthName} символов, сейчас <{Test.Name.Length}>.";
-			}
-
-			if (Test.Description?.Length > _MaxLengthName)
-			{
-				_IsValid = false;
-				_Log += $"Название не должно быть больше {_MaxLengthDescription} символов, сейчас <{Test.Description.Length}>.";
-			}
-
-			if(Test.Questions?.Count() > _MaxQuestions)
-			{
-				_IsValid = false;
-				_Log += $"Вопросов не должно быть больше {_MaxQuestions} символов, сейчас <{Test.Questions.Count()}>.";
-			}
-
-			Log = _Log;
-			return _IsValid;
 		}
 
 		public string GetQuestions()

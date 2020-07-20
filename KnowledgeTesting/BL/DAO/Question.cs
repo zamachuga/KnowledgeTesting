@@ -10,7 +10,8 @@ namespace KnowledgeTesting.BL.DAO
 	/// <summary>
 	/// Вопрос.
 	/// </summary>
-	public class Question { 
+	public class Question
+	{
 		public Question()
 		{
 			Tests = new List<Test>();

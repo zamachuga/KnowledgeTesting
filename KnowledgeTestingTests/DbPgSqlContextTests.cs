@@ -10,17 +10,11 @@ using System.Linq;
 namespace KnowledgeTestingTests
 {
 	[TestFixture]
-	class ClassDbPgSqlContextTests
+	class DbPgSqlContextTests
 	{
 		[Test]
 		public void InstanceTest() {
 			ClassDbPgSqlContext _ClassDbPgSqlContext = new ClassDbPgSqlContext();
-		}
-
-		[Test]
-		public void SeedDataTest()
-		{
-			Assert.Fail();
 		}
 	}
 }

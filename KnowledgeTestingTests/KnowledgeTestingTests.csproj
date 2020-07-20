@@ -53,7 +53,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassDbPgSqlContextTests.cs" />
+    <Compile Include="DbPgSqlContextTests.cs" />
+    <Compile Include="TestManagementTests.cs" />
+    <Compile Include="UtilsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnowledgeTesting\KnowledgeTesting.csproj">

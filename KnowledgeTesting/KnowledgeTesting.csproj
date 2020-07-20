@@ -189,6 +189,10 @@
     <Compile Include="Migrations\202007190847044_InitDb.designer.cs">
       <DependentUpon>202007190847044_InitDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007201242484_FkErr.cs" />
+    <Compile Include="Migrations\202007201242484_FkErr.designer.cs">
+      <DependentUpon>202007201242484_FkErr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
     <Compile Include="Models\TestsViewModel.cs" />
@@ -343,6 +347,8 @@
     <Content Include="Views\Testing\Index.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\TestManagement\CreateTest.cshtml" />
+    <Content Include="Views\TestManagement\Ajax\CreateTest.cshtml" />
+    <Content Include="Views\TestManagement\Ajax\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -361,6 +367,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007190847044_InitDb.resx">
       <DependentUpon>202007190847044_InitDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007201242484_FkErr.resx">
+      <DependentUpon>202007201242484_FkErr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
