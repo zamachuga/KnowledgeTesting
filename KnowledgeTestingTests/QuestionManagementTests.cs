@@ -28,7 +28,7 @@ namespace KnowledgeTestingTests
 		}
 
 		[Test]
-		public void Test()
+		public void GetAnswerTest()
 		{
 			DAO.Answer _Answer = _QuestionManagement.GetAnswer(5);
 
