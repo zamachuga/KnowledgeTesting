@@ -169,6 +169,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BL\AnswerManagement.cs" />
     <Compile Include="BL\DAO\Answer.cs" />
     <Compile Include="BL\DAO\Question.cs" />
     <Compile Include="BL\DAO\Test.cs" />

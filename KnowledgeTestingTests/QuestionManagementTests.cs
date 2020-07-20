@@ -18,25 +18,6 @@ namespace KnowledgeTestingTests
 		DbPgSqlContext _DbContext = new DbPgSqlContext();
 
 		[Test]
-		public void CreateAnswerTest()
-		{
-			DAO.Answer _Answer = new DAO.Answer() { Text = "wtf?" };
-
-			Assert.DoesNotThrow(() => _QuestionManagement.CreateAnswer(_Answer));
-			Assert.DoesNotThrow(() => _QuestionManagement.CreateAnswer(_Answer));
-			// Исключаем повторное добавление.
-			Assert.True(_DbContext.Answers.Where(x => x.Text == "wtf?").Count() == 1);
-		}
-
-		[Test]
-		public void GetAnswerTest()
-		{
-			DAO.Answer _Answer = _QuestionManagement.GetAnswer(5);
-
-			Assert.True(_Answer.Id == 5);
-		}
-
-		[Test]
 		public void AddAnswerMax3Test()
 		{
 			DAO.Question _Question = new DAO.Question();
