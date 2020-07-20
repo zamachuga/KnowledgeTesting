@@ -1,10 +1,5 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using KnowledgeTesting.BL.DB.PgSql;
-using System.Data.Entity;
+﻿using KnowledgeTesting.BL.DB.PgSql;
+using NUnit.Framework;
 using System.Linq;
 
 namespace KnowledgeTestingTests
@@ -12,9 +7,14 @@ namespace KnowledgeTestingTests
 	[TestFixture]
 	class DbPgSqlContextTests
 	{
+		ClassDbPgSqlContext _DbContext = new ClassDbPgSqlContext();
+
 		[Test]
-		public void InstanceTest() {
-			ClassDbPgSqlContext _ClassDbPgSqlContext = new ClassDbPgSqlContext();
+		public void SelectCount0Records()
+		{
+			Assert.DoesNotThrow(()=>
+				_DbContext.Tests.Select(x => x.Name.ToLower().Replace(" ", "") == "---TestName".ToLower().Replace(" ", "")).Count()
+			);
 		}
 	}
 }

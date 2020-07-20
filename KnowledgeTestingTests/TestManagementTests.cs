@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO = KnowledgeTesting.BL.DTO;
+using DAO = KnowledgeTesting.BL.DAO;
 
 namespace KnowledgeTestingTests
 {
@@ -15,7 +16,22 @@ namespace KnowledgeTestingTests
 		TestManagement _TestManagement = new TestManagement();
 
 		[Test]
-		public void Test()
+		public void CheckTestDataTest()
+		{
+			string _LogCheck = "";
+
+			DTO.Test _Test = new DTO.Test() {
+				Id = 0,
+				Name = "Test1",
+				Description = "Des"
+			};
+
+			Assert.True(_TestManagement.CheckTestData(_Test, out _LogCheck));
+			Assert.True(string.IsNullOrEmpty(_LogCheck));
+		}
+
+		[Test]
+		public void CreateTestTest()
 		{
 			DTO.Test _Test = new DTO.Test();
 			_Test.Name = "T1";
@@ -23,7 +39,5 @@ namespace KnowledgeTestingTests
 
 			Assert.DoesNotThrow(() => _TestManagement.CreateTest(_Test));
 		}
-
-
 	}
 }
