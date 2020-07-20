@@ -19,6 +19,17 @@ namespace KnowledgeTesting.BL.DAO
 
 		public int Id { get; set; }
 		public string Text { get; set; }
+		/// <summary>
+		/// Вопросы.
+		/// </summary>
 		public ICollection<Answer> Answers { get; set; }
+		/// <summary>
+		/// Правильный ответ на вопрос.
+		/// </summary>
+		public int? AnswerId { get; set; }
+		/// <summary>
+		/// Правильный ответ на вопрос.
+		/// </summary>
+		public Answer CorrectAnswer { get; set; }
 	}
 }

@@ -171,12 +171,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BL\DAO\Answer.cs" />
     <Compile Include="BL\DAO\Question.cs" />
-    <Compile Include="BL\DAO\QuestionAnswer.cs" />
     <Compile Include="BL\DAO\Test.cs" />
-    <Compile Include="BL\DAO\TestQuestion.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
     <Compile Include="BL\DB\PgSql\ClassDbPgSqlContext.cs" />
+    <Compile Include="BL\TestManagement.cs" />
     <Compile Include="BL\Utils.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
@@ -187,6 +186,10 @@
     <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.cs" />
     <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.designer.cs">
       <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007201622206_QuestionCorrectAnswer.cs" />
+    <Compile Include="Migrations\202007201622206_QuestionCorrectAnswer.designer.cs">
+      <DependentUpon>202007201622206_QuestionCorrectAnswer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -362,6 +365,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007201459338_AnswerQuestion_MToM.resx">
       <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007201622206_QuestionCorrectAnswer.resx">
+      <DependentUpon>202007201622206_QuestionCorrectAnswer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

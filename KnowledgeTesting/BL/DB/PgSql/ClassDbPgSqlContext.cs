@@ -24,6 +24,13 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// <param name="modelBuilder">Конструктор моделей в БД.</param>
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<DAO.Question>()
+				// EF6 почему-то решил - не надо 3ю таблицу для связи вопрос-ответы.
+				.HasMany(x => x.Answers)
+				.WithMany(x=>x.Questions)
+				.Map(m => {
+					m.ToTable("QuestionAnswers");
+				});
 		}
 	}
 }
