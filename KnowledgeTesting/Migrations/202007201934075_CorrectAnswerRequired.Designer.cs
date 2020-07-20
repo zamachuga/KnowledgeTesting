@@ -13,7 +13,7 @@ namespace KnowledgeTesting.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202007201632043_CorrectAnswerRequired"; }
+            get { return "202007201934075_CorrectAnswerRequired"; }
         }
         
         string IMigrationMetadata.Source

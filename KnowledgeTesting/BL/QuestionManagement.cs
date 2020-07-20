@@ -33,7 +33,7 @@ namespace KnowledgeTesting.BL
 		{
 			if (!Question.Answers.Contains(Answer)) throw new Exception("Правильный ответ должен быть одним из вариантов ответов.");
 
-			Question.CorrectAnswer = Answer;
+			Question.Answer = Answer;
 		}
 
 		/// <summary>
@@ -41,7 +41,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public void CreateQuestion(DAO.Question Question)
 		{
-			if (IsExist(Question)) throw new Exception("Вопрос существует.");
+			if (IsExist(Question)) return;
 
 			_DbContext.Questions.Add(Question);
 			_DbContext.SaveChanges();

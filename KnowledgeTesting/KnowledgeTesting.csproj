@@ -189,13 +189,9 @@
     <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.designer.cs">
       <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007201622206_QuestionCorrectAnswer.cs" />
-    <Compile Include="Migrations\202007201622206_QuestionCorrectAnswer.designer.cs">
-      <DependentUpon>202007201622206_QuestionCorrectAnswer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007201632043_CorrectAnswerRequired.cs" />
-    <Compile Include="Migrations\202007201632043_CorrectAnswerRequired.designer.cs">
-      <DependentUpon>202007201632043_CorrectAnswerRequired.cs</DependentUpon>
+    <Compile Include="Migrations\202007201934075_CorrectAnswerRequired.cs" />
+    <Compile Include="Migrations\202007201934075_CorrectAnswerRequired.designer.cs">
+      <DependentUpon>202007201934075_CorrectAnswerRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -372,11 +368,8 @@
     <EmbeddedResource Include="Migrations\202007201459338_AnswerQuestion_MToM.resx">
       <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007201622206_QuestionCorrectAnswer.resx">
-      <DependentUpon>202007201622206_QuestionCorrectAnswer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007201632043_CorrectAnswerRequired.resx">
-      <DependentUpon>202007201632043_CorrectAnswerRequired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007201934075_CorrectAnswerRequired.resx">
+      <DependentUpon>202007201934075_CorrectAnswerRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
