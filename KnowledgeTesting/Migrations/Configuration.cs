@@ -20,12 +20,6 @@
 			//  You can use the DbSet<T>.AddOrUpdate() helper extension method
 			//  to avoid creating duplicate seed data.
 
-
-			/// Не получилось обновлять, в таблице можно напрямую менять
-			/// EF не хочет вторичный ключ обновлять - странно!!!
-			/// Не стал придумывать ничего....
-			/// 
-
 			context.Answers.AddOrUpdate(x => x.Text, GenerateAnswers());
 			context.SaveChanges();
 
@@ -73,8 +67,7 @@
 						context.Answers.First(x => x.Text == "Венера"),
 						context.Answers.First(x => x.Text == "Меркурий"),
 						context.Answers.First(x => x.Text == "Земля")
-					},
-					CorrectAnswer = context.Answers.First(x => x.Text == "Венера")
+					}
 				},
 				new DAO.Question(){
 					Text = "Число 27 в двоичной системе исчисления?",
@@ -82,8 +75,7 @@
 						context.Answers.First(x=>x.Text == "111000"),
 						context.Answers.First(x=>x.Text == "101010"),
 						context.Answers.First(x=>x.Text == "11011")
-					},
-					CorrectAnswer = context.Answers.First(x=>x.Text == "11011")
+					}
 				},
 				new DAO.Question(){
 					Text = "Примерное количество людей на Земле?",
@@ -91,8 +83,7 @@
 						context.Answers.First(x=>x.Text == "7 млрд."),
 						context.Answers.First(x=>x.Text == "10 млрд."),
 						context.Answers.First(x=>x.Text == "5 млрд.")
-					},
-					CorrectAnswer = context.Answers.First(x=>x.Text == "7 млрд.")
+					}
 				},
 				new DAO.Question(){
 					Text = "Кто написал «Сказка о царе Салтане»?",
@@ -100,8 +91,7 @@
 						context.Answers.First(x=>x.Text == "Лермонтов"),
 						context.Answers.First(x=>x.Text == "Пушкин"),
 						context.Answers.First(x=>x.Text == "Некрасов")
-					},
-					CorrectAnswer = context.Answers.First(x=>x.Text == "Пушкин")
+					}
 				},
 				new DAO.Question(){
 					Text = "Сколько граней у куба?",
@@ -109,8 +99,7 @@
 						context.Answers.First(x=>x.Text == "6"),
 						context.Answers.First(x=>x.Text == "8"),
 						context.Answers.First(x=>x.Text == "12")
-					},
-					CorrectAnswer = context.Answers.First(x=>x.Text == "6")
+					}
 				}
 			};
 

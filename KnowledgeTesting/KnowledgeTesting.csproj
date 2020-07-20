@@ -172,6 +172,7 @@
     <Compile Include="BL\DAO\Answer.cs" />
     <Compile Include="BL\DAO\Interviewee.cs" />
     <Compile Include="BL\DAO\Question.cs" />
+    <Compile Include="BL\DAO\QuestionAnswers.cs" />
     <Compile Include="BL\DAO\Test.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
@@ -184,14 +185,6 @@
     <Compile Include="Controllers\TestingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007190847044_InitDb.cs" />
-    <Compile Include="Migrations\202007190847044_InitDb.designer.cs">
-      <DependentUpon>202007190847044_InitDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007201242484_FkErr.cs" />
-    <Compile Include="Migrations\202007201242484_FkErr.designer.cs">
-      <DependentUpon>202007201242484_FkErr.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -363,14 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007190847044_InitDb.resx">
-      <DependentUpon>202007190847044_InitDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007201242484_FkErr.resx">
-      <DependentUpon>202007201242484_FkErr.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
