@@ -28,14 +28,5 @@ namespace KnowledgeTesting.BL.DAO
 		/// Ответы на вопрос.
 		/// </summary>
 		public List<Answer> Answers { get; set; }
-		/// <summary>
-		/// Корректный ответ на вопрос.
-		/// </summary>
-		public int CorrectAnswerId { get; set; }
-		/// <summary>
-		/// Корректный ответ на вопрос.
-		/// </summary>
-		[ForeignKey("CorrectAnswerId")]
-		public Answer CorrectAnswer { get; set; }
 	}
 }
