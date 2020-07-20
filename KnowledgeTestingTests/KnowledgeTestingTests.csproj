@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbPgSqlContextTests.cs" />
+    <Compile Include="QuestionManagementTests.cs" />
     <Compile Include="TestManagementTests.cs" />
     <Compile Include="UtilsTests.cs" />
   </ItemGroup>

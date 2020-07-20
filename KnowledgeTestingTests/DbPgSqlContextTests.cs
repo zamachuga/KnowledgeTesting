@@ -9,11 +9,14 @@ namespace KnowledgeTestingTests
 	{
 		DbPgSqlContext _DbContext = new DbPgSqlContext();
 
-		[Test]
+		[Test(Description = "Тест проверяет работоспособность Select к таблице. Были преценденты.")]
 		public void SelectCount0Records()
 		{
-			Assert.True(_DbContext.Answers.Select(x => x.Id == 0).Count() == 0);
-			Assert.True(_DbContext.Questions.Select(x => x.Id == 0).Count() == 0);
+			var _Answers = _DbContext.Answers.Where(x => x.Id == 0);
+			var _Questions = _DbContext.Questions.Where(x => x.Id == 0);
+
+			Assert.True(_Answers.Count() == 0);
+			Assert.True(_Questions.Count() == 0);
 		}
 	}
 }

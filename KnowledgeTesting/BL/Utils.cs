@@ -36,5 +36,19 @@ namespace KnowledgeTesting.BL
 
 			return _Result.ToArray();
 		}
+
+		/// <summary>
+		/// Сравнение двух строк.
+		/// </summary>
+		/// <param name="Text1">Первая строка.</param>
+		/// <param name="Text2">Вторая строка.</param>
+		/// <returns></returns>
+		public static bool ExpressionText(string TextA, string TextB)
+		{
+			var _A = TextB.Replace(" ", "").ToLower();
+			var _B = TextB.Replace(" ", "").ToLower();
+
+			return _A == _B;
+		}
 	}
 }
