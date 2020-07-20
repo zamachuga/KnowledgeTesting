@@ -7,14 +7,14 @@
 	using System.Linq;
 	using DAO = KnowledgeTesting.BL.DAO;
 
-	internal sealed class Configuration : DbMigrationsConfiguration<BL.DB.PgSql.ClassDbPgSqlContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<BL.DB.PgSql.DbPgSqlContext>
 	{
 		public Configuration()
 		{
 			AutomaticMigrationsEnabled = false;
 		}
 
-		protected override void Seed(BL.DB.PgSql.ClassDbPgSqlContext context)
+		protected override void Seed(BL.DB.PgSql.DbPgSqlContext context)
 		{
 			//  This method will be called after migrating to the latest version.
 			//  You can use the DbSet<T>.AddOrUpdate() helper extension method

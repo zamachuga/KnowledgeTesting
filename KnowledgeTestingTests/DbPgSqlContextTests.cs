@@ -7,7 +7,7 @@ namespace KnowledgeTestingTests
 	[TestFixture]
 	class DbPgSqlContextTests
 	{
-		ClassDbPgSqlContext _DbContext = new ClassDbPgSqlContext();
+		DbPgSqlContext _DbContext = new DbPgSqlContext();
 
 		[Test]
 		public void SelectCount0Records()

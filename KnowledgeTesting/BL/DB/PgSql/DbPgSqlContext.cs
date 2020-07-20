@@ -8,7 +8,7 @@ namespace KnowledgeTesting.BL.DB.PgSql
 	/// <summary>
 	/// Контекст работы с БД PostgreSql.
 	/// </summary>
-	public class ClassDbPgSqlContext : DbContext
+	public class DbPgSqlContext : DbContext
 	{
 		public DbSet<DAO.Answer> Answers { get; set; }
 		public DbSet<DAO.Question> Questions { get; set; }
@@ -16,7 +16,7 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		//public DbSet<DAO.QuestionAnswer> QuestionAnswers { get; set; }
 		//public DbSet<DAO.TestQuestion> TestQuestions { get; set; }
 
-		public ClassDbPgSqlContext() : base("NpgsqlConnectionString") { }
+		public DbPgSqlContext() : base("NpgsqlConnectionString") { }
 
 		/// <summary>
 		/// Ручное определение связей между сущностями.

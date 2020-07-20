@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -30,6 +31,8 @@ namespace KnowledgeTesting.BL.DAO
 		/// <summary>
 		/// Правильный ответ на вопрос.
 		/// </summary>
+		/// 
+		[Required]
 		public Answer CorrectAnswer { get; set; }
 	}
 }
