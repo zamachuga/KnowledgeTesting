@@ -44,5 +44,14 @@ namespace KnowledgeTestingTests
 			Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer3));
 			Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
 		}
+
+		[Test]
+		public void CreateQuestionNotAnswersTest()
+		{
+			DAO.Question _Question = new DAO.Question() { Text = "wtf?" };
+
+			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+		}
 	}
 }

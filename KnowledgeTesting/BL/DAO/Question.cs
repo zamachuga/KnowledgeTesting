@@ -31,8 +31,6 @@ namespace KnowledgeTesting.BL.DAO
 		/// <summary>
 		/// Правильный ответ на вопрос.
 		/// </summary>
-		/// 
-		[Required]
 		public Answer CorrectAnswer { get; set; }
 	}
 }

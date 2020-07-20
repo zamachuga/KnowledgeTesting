@@ -41,7 +41,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public void CreateQuestion(DAO.Question Question)
 		{
-			if (IsExist(Question)) return;
+			if (IsExist(Question)) throw new Exception("Вопрос существует.");
 
 			_DbContext.Questions.Add(Question);
 			_DbContext.SaveChanges();
