@@ -20,8 +20,8 @@
 			//  You can use the DbSet<T>.AddOrUpdate() helper extension method
 			//  to avoid creating duplicate seed data.
 
-			//context.Answers.AddOrUpdate(x => x.Text, GenerateAnswers());
-			//context.SaveChanges();
+			context.Answers.AddOrUpdate(x => x.Text, GenerateAnswers());
+			context.SaveChanges();
 
 			//if (context.Questions.Count() == 0)
 			//{
@@ -30,33 +30,33 @@
 			//}
 		}
 
-		//private DAO.Answer[] GenerateAnswers()
-		//{
-		//	DAO.Answer[] _Data = new DAO.Answer[]
-		//	{
-		//		new DAO.Answer(){Text = "Венера"},
-		//		new DAO.Answer(){Text = "Меркурий"},
-		//		new DAO.Answer(){Text = "Земля"},
+		private DAO.Answer[] GenerateAnswers()
+		{
+			DAO.Answer[] _Data = new DAO.Answer[]
+			{
+				new DAO.Answer(){Text = "Венера"},
+				new DAO.Answer(){Text = "Меркурий"},
+				new DAO.Answer(){Text = "Земля"},
 
-		//		new DAO.Answer(){Text = "111000"},
-		//		new DAO.Answer(){Text = "101010"},
-		//		new DAO.Answer(){Text = "11011"},
+				new DAO.Answer(){Text = "111000"},
+				new DAO.Answer(){Text = "101010"},
+				new DAO.Answer(){Text = "11011"},
 
-		//		new DAO.Answer(){Text = "7 млрд."},
-		//		new DAO.Answer(){Text = "10 млрд."},
-		//		new DAO.Answer(){Text = "5 млрд."},
+				new DAO.Answer(){Text = "7 млрд."},
+				new DAO.Answer(){Text = "10 млрд."},
+				new DAO.Answer(){Text = "5 млрд."},
 
-		//		new DAO.Answer(){Text = "Лермонтов"},
-		//		new DAO.Answer(){Text = "Пушкин"},
-		//		new DAO.Answer(){Text = "Некрасов"},
+				new DAO.Answer(){Text = "Лермонтов"},
+				new DAO.Answer(){Text = "Пушкин"},
+				new DAO.Answer(){Text = "Некрасов"},
 
-		//		new DAO.Answer(){Text = "6"},
-		//		new DAO.Answer(){Text = "8"},
-		//		new DAO.Answer(){Text = "12"}
-		//	};
+				new DAO.Answer(){Text = "6"},
+				new DAO.Answer(){Text = "8"},
+				new DAO.Answer(){Text = "12"}
+			};
 
-		//	return _Data;
-		//}
+			return _Data;
+		}
 
 		//private DAO.Question[] GenerateQuestions(BL.DB.PgSql.ClassDbPgSqlContext context)
 		//{
