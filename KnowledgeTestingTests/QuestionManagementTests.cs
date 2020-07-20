@@ -26,5 +26,13 @@ namespace KnowledgeTestingTests
 			// Исключаем повторное добавление.
 			Assert.True(_DbContext.Answers.Where(x => x.Text == "wtf?").Count() == 1);
 		}
+
+		[Test]
+		public void Test()
+		{
+			DAO.Answer _Answer = _QuestionManagement.GetAnswer(5);
+
+			Assert.True(_Answer.Id == 5);
+		}
 	}
 }
