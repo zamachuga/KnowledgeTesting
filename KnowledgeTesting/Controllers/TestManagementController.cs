@@ -34,7 +34,7 @@ namespace KnowledgeTesting.Controllers
 		/// </summary>
 		/// <param name="Model"></param>
 		/// <returns></returns>
-		public ActionResult AddAnswer(CreateTestModel Model)
+		public ActionResult AddQuestion(CreateTestModel Model)
 		{
 			CreateTestModel _Model = Model;
 
@@ -97,6 +97,12 @@ namespace KnowledgeTesting.Controllers
 
 			Log = _Log;
 			return _IsValid;
+		}
+
+		public string GetQuestions()
+		{
+			DTO.Question[] _Questions = _TestManagement.GetQuestions();
+			return JsonConvert.SerializeObject(_Questions);
 		}
 	}
 }
