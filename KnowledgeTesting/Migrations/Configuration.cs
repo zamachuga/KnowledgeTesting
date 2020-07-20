@@ -5,7 +5,7 @@
 	using System.Data.Entity;
 	using System.Data.Entity.Migrations;
 	using System.Linq;
-	using DAO = KnowledgeTesting.BL.DAO;
+	using DAO = BL.DAO;
 
 	internal sealed class Configuration : DbMigrationsConfiguration<BL.DB.PgSql.DbPgSqlContext>
 	{
