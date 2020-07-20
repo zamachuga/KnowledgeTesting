@@ -12,9 +12,8 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void SelectCount0Records()
 		{
-			Assert.DoesNotThrow(()=>
-				_DbContext.Tests.Select(x => x.Name.ToLower().Replace(" ", "") == "---TestName".ToLower().Replace(" ", "")).Count()
-			);
+			Assert.True(_DbContext.Answers.Select(x => x.Id == 0).Count() == 0);
+			Assert.True(_DbContext.Questions.Select(x => x.Id == 0).Count() == 0);
 		}
 	}
 }

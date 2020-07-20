@@ -13,31 +13,31 @@ namespace KnowledgeTestingTests
 	[TestFixture]
 	public class TestManagementTests
 	{
-		TestManagement _TestManagement = new TestManagement();
+		//TestManagement _TestManagement = new TestManagement();
 
-		[Test]
-		public void CheckTestDataTest()
-		{
-			string _LogCheck = "";
+		//[Test]
+		//public void CheckTestDataTest()
+		//{
+		//	string _LogCheck = "";
 
-			DTO.Test _Test = new DTO.Test() {
-				Id = 0,
-				Name = "Test1",
-				Description = "Des"
-			};
+		//	DTO.Test _Test = new DTO.Test() {
+		//		Id = 0,
+		//		Name = "Test1",
+		//		Description = "Des"
+		//	};
 
-			Assert.True(_TestManagement.CheckTestData(_Test, out _LogCheck));
-			Assert.True(string.IsNullOrEmpty(_LogCheck));
-		}
+		//	Assert.True(_TestManagement.CheckTestData(_Test, out _LogCheck));
+		//	Assert.True(string.IsNullOrEmpty(_LogCheck));
+		//}
 
-		[Test]
-		public void CreateTestTest()
-		{
-			DTO.Test _Test = new DTO.Test();
-			_Test.Name = "T1";
-			_Test.Description = "Test 1 Nunit.";
+		//[Test]
+		//public void CreateTestTest()
+		//{
+		//	DTO.Test _Test = new DTO.Test();
+		//	_Test.Name = "T1";
+		//	_Test.Description = "Test 1 Nunit.";
 
-			Assert.DoesNotThrow(() => _TestManagement.CreateTest(_Test));
-		}
+		//	Assert.DoesNotThrow(() => _TestManagement.CreateTest(_Test));
+		//}
 	}
 }

@@ -11,8 +11,13 @@ namespace KnowledgeTesting.BL.DAO
 	/// </summary>
 	public class Answer
 	{
+		public Answer()
+		{
+			Questions = new List<Question>();
+		}
+
 		public int Id { get; set; }
 		public string Text { get; set; }
-		public List<Question> Questions { get; set; }
+		public ICollection<Question> Questions { get; set; }
 	}
 }

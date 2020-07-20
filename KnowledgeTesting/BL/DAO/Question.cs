@@ -14,19 +14,11 @@ namespace KnowledgeTesting.BL.DAO
 	{
 		public Question()
 		{
-			Tests = new List<Test>();
 			Answers = new List<Answer>();
 		}
 
 		public int Id { get; set; }
 		public string Text { get; set; }
-		/// <summary>
-		/// Тесты в которых участвует вопрос.
-		/// </summary>
-		public List<Test> Tests { get; set; }
-		/// <summary>
-		/// Ответы на вопрос.
-		/// </summary>
-		public List<Answer> Answers { get; set; }
+		public ICollection<Answer> Answers { get; set; }
 	}
 }

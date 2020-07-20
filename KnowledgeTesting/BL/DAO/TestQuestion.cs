@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using DTO = KnowledgeTesting.BL.DTO;
 
 namespace KnowledgeTesting.BL.DAO
 {
 	/// <summary>
-	/// Тест.
+	/// Вопрос теста.
 	/// </summary>
-	public class Test
+	public class TestQuestion
 	{
-		public Test()
-		{
-		}
-
 		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public Test Test { get; set; }
+		public Question Question { get; set; }
 	}
 }

@@ -10,9 +10,11 @@ namespace KnowledgeTesting.BL.DB.PgSql
 	/// </summary>
 	public class ClassDbPgSqlContext : DbContext
 	{
-		public DbSet<DAO.Question> Questions { get; set; }
-		public DbSet<DAO.Test> Tests { get; set; }
 		public DbSet<DAO.Answer> Answers { get; set; }
+		public DbSet<DAO.Question> Questions { get; set; }
+		//public DbSet<DAO.Test> Tests { get; set; }
+		//public DbSet<DAO.QuestionAnswer> QuestionAnswers { get; set; }
+		//public DbSet<DAO.TestQuestion> TestQuestions { get; set; }
 
 		public ClassDbPgSqlContext() : base("NpgsqlConnectionString") { }
 
@@ -22,16 +24,6 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// <param name="modelBuilder">Конструктор моделей в БД.</param>
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			// Ответы и вопросы  многие-ко-многим.
-			modelBuilder.Entity<DAO.Question>()
-				.HasMany(x => x.Answers)
-				.WithMany(x => x.Questions)
-				.Map(
-					m =>
-					{
-						m.ToTable("QuestionAnswers");
-					}
-				);
 		}
 	}
 }

@@ -13,74 +13,74 @@ namespace KnowledgeTesting.Controllers
 {
 	public class TestManagementController : Controller
 	{
-		BL.TestManagement _TestManagement = new BL.TestManagement();
-		BL.DB.PgSql.ClassDbPgSqlContext _DbContext = new BL.DB.PgSql.ClassDbPgSqlContext();
+		//BL.TestManagement _TestManagement = new BL.TestManagement();
+		//BL.DB.PgSql.ClassDbPgSqlContext _DbContext = new BL.DB.PgSql.ClassDbPgSqlContext();
 
-		public ActionResult Index(TestsViewModel Model)
-		{
-			return View(Model);
-		}
+		//public ActionResult Index(TestsViewModel Model)
+		//{
+		//	return View(Model);
+		//}
 
-		public ActionResult CreateTest(CreateTestModel Model)
-		{
-			CreateTestModel _Model = Model;
+		//public ActionResult CreateTest(CreateTestModel Model)
+		//{
+		//	CreateTestModel _Model = Model;
 
-			ViewBag.Questions = new SelectList(GetQuestionsDtoModels(), "Id", "Text");
+		//	ViewBag.Questions = new SelectList(GetQuestionsDtoModels(), "Id", "Text");
 
-			return View(Model);
-		}
+		//	return View(Model);
+		//}
 
-		/// <summary>
-		/// Добавить вопрос в тест.
-		/// </summary>
-		/// <param name="Model"></param>
-		/// <returns></returns>
-		public ActionResult AddQuestion(CreateTestModel Model)
-		{
-			CreateTestModel _Model = Model;
+		///// <summary>
+		///// Добавить вопрос в тест.
+		///// </summary>
+		///// <param name="Model"></param>
+		///// <returns></returns>
+		//public ActionResult AddQuestion(CreateTestModel Model)
+		//{
+		//	CreateTestModel _Model = Model;
 
-			string _Notification = "";
+		//	string _Notification = "";
 
-			DTO.Question _Question = GetQuestionsDtoModels().First(x => x.Id == _Model.SelectedQuestionId);
-			_Model.Test.Questions.Add(_Question);
+		//	DTO.Question _Question = GetQuestionsDtoModels().First(x => x.Id == _Model.SelectedQuestionId);
+		//	_Model.Test.Questions.Add(_Question);
 
-			_Model.Notification = _Notification;
+		//	_Model.Notification = _Notification;
 
-			return CreateTest(_Model);
-		}
+		//	return CreateTest(_Model);
+		//}
 
-		public ActionResult SaveNewTest(CreateTestModel Model)
-		{
-			CreateTestModel _Model = Model;
-			string _Notification = "";
+		//public ActionResult SaveNewTest(CreateTestModel Model)
+		//{
+		//	CreateTestModel _Model = Model;
+		//	string _Notification = "";
 
-			if (_TestManagement.CheckTestData(_Model.Test, out _Notification))
-			{
-				_Notification = $"Тест <{_Model.Test.Name}> сохранен.";
-			}
+		//	if (_TestManagement.CheckTestData(_Model.Test, out _Notification))
+		//	{
+		//		_Notification = $"Тест <{_Model.Test.Name}> сохранен.";
+		//	}
 
-			_Model.Notification = _Notification;
+		//	_Model.Notification = _Notification;
 
-			return CreateTest(_Model);
-		}
+		//	return CreateTest(_Model);
+		//}
 
-		public string GetQuestions()
-		{
-			DTO.Question[] _Questions = GetQuestionsDtoModels();
-			return JsonConvert.SerializeObject(_Questions);
-		}
+		//public string GetQuestions()
+		//{
+		//	DTO.Question[] _Questions = GetQuestionsDtoModels();
+		//	return JsonConvert.SerializeObject(_Questions);
+		//}
 
-		private DTO.Question[] GetQuestionsDtoModels()
-		{
-			DTO.Question[] _Questions = _DbContext.Questions.Select(
-				x => new DTO.Question()
-				{
-					Id = x.Id,
-					Text = x.Text
-				}
-			).ToArray();
+		//private DTO.Question[] GetQuestionsDtoModels()
+		//{
+		//	DTO.Question[] _Questions = _DbContext.Questions.Select(
+		//		x => new DTO.Question()
+		//		{
+		//			Id = x.Id,
+		//			Text = x.Text
+		//		}
+		//	).ToArray();
 
-			return _Questions;
-		}
+		//	return _Questions;
+		//}
 	}
 }
