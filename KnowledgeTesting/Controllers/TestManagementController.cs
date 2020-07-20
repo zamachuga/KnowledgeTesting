@@ -14,6 +14,7 @@ namespace KnowledgeTesting.Controllers
 	public class TestManagementController : Controller
 	{
 		BL.TestManagement _TestManagement = new BL.TestManagement();
+		BL.DB.PgSql.ClassDbPgSqlContext _DbContext = new BL.DB.PgSql.ClassDbPgSqlContext();
 
 		public ActionResult Index(TestsViewModel Model)
 		{
@@ -24,7 +25,7 @@ namespace KnowledgeTesting.Controllers
 		{
 			CreateTestModel _Model = Model;
 
-			ViewBag.Questions = new SelectList(_TestManagement.GetQuestions(), "Id", "Text");
+			ViewBag.Questions = new SelectList(GetQuestionsDtoModels(), "Id", "Text");
 
 			return View(Model);
 		}
@@ -40,7 +41,7 @@ namespace KnowledgeTesting.Controllers
 
 			string _Notification = "";
 
-			DTO.Question _Question = _TestManagement.GetQuestions().First(x => x.Id == _Model.SelectedQuestionId);
+			DTO.Question _Question = GetQuestionsDtoModels().First(x => x.Id == _Model.SelectedQuestionId);
 			_Model.Test.Questions.Add(_Question);
 
 			_Model.Notification = _Notification;
@@ -65,8 +66,21 @@ namespace KnowledgeTesting.Controllers
 
 		public string GetQuestions()
 		{
-			DTO.Question[] _Questions = _TestManagement.GetQuestions();
+			DTO.Question[] _Questions = GetQuestionsDtoModels();
 			return JsonConvert.SerializeObject(_Questions);
+		}
+
+		private DTO.Question[] GetQuestionsDtoModels()
+		{
+			DTO.Question[] _Questions = _DbContext.Questions.Select(
+				x => new DTO.Question()
+				{
+					Id = x.Id,
+					Text = x.Text
+				}
+			).ToArray();
+
+			return _Questions;
 		}
 	}
 }

@@ -18,18 +18,6 @@ namespace KnowledgeTesting.BL
 		DB.PgSql.ClassDbPgSqlContext _DbContext;
 
 		/// <summary>
-		/// Получить список вопросов.
-		/// </summary>
-		/// <returns>DTO представление вопросов.</returns>
-		internal DTO.Question[] GetQuestions()
-		{
-			DAO.Question[] _DaoQuestions = _DbContext.Questions.Select(x => x).ToArray();
-			DTO.Question[] _DtoQuestions = Utils.ConverArrayObjectsByJson<DTO.Question>(_DaoQuestions);
-
-			return _DtoQuestions;
-		}
-
-		/// <summary>
 		/// Создать тест.
 		/// </summary>
 		/// <param name="DtoTest">Набор данных теста с визуальной части.</param>
