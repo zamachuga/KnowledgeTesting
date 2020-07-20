@@ -45,6 +45,9 @@ namespace KnowledgeTestingTests
 			Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
 		}
 
+		/// <summary>
+		/// Создание вопроса без ответов.
+		/// </summary>
 		[Test]
 		public void CreateQuestionNotAnswersTest()
 		{
@@ -52,6 +55,36 @@ namespace KnowledgeTestingTests
 
 			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
 			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+		}
+
+		/// <summary>
+		/// Создание вопроса с ответами.
+		/// </summary
+		[Test]
+		public void CreateQuestionAnswersTest()
+		{
+			DAO.Question _Question = new DAO.Question() { Text = "Вторая планета Солнечной системы?" };
+			// Удаляем созданный вопрос, т.к. если вопрос существует то тест пойдет уже не так.
+			_DbContext.Questions.Remove(_DbContext.Questions.First(x => x.Text == _Question.Text));
+			_DbContext.SaveChanges();
+
+			DAO.Answer[] _Answers = new DAO.Answer[]{
+				_DbContext.Answers.First(x => x.Text == "Венера"),
+				_DbContext.Answers.First(x => x.Text == "Меркурий"),
+				_DbContext.Answers.First(x => x.Text == "Земля")
+			};
+			_QuestionManagement.AddAnswer(_Question, _Answers);
+
+			// Создаем вопрос до того, как назначили правильный ответ - ошибка.
+			Assert.Throws<Exception>(() => _QuestionManagement.CreateQuestion(_Question));
+
+			// Назначаем правильный ответ и создаем вопрос - верно.
+			_QuestionManagement.SetCorrectAnswer(_Question, _DbContext.Answers.First(x => x.Text == "Венера"));
+			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+
+			// Мелкие проверки на всякий случай.
+			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+			Assert.True(_DbContext.Answers.Where(x => x.Text == "Венера").Count() == 1);
 		}
 	}
 }
