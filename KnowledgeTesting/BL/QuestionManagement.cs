@@ -53,6 +53,11 @@ namespace KnowledgeTesting.BL
 			Question.CorrectAnswer = Answer;
 		}
 
+		/// <summary>
+		/// Поиск ответа в БД.
+		/// </summary>
+		/// <param name="Answer"></param>
+		/// <returns></returns>
 		private bool IsExist(DAO.Answer Answer)
 		{
 			DAO.Answer _FinKey = _DbContext.Answers.Find(Answer.Id);
