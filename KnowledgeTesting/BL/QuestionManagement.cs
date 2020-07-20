@@ -35,5 +35,30 @@ namespace KnowledgeTesting.BL
 
 			Question.CorrectAnswer = Answer;
 		}
+
+		/// <summary>
+		/// Создать вопрос.
+		/// </summary>
+		public void CreateQuestion(DAO.Question Question)
+		{
+			if (IsExist(Question)) return;
+
+			_DbContext.Questions.Add(Question);
+			_DbContext.SaveChanges();
+		}
+
+		/// <summary>
+		/// Найти вопрос.
+		/// </summary>
+		/// <param name="Question"></param>
+		/// <returns></returns>
+		private bool IsExist(DAO.Question Question)
+		{
+			DAO.Question _FinKey = _DbContext.Questions.Find(Question.Id);
+			int _FindText = _DbContext.Questions.Where(x => x.Text.ToLower().Replace(" ", "") == Question.Text.ToLower().Replace(" ", "")).Count();
+
+			bool _IsExist = _FinKey != null || _FindText > 0;
+			return _IsExist;
+		}
 	}
 }
