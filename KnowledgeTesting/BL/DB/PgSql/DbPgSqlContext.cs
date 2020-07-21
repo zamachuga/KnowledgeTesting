@@ -2,6 +2,7 @@
 using Microsoft.Ajax.Utilities;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting;
 using DAO = KnowledgeTesting.BL.DAO;
 
 namespace KnowledgeTesting.BL.DB.PgSql
@@ -11,6 +12,9 @@ namespace KnowledgeTesting.BL.DB.PgSql
 	/// </summary>
 	public class DbPgSqlContext : DbContext
 	{
+		private static DbPgSqlContext _DbContext = new DbPgSqlContext();
+		public string Guid { get; private set; }
+
 		/// <summary>
 		/// Ответы.
 		/// </summary>
@@ -27,7 +31,14 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		//public DbSet<DAO.QuestionAnswer> QuestionAnswers { get; set; }
 		//public DbSet<DAO.TestQuestion> TestQuestions { get; set; }
 
-		public DbPgSqlContext() : base("NpgsqlConnectionString") { }
+		private DbPgSqlContext() : base("NpgsqlConnectionString") {
+			Guid = System.Guid.NewGuid().ToString();
+		}
+
+		public static DbPgSqlContext Instance()
+		{
+			return _DbContext;
+		}
 
 		/// <summary>
 		/// Ручное определение связей между сущностями.

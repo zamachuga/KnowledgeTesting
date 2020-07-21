@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using KnowledgeTesting.BL.DB.PgSql;
 using NUnit.Framework.Constraints;
 using System.Data.Entity;
+using Moq;
 
 namespace KnowledgeTestingTests
 {
@@ -16,19 +17,20 @@ namespace KnowledgeTestingTests
 	public class QuestionManagementTests
 	{
 		QuestionManagement _QuestionManagement = new QuestionManagement();
-		DbPgSqlContext _DbContext = new DbPgSqlContext();
+		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
 		public void AddAnswerMax3Test()
 		{
 			using (var _Transaction = _DbContext.Database.BeginTransaction())
 			{
-				DAO.Question _Question = new DAO.Question();
+				var _Question = new Mock<DAO.Question>();
+				var _QuestionAnswers = new Mock<DAO.QuestionAnswers>();
+				List<DAO.QuestionAnswers> _Answers = new List<DAO.QuestionAnswers>() { _QuestionAnswers.Object, _QuestionAnswers.Object, _QuestionAnswers.Object };
 
-				Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-				Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-				Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-				Assert.Throws<Exception>(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+				_Question.Setup(x => x.Answers).Returns(_Answers);
+
+				Assert.Throws<Exception>(() => _QuestionManagement.AddAnswer(_Question.Object, new DAO.Answer() { }));
 
 				_Transaction.Rollback();
 			}
@@ -51,7 +53,7 @@ namespace KnowledgeTestingTests
 
 				Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer3));
 				Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
-				
+
 				_Transaction.Rollback();
 			}
 		}

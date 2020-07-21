@@ -23,7 +23,7 @@ namespace KnowledgeTesting.BL.DAO
 		/// <summary>
 		/// Вопросы.
 		/// </summary>
-		public List<QuestionAnswers> Answers { get; set; }
+		public virtual List<QuestionAnswers> Answers { get; set; }
 		/// <summary>
 		/// Правильный ответ на вопрос.
 		/// </summary>

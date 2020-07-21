@@ -14,7 +14,7 @@ namespace KnowledgeTestingTests
 	class AnswerManagementTests
 	{
 		AnswerManagement _AnswerManagement = new AnswerManagement();
-		DbPgSqlContext _DbContext = new DbPgSqlContext();
+		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
 		public void CreateAnswerTest()
@@ -25,8 +25,10 @@ namespace KnowledgeTestingTests
 
 				Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
 				Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
+				_DbContext.SaveChanges();
 				// Исключаем повторное добавление.
-				Assert.True(_DbContext.Answers.Where(x => x.Text == "wtf?").Count() == 1);
+				var _Count = _DbContext.Answers.Where(x => x.Text == _Answer.Text).Count();
+				Assert.True(_Count == 1);
 
 				_Transaction.Rollback();
 			}

@@ -7,7 +7,7 @@ namespace KnowledgeTestingTests
 	[TestFixture]
 	class DbPgSqlContextTests
 	{
-		DbPgSqlContext _DbContext = new DbPgSqlContext();
+		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test(Description = "Тест проверяет работоспособность Select к таблице. Были преценденты.")]
 		public void SelectCount0Records()

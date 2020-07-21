@@ -9,7 +9,7 @@ namespace KnowledgeTesting.BL
 	/// </summary>
 	public class QuestionManagement
 	{
-		DB.PgSql.DbPgSqlContext _DbContext = new DB.PgSql.DbPgSqlContext();
+		DB.PgSql.DbPgSqlContext _DbContext = DB.PgSql.DbPgSqlContext.Instance();
 
 		/// <summary>
 		/// Добавить вариант ответа в вопрос.
