@@ -20,10 +20,12 @@ namespace KnowledgeTesting.BL
 		{
 			if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
 
-			DAO.QuestionAnswers _QuestionAnswers = new DAO.QuestionAnswers() { Answer = Answer, Question = Question, IsCorrect = false };
+			DAO.QuestionAnswers _QuestionAnswers = new DAO.QuestionAnswers() { 
+				AnswerId = Answer.Id, 
+				QuestionId = Question.Id, 
+				IsCorrect = false };
 
 			_DbContext.QuestionAnswers.Add(_QuestionAnswers);
-			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -49,14 +51,13 @@ namespace KnowledgeTesting.BL
 
 			if (_Answer == null) throw new Exception("Правильный ответ должен содержаться в вопросе.");
 
-			if (_CurrentCorrectAnswer != null) {
+			if (_CurrentCorrectAnswer != null)
+			{
 				if (_CurrentCorrectAnswer.AnswerId == Answer.Id) return;
 				else _CurrentCorrectAnswer.IsCorrect = false;
 			}
 
 			_Answer.IsCorrect = true;
-
-			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -67,7 +68,6 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Question)) return;
 
 			_DbContext.Questions.Add(Question);
-			_DbContext.SaveChanges();
 		}
 
 		/// <summary>

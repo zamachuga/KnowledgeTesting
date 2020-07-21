@@ -21,7 +21,6 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Answer)) return;
 
 			_DbContext.Answers.Add(Answer);
-			_DbContext.SaveChanges();
 		}
 
 		public DAO.Answer GetAnswer(int Id)

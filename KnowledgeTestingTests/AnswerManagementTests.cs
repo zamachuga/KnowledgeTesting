@@ -19,20 +19,30 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void CreateAnswerTest()
 		{
-			DAO.Answer _Answer = new DAO.Answer() { Text = "wtf?" };
+			using (var _Transaction =_DbContext.Database.BeginTransaction())
+			{
+				DAO.Answer _Answer = new DAO.Answer() { Text = "wtf?" };
 
-			Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
-			Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
-			// Исключаем повторное добавление.
-			Assert.True(_DbContext.Answers.Where(x => x.Text == "wtf?").Count() == 1);
+				Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
+				Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
+				// Исключаем повторное добавление.
+				Assert.True(_DbContext.Answers.Where(x => x.Text == "wtf?").Count() == 1);
+
+				_Transaction.Rollback();
+			}
 		}
 
 		[Test]
 		public void GetAnswerTest()
 		{
-			DAO.Answer _Answer = _AnswerManagement.GetAnswer(5);
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Answer _Answer = _AnswerManagement.GetAnswer(5);
 
-			Assert.True(_Answer.Id == 5);
+				Assert.True(_Answer.Id == 5);
+
+				_Transaction.Rollback();
+			}
 		}
 	}
 }

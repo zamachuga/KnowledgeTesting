@@ -35,13 +35,13 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// <param name="modelBuilder">Конструктор моделей в БД.</param>
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<DAO.QuestionAnswers>()
+			modelBuilder.Entity<QuestionAnswers>()
 				.HasKey(k => new { k.QuestionId, k.AnswerId });
-			modelBuilder.Entity<DAO.QuestionAnswers>()
+			modelBuilder.Entity<QuestionAnswers>()
 				.HasRequired(x => x.Answer)
 				.WithMany(x => x.Questions)
 				.HasForeignKey(x => x.AnswerId);
-			modelBuilder.Entity<DAO.QuestionAnswers>()
+			modelBuilder.Entity<QuestionAnswers>()
 				.HasRequired(x => x.Question)
 				.WithMany(x => x.Answers)
 				.HasForeignKey(x => x.QuestionId);

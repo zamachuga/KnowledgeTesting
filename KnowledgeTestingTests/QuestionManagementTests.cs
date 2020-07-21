@@ -21,29 +21,39 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void AddAnswerMax3Test()
 		{
-			DAO.Question _Question = new DAO.Question();
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Question _Question = new DAO.Question();
 
-			Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-			Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-			Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-			Assert.Throws<Exception>(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+				Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+				Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+				Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+				Assert.Throws<Exception>(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+
+				_Transaction.Rollback();
+			}
 		}
 
 		[Test]
 		public void SetCorrectAnswerTest()
 		{
-			DAO.Question _Question = new DAO.Question();
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Question _Question = new DAO.Question();
 
-			var _Answer1 = new DAO.Answer() { };
-			var _Answer2 = new DAO.Answer() { };
-			var _Answer3 = new DAO.Answer() { };
-			var _Answer4 = new DAO.Answer() { };
-			_QuestionManagement.AddAnswer(_Question, _Answer1);
-			_QuestionManagement.AddAnswer(_Question, _Answer2);
-			_QuestionManagement.AddAnswer(_Question, _Answer3);
+				var _Answer1 = new DAO.Answer() { };
+				var _Answer2 = new DAO.Answer() { };
+				var _Answer3 = new DAO.Answer() { };
+				var _Answer4 = new DAO.Answer() { };
+				_QuestionManagement.AddAnswer(_Question, _Answer1);
+				_QuestionManagement.AddAnswer(_Question, _Answer2);
+				_QuestionManagement.AddAnswer(_Question, _Answer3);
 
-			Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer3));
-			Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
+				Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer3));
+				Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
+				
+				_Transaction.Rollback();
+			}
 		}
 
 		/// <summary>
@@ -52,10 +62,15 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void CreateQuestionNotAnswersTest()
 		{
-			DAO.Question _Question = new DAO.Question() { Text = "wtf?" };
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Question _Question = new DAO.Question() { Text = "wtf?" };
 
-			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
-			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+				Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+				Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+
+				_Transaction.Rollback();
+			}
 		}
 
 		/// <summary>
@@ -71,7 +86,6 @@ namespace KnowledgeTestingTests
 			DAO.Question _RemoveQuestion = _DbContext.Questions.FirstOrDefault(x => x.Text == _Question.Text);
 			if (_RemoveQuestion != null)
 				_DbContext.Questions.Remove(_RemoveQuestion);
-			_DbContext.SaveChanges();
 
 			// Создаем вопрос.
 			_QuestionManagement.CreateQuestion(_Question);
@@ -84,11 +98,6 @@ namespace KnowledgeTestingTests
 						_DbContext.Answers.Single(x => x.Text == "Земля")
 					};
 			_QuestionManagement.AddAnswer(_Question, _Answers);
-
-			// Назначаем правильный ответ и создаем вопрос - верно.
-			_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
-			DAO.Answer _Answer = _DbContext.Answers.Where(x => x.Text == "Венера").Include(x => x.Questions).Single();
-			Assert.True(_Question.Answers.Count() == 3);
 
 			// Мелкие проверки на всякий случай.
 			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
