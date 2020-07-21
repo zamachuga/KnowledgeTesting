@@ -187,14 +187,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BL\AnswerManagement.cs" />
     <Compile Include="BL\DAO\Answer.cs" />
+    <Compile Include="BL\DAO\Interviwee.cs" />
+    <Compile Include="BL\DAO\InterviweeTests.cs" />
     <Compile Include="BL\DAO\Question.cs" />
     <Compile Include="BL\DAO\QuestionAnswers.cs" />
     <Compile Include="BL\DAO\Test.cs" />
     <Compile Include="BL\DAO\TestQuestions.cs" />
+    <Compile Include="BL\DAO\TestingResult.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
     <Compile Include="BL\DB\PgSql\DbPgSqlContext.cs" />
     <Compile Include="BL\QuestionManagement.cs" />
+    <Compile Include="BL\TestingManagement.cs" />
     <Compile Include="BL\TestManagement.cs" />
     <Compile Include="BL\Utils.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
@@ -210,6 +214,10 @@
     <Compile Include="Migrations\202007211738346_TestQuestionsMTM.cs" />
     <Compile Include="Migrations\202007211738346_TestQuestionsMTM.designer.cs">
       <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007211958499_TestingStructure.cs" />
+    <Compile Include="Migrations\202007211958499_TestingStructure.designer.cs">
+      <DependentUpon>202007211958499_TestingStructure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -388,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007211738346_TestQuestionsMTM.resx">
       <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007211958499_TestingStructure.resx">
+      <DependentUpon>202007211958499_TestingStructure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
