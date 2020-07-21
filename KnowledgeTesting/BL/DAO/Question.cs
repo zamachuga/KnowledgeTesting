@@ -15,7 +15,7 @@ namespace KnowledgeTesting.BL.DAO
 	{
 		public Question()
 		{
-			Answers = new List<Answer>();
+			QuestionAnswers = new List<QuestionAnswers>();
 		}
 
 		public int Id { get; set; }
@@ -23,14 +23,14 @@ namespace KnowledgeTesting.BL.DAO
 		/// <summary>
 		/// Вопросы.
 		/// </summary>
-		public ICollection<Answer> Answers { get; set; }
+		public List<QuestionAnswers> QuestionAnswers { get; set; }
 		/// <summary>
 		/// Правильный ответ на вопрос.
 		/// </summary>
-		public int? AnswerId { get; set; }
+		//public int? AnswerId { get; set; }
 		/// <summary>
 		/// Правильный ответ на вопрос.
 		/// </summary>
-		public Answer Answer { get; set; }
+		//public Answer Answer { get; set; }
 	}
 }

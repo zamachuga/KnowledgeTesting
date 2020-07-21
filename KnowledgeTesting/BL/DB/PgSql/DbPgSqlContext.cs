@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using KnowledgeTesting.BL.DAO;
+using Microsoft.Ajax.Utilities;
 using System.Data.Entity;
 using System.Linq;
 using DAO = KnowledgeTesting.BL.DAO;
@@ -34,13 +35,16 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// <param name="modelBuilder">Конструктор моделей в БД.</param>
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<DAO.Question>()
-				// EF6 почему-то решил - не надо 3ю таблицу для связи вопрос-ответы.
-				.HasMany(x => x.Answers)
-				.WithMany(x=>x.Questions)
-				.Map(m => {
-					m.ToTable("QuestionAnswers");
-				});
+			modelBuilder.Entity<DAO.QuestionAnswers>()
+				.HasKey(k => new { k.QuestionId, k.AnswerId });
+			modelBuilder.Entity<DAO.QuestionAnswers>()
+				.HasRequired(x => x.Answer)
+				.WithMany(x => x.QuestionAnswers)
+				.HasForeignKey(x => x.AnswerId);
+			modelBuilder.Entity<DAO.QuestionAnswers>()
+				.HasRequired(x => x.Question)
+				.WithMany(x => x.QuestionAnswers)
+				.HasForeignKey(x => x.QuestionId);
 		}
 	}
 }

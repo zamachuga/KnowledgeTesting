@@ -18,9 +18,9 @@ namespace KnowledgeTesting.BL
 		/// <param name="Answer"></param>
 		public void AddAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
-			if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
+			//if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
 
-			Question.Answers.Add(Answer);
+			//Question.Answers.Add(Answer);
 			_DbContext.SaveChanges();
 		}
 
@@ -42,10 +42,10 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public void SetCorrectAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
-			if (!Question.Answers.Contains(Answer)) throw new Exception("Правильный ответ должен быть одним из вариантов ответов.");
+			//if (!Question.Answers.Contains(Answer)) throw new Exception("Правильный ответ должен быть одним из вариантов ответов.");
 
-			Question.Answer = Answer;
-			Question.AnswerId = Answer.Id;
+			//Question.Answer = Answer;
+			//Question.AnswerId = Answer.Id;
 			_DbContext.SaveChanges();
 		}
 
@@ -57,7 +57,7 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Question)) return;
 			CheckDataQuestion(Question);
 
-			Question.Answers = new List<DAO.Answer>();
+			//Question.Answers = new List<DAO.Answer>();
 			_DbContext.Questions.Add(Question);
 			_DbContext.SaveChanges();
 		}
@@ -83,8 +83,8 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		private void CheckDataQuestion(DAO.Question Question)
 		{
-			if (Question.Answers.Count > 0 & Question.Answer == null) 
-				throw new Exception("При наличии ответов в вопросе, необходимо указать правильный ответ.");
+			//if (Question.Answers.Count > 0 & Question.Answer == null) 
+			//throw new Exception("При наличии ответов в вопросе, необходимо указать правильный ответ.");
 		}
 	}
 }
