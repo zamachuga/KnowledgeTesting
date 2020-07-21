@@ -1,9 +1,5 @@
 ﻿using KnowledgeTesting.BL.DAO;
-using Microsoft.Ajax.Utilities;
 using System.Data.Entity;
-using System.Linq;
-using System.Runtime.Remoting;
-using DAO = KnowledgeTesting.BL.DAO;
 
 namespace KnowledgeTesting.BL.DB.PgSql
 {
@@ -18,22 +14,35 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// <summary>
 		/// Ответы.
 		/// </summary>
-		public DbSet<DAO.Answer> Answers { get; set; }
+		public DbSet<Answer> Answers { get; set; }
 		/// <summary>
 		/// Вопросы.
 		/// </summary>
-		public DbSet<DAO.Question> Questions { get; set; }
+		public DbSet<Question> Questions { get; set; }
 		/// <summary>
 		/// Ответы на вопрос.
 		/// </summary>
-		public DbSet<DAO.QuestionAnswers> QuestionAnswers { get; set; }
-		//public DbSet<DAO.Test> Tests { get; set; }
-		//public DbSet<DAO.QuestionAnswer> QuestionAnswers { get; set; }
-		//public DbSet<DAO.TestQuestion> TestQuestions { get; set; }
+		public DbSet<QuestionAnswers> QuestionAnswers { get; set; }
+		/// <summary>
+		/// Тесты.
+		/// </summary>
+		public DbSet<Test> Tests { get; set; }
+		/// <summary>
+		/// Вопросы тестов.
+		/// </summary>
+		public DbSet<TestQuestions> TestQuestions { get; set; }
 
+		// В режиме отладки конструктор публичный ради создания миграции БД.
+#if DEBUG
+		public DbPgSqlContext() : base("NpgsqlConnectionString")
+		{
+			Guid = System.Guid.NewGuid().ToString();
+		}
+#else
 		private DbPgSqlContext() : base("NpgsqlConnectionString") {
 			Guid = System.Guid.NewGuid().ToString();
 		}
+#endif
 
 		public static DbPgSqlContext Instance()
 		{
@@ -55,6 +64,17 @@ namespace KnowledgeTesting.BL.DB.PgSql
 			modelBuilder.Entity<QuestionAnswers>()
 				.HasRequired(x => x.Question)
 				.WithMany(x => x.Answers)
+				.HasForeignKey(x => x.QuestionId);
+
+			modelBuilder.Entity<TestQuestions>()
+				.HasKey(k => new { k.TestId, k.QuestionId });
+			modelBuilder.Entity<TestQuestions>()
+				.HasRequired(x => x.Test)
+				.WithMany(x => x.Questions)
+				.HasForeignKey(x => x.TestId);
+			modelBuilder.Entity<TestQuestions>()
+				.HasRequired(x => x.Question)
+				.WithMany(x => x.Tests)
 				.HasForeignKey(x => x.QuestionId);
 		}
 	}

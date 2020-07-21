@@ -190,6 +190,7 @@
     <Compile Include="BL\DAO\Question.cs" />
     <Compile Include="BL\DAO\QuestionAnswers.cs" />
     <Compile Include="BL\DAO\Test.cs" />
+    <Compile Include="BL\DAO\TestQuestions.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
     <Compile Include="BL\DB\PgSql\DbPgSqlContext.cs" />
@@ -205,6 +206,10 @@
     <Compile Include="Migrations\202007211545124_QuestionAnswersMTM.cs" />
     <Compile Include="Migrations\202007211545124_QuestionAnswersMTM.designer.cs">
       <DependentUpon>202007211545124_QuestionAnswersMTM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007211738346_TestQuestionsMTM.cs" />
+    <Compile Include="Migrations\202007211738346_TestQuestionsMTM.designer.cs">
+      <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -380,6 +385,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007211545124_QuestionAnswersMTM.resx">
       <DependentUpon>202007211545124_QuestionAnswersMTM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007211738346_TestQuestionsMTM.resx">
+      <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
