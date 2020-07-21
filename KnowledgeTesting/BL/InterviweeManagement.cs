@@ -20,7 +20,5 @@ namespace KnowledgeTesting.BL
 			_DbContext.Interviwees.Add(Interviwee);
 			_DbContext.SaveChanges();
 		}
-
-
 	}
 }
