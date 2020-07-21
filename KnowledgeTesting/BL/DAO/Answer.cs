@@ -13,7 +13,7 @@ namespace KnowledgeTesting.BL.DAO
 	{
 		public Answer()
 		{
-			QuestionAnswers = new List<QuestionAnswers>();
+			Questions = new List<QuestionAnswers>();
 		}
 
 		public int Id { get; set; }
@@ -21,6 +21,6 @@ namespace KnowledgeTesting.BL.DAO
 		/// <summary>
 		/// Вопросы в которых участвует ответ.
 		/// </summary>
-		public List<QuestionAnswers> QuestionAnswers { get; set; }
+		public List<QuestionAnswers> Questions { get; set; }
 	}
 }

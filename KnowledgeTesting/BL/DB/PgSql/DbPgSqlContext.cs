@@ -39,11 +39,11 @@ namespace KnowledgeTesting.BL.DB.PgSql
 				.HasKey(k => new { k.QuestionId, k.AnswerId });
 			modelBuilder.Entity<DAO.QuestionAnswers>()
 				.HasRequired(x => x.Answer)
-				.WithMany(x => x.QuestionAnswers)
+				.WithMany(x => x.Questions)
 				.HasForeignKey(x => x.AnswerId);
 			modelBuilder.Entity<DAO.QuestionAnswers>()
 				.HasRequired(x => x.Question)
-				.WithMany(x => x.QuestionAnswers)
+				.WithMany(x => x.Answers)
 				.HasForeignKey(x => x.QuestionId);
 		}
 	}

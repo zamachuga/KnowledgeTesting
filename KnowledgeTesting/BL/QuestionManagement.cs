@@ -18,9 +18,11 @@ namespace KnowledgeTesting.BL
 		/// <param name="Answer"></param>
 		public void AddAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
-			//if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
+			if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
 
-			//Question.Answers.Add(Answer);
+			DAO.QuestionAnswers _QuestionAnswers = new DAO.QuestionAnswers() { Answer = Answer, Question = Question, IsCorrect = false };
+
+			_DbContext.QuestionAnswers.Add(_QuestionAnswers);
 			_DbContext.SaveChanges();
 		}
 
@@ -42,10 +44,18 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public void SetCorrectAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
-			//if (!Question.Answers.Contains(Answer)) throw new Exception("Правильный ответ должен быть одним из вариантов ответов.");
+			DAO.QuestionAnswers _Answer = _DbContext.QuestionAnswers.Find(Question.Id, Answer.Id);
+			DAO.QuestionAnswers _CurrentCorrectAnswer = _DbContext.QuestionAnswers.SingleOrDefault(x => x.QuestionId == Question.Id & x.IsCorrect);
 
-			//Question.Answer = Answer;
-			//Question.AnswerId = Answer.Id;
+			if (_Answer == null) throw new Exception("Правильный ответ должен содержаться в вопросе.");
+
+			if (_CurrentCorrectAnswer != null) {
+				if (_CurrentCorrectAnswer.AnswerId == Answer.Id) return;
+				else _CurrentCorrectAnswer.IsCorrect = false;
+			}
+
+			_Answer.IsCorrect = true;
+
 			_DbContext.SaveChanges();
 		}
 
@@ -55,9 +65,7 @@ namespace KnowledgeTesting.BL
 		public void CreateQuestion(DAO.Question Question)
 		{
 			if (IsExist(Question)) return;
-			CheckDataQuestion(Question);
 
-			//Question.Answers = new List<DAO.Answer>();
 			_DbContext.Questions.Add(Question);
 			_DbContext.SaveChanges();
 		}
@@ -74,17 +82,6 @@ namespace KnowledgeTesting.BL
 
 			bool _IsExist = _FinKey != null || _FindText > 0;
 			return _IsExist;
-		}
-
-		/// <summary>
-		/// Проверить содержимое.
-		/// </summary>
-		/// <param name="Question"></param>
-		/// <returns></returns>
-		private void CheckDataQuestion(DAO.Question Question)
-		{
-			//if (Question.Answers.Count > 0 & Question.Answer == null) 
-			//throw new Exception("При наличии ответов в вопросе, необходимо указать правильный ответ.");
 		}
 	}
 }
