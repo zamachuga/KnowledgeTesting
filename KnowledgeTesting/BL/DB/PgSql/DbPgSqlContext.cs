@@ -31,6 +31,18 @@ namespace KnowledgeTesting.BL.DB.PgSql
 		/// Вопросы тестов.
 		/// </summary>
 		public DbSet<TestQuestions> TestQuestions { get; set; }
+		/// <summary>
+		/// Прохождение тестов.
+		/// </summary>
+		public DbSet<InterviweeTests> InterviweeTests { get; set; }
+		/// <summary>
+		/// Результаты прохождения тестов.
+		/// </summary>
+		public DbSet<TestingResult> TestingResults { get; set; }
+		/// <summary>
+		/// Тестируемые.
+		/// </summary>
+		public DbSet<Interviwee> Interviwees { get; set; }
 
 		// В режиме отладки конструктор публичный ради создания миграции БД.
 #if DEBUG
@@ -76,6 +88,28 @@ namespace KnowledgeTesting.BL.DB.PgSql
 				.HasRequired(x => x.Question)
 				.WithMany(x => x.Tests)
 				.HasForeignKey(x => x.QuestionId);
+
+			modelBuilder.Entity<InterviweeTests>()
+				.HasKey(k => k.Id);
+			modelBuilder.Entity<InterviweeTests>()
+				.HasRequired(x => x.Test)
+				.WithMany(x => x.Interviwees)
+				.HasForeignKey(x => x.TestId);
+			modelBuilder.Entity<InterviweeTests>()
+				.HasRequired(x => x.Interviwee)
+				.WithMany(x => x.Tests)
+				.HasForeignKey(x => x.InterviweeId);
+
+			modelBuilder.Entity<TestingResult>()
+				.HasKey(k => k.Id);
+			modelBuilder.Entity<TestingResult>()
+				.HasRequired(x => x.Question)
+				.WithMany(x => x.TestingResults)
+				.HasForeignKey(x => x.QuestionId);
+			modelBuilder.Entity<TestingResult>()
+				.HasRequired(x => x.Answer)
+				.WithMany(x => x.TestingResults)
+				.HasForeignKey(x => x.AnswerId);
 		}
 	}
 }

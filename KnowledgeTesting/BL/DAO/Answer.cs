@@ -22,5 +22,9 @@ namespace KnowledgeTesting.BL.DAO
 		/// Вопросы в которых участвует ответ.
 		/// </summary>
 		public List<QuestionAnswers> Questions { get; set; }
+		/// <summary>
+		/// Результаты тестов в которых участвовал ответ.
+		/// </summary>
+		public List<TestingResult> TestingResults { get; set; }
 	}
 }

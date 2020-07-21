@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO = KnowledgeTesting.BL.DTO;
 using DAO = KnowledgeTesting.BL.DAO;
+using KnowledgeTesting.BL.DB.PgSql;
 
 namespace KnowledgeTestingTests
 {
@@ -14,7 +15,7 @@ namespace KnowledgeTestingTests
 	public class TestManagementTests
 	{
 		TestManagement _TestManagement = new TestManagement();
-		KnowledgeTesting.BL.DB.PgSql.DbPgSqlContext _DbContext = KnowledgeTesting.BL.DB.PgSql.DbPgSqlContext.Instance();
+		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
 		public void CreateTest()

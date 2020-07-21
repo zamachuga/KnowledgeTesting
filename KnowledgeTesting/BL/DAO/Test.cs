@@ -24,5 +24,9 @@ namespace KnowledgeTesting.BL.DAO
 		/// Вопросы в тесте.
 		/// </summary>
 		public virtual List<TestQuestions> Questions { get; set; }
+		/// <summary>
+		/// Прохождения теста.
+		/// </summary>
+		public virtual List<InterviweeTests> Interviwees { get; set; }
 	}
 }
