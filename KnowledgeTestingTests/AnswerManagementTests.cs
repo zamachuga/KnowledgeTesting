@@ -14,25 +14,37 @@ namespace KnowledgeTestingTests
 	class AnswerManagementTests
 	{
 		AnswerManagement _AnswerManagement = new AnswerManagement();
-		DbPgSqlContext _DbContext = new DbPgSqlContext();
+		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
 		public void CreateAnswerTest()
 		{
-			DAO.Answer _Answer = new DAO.Answer() { Text = "wtf?" };
+			using (var _Transaction =_DbContext.Database.BeginTransaction())
+			{
+				DAO.Answer _Answer = new DAO.Answer() { Text = "wtf?" };
 
-			Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
-			Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
-			// Исключаем повторное добавление.
-			Assert.True(_DbContext.Answers.Where(x => x.Text == "wtf?").Count() == 1);
+				Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
+				Assert.DoesNotThrow(() => _AnswerManagement.CreateAnswer(_Answer));
+				_DbContext.SaveChanges();
+				// Исключаем повторное добавление.
+				var _Count = _DbContext.Answers.Where(x => x.Text == _Answer.Text).Count();
+				Assert.True(_Count == 1);
+
+				_Transaction.Rollback();
+			}
 		}
 
 		[Test]
 		public void GetAnswerTest()
 		{
-			DAO.Answer _Answer = _AnswerManagement.GetAnswer(5);
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Answer _Answer = _AnswerManagement.GetAnswer(5);
 
-			Assert.True(_Answer.Id == 5);
+				Assert.True(_Answer.Id == 5);
+
+				_Transaction.Rollback();
+			}
 		}
 	}
 }

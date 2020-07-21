@@ -10,7 +10,7 @@ namespace KnowledgeTesting.BL
 	/// </summary>
 	public class AnswerManagement
 	{
-		DB.PgSql.DbPgSqlContext _DbContext = new DB.PgSql.DbPgSqlContext();
+		DB.PgSql.DbPgSqlContext _DbContext = DB.PgSql.DbPgSqlContext.Instance();
 
 		/// <summary>
 		/// Создать вопрос.
@@ -21,7 +21,6 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Answer)) return;
 
 			_DbContext.Answers.Add(Answer);
-			_DbContext.SaveChanges();
 		}
 
 		public DAO.Answer GetAnswer(int Id)

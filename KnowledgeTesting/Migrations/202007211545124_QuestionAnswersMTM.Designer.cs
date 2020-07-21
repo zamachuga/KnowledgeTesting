@@ -7,13 +7,13 @@ namespace KnowledgeTesting.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class CorrectAnswerRequired : IMigrationMetadata
+    public sealed partial class QuestionAnswersMTM : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CorrectAnswerRequired));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(QuestionAnswersMTM));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007201934075_CorrectAnswerRequired"; }
+            get { return "202007211545124_QuestionAnswersMTM"; }
         }
         
         string IMigrationMetadata.Source

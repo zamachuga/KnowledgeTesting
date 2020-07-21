@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using KnowledgeTesting.BL.DB.PgSql;
 using NUnit.Framework.Constraints;
+using System.Data.Entity;
+using Moq;
 
 namespace KnowledgeTestingTests
 {
@@ -15,34 +17,54 @@ namespace KnowledgeTestingTests
 	public class QuestionManagementTests
 	{
 		QuestionManagement _QuestionManagement = new QuestionManagement();
-		DbPgSqlContext _DbContext = new DbPgSqlContext();
+		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
 		public void AddAnswerMax3Test()
 		{
-			DAO.Question _Question = new DAO.Question();
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				var _Question = new Mock<DAO.Question>();
+				var _QuestionAnswers = new Mock<DAO.QuestionAnswers>();
+				List<DAO.QuestionAnswers> _Answers = new List<DAO.QuestionAnswers>() { _QuestionAnswers.Object, _QuestionAnswers.Object, _QuestionAnswers.Object };
 
-			Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-			Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-			Assert.DoesNotThrow(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
-			Assert.Throws<Exception>(() => _QuestionManagement.AddAnswer(_Question, new DAO.Answer() { }));
+				_Question.Setup(x => x.Answers).Returns(_Answers);
+
+				Assert.Throws<Exception>(() => _QuestionManagement.AddAnswer(_Question.Object, new DAO.Answer() { }));
+
+				_Transaction.Rollback();
+			}
 		}
 
 		[Test]
 		public void SetCorrectAnswerTest()
 		{
-			DAO.Question _Question = new DAO.Question();
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				// Создаем вопрос.
+				DAO.Question _Question = new DAO.Question() { Text = "SetCorrectAnswerTest?" };
+				_QuestionManagement.CreateQuestion(_Question);
+				_DbContext.SaveChanges();
 
-			var _Answer1 = new DAO.Answer() { };
-			var _Answer2 = new DAO.Answer() { };
-			var _Answer3 = new DAO.Answer() { };
-			var _Answer4 = new DAO.Answer() { };
-			_QuestionManagement.AddAnswer(_Question, _Answer1);
-			_QuestionManagement.AddAnswer(_Question, _Answer2);
-			_QuestionManagement.AddAnswer(_Question, _Answer3);
+				// Получаем сущность из БД - если не получить, то EF подумает, что надо создать новую.
+				_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
 
-			Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer3));
-			Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
+				// Выбираем ответы для заполнения.
+				DAO.Answer[] _Answers = new DAO.Answer[]{
+						_DbContext.Answers.Single(x => x.Text == "Венера"),
+						_DbContext.Answers.Single(x => x.Text == "Меркурий"),
+						_DbContext.Answers.Single(x => x.Text == "Земля")
+					};
+				_QuestionManagement.AddAnswer(_Question, _Answers);
+				_DbContext.SaveChanges();
+
+				Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _DbContext.Answers.Single(x => x.Text == "Венера")));
+
+				var _UnCorrectAnswer = _DbContext.Answers.Single(x => x.Text == "101010");
+				Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _UnCorrectAnswer));
+
+				_Transaction.Rollback();
+			}
 		}
 
 		/// <summary>
@@ -51,10 +73,16 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void CreateQuestionNotAnswersTest()
 		{
-			DAO.Question _Question = new DAO.Question() { Text = "wtf?" };
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Question _Question = new DAO.Question() { Text = "wtf?" };
 
-			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
-			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+				Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+				_DbContext.SaveChanges();
+				Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
+
+				_Transaction.Rollback();
+			}
 		}
 
 		/// <summary>
@@ -63,28 +91,29 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void CreateQuestionAnswersTest()
 		{
-			DAO.Question _Question = new DAO.Question() { Text = "Вторая планета Солнечной системы?" };
-			// Удаляем созданный вопрос, т.к. если вопрос существует то тест пойдет уже не так.
-			_DbContext.Questions.Remove(_DbContext.Questions.First(x => x.Text == _Question.Text));
-			_DbContext.SaveChanges();
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				// Создаем вопрос.
+				DAO.Question _Question = new DAO.Question() { Text = "CreateQuestionAnswersTest?" };
+				_QuestionManagement.CreateQuestion(_Question);
+				_DbContext.SaveChanges();
 
-			DAO.Answer[] _Answers = new DAO.Answer[]{
-				_DbContext.Answers.First(x => x.Text == "Венера"),
-				_DbContext.Answers.First(x => x.Text == "Меркурий"),
-				_DbContext.Answers.First(x => x.Text == "Земля")
-			};
-			_QuestionManagement.AddAnswer(_Question, _Answers);
+				// Получаем сущность из БД - если не получить, то EF подумает, что надо создать новую.
+				_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
 
-			// Создаем вопрос до того, как назначили правильный ответ - ошибка.
-			Assert.Throws<Exception>(() => _QuestionManagement.CreateQuestion(_Question));
+				// Выбираем ответы для заполнения.
+				DAO.Answer[] _Answers = new DAO.Answer[]{
+						_DbContext.Answers.Single(x => x.Text == "Венера"),
+						_DbContext.Answers.Single(x => x.Text == "Меркурий"),
+						_DbContext.Answers.Single(x => x.Text == "Земля")
+					};
+				_QuestionManagement.AddAnswer(_Question, _Answers);
+				_DbContext.SaveChanges();
 
-			// Назначаем правильный ответ и создаем вопрос - верно.
-			_QuestionManagement.SetCorrectAnswer(_Question, _DbContext.Answers.First(x => x.Text == "Венера"));
-			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+				Assert.True(_Question.Answers.Count() == 3);
 
-			// Мелкие проверки на всякий случай.
-			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
-			Assert.True(_DbContext.Answers.Where(x => x.Text == "Венера").Count() == 1);
+				_Transaction.Rollback();
+			}
 		}
 	}
 }

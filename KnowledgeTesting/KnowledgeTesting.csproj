@@ -63,6 +63,22 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Npgsql, Version=4.1.4.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.4.1.4\lib\net461\Npgsql.dll</HintPath>
     </Reference>
@@ -172,6 +188,7 @@
     <Compile Include="BL\AnswerManagement.cs" />
     <Compile Include="BL\DAO\Answer.cs" />
     <Compile Include="BL\DAO\Question.cs" />
+    <Compile Include="BL\DAO\QuestionAnswers.cs" />
     <Compile Include="BL\DAO\Test.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
@@ -185,13 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.cs" />
-    <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.designer.cs">
-      <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007201934075_CorrectAnswerRequired.cs" />
-    <Compile Include="Migrations\202007201934075_CorrectAnswerRequired.designer.cs">
-      <DependentUpon>202007201934075_CorrectAnswerRequired.cs</DependentUpon>
+    <Compile Include="Migrations\202007211545124_QuestionAnswersMTM.cs" />
+    <Compile Include="Migrations\202007211545124_QuestionAnswersMTM.designer.cs">
+      <DependentUpon>202007211545124_QuestionAnswersMTM.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -365,11 +378,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007201459338_AnswerQuestion_MToM.resx">
-      <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007201934075_CorrectAnswerRequired.resx">
-      <DependentUpon>202007201934075_CorrectAnswerRequired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007211545124_QuestionAnswersMTM.resx">
+      <DependentUpon>202007211545124_QuestionAnswersMTM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
