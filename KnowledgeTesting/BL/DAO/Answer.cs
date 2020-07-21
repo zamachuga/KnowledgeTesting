@@ -14,7 +14,7 @@ namespace KnowledgeTesting.BL.DAO
 		public Answer()
 		{
 			Questions = new List<Question>();
-			CorrectToQuestions = new List<Question>();
+			//CorrectToQuestions = new List<Question>();
 		}
 
 		public int Id { get; set; }
@@ -26,6 +26,6 @@ namespace KnowledgeTesting.BL.DAO
 		/// <summary>
 		/// Вопросы для которых ответ правильный.
 		/// </summary>
-		public ICollection<Question> CorrectToQuestions { get; set; }
+		//public ICollection<Question> CorrectToQuestions { get; set; }
 	}
 }

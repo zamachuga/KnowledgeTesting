@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
-using System.Web.UI.WebControls;
 
 namespace KnowledgeTesting.BL
 {
@@ -24,6 +21,7 @@ namespace KnowledgeTesting.BL
 			if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
 
 			Question.Answers.Add(Answer);
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -48,6 +46,7 @@ namespace KnowledgeTesting.BL
 
 			Question.Answer = Answer;
 			Question.AnswerId = Answer.Id;
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -58,6 +57,7 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Question)) return;
 			CheckDataQuestion(Question);
 
+			Question.Answers = new List<DAO.Answer>();
 			_DbContext.Questions.Add(Question);
 			_DbContext.SaveChanges();
 		}

@@ -10,8 +10,18 @@ namespace KnowledgeTesting.BL.DB.PgSql
 	/// </summary>
 	public class DbPgSqlContext : DbContext
 	{
+		/// <summary>
+		/// Ответы.
+		/// </summary>
 		public DbSet<DAO.Answer> Answers { get; set; }
+		/// <summary>
+		/// Вопросы.
+		/// </summary>
 		public DbSet<DAO.Question> Questions { get; set; }
+		/// <summary>
+		/// Ответы на вопрос.
+		/// </summary>
+		public DbSet<DAO.QuestionAnswers> QuestionAnswers { get; set; }
 		//public DbSet<DAO.Test> Tests { get; set; }
 		//public DbSet<DAO.QuestionAnswer> QuestionAnswers { get; set; }
 		//public DbSet<DAO.TestQuestion> TestQuestions { get; set; }

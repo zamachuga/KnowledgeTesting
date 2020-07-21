@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KnowledgeTesting.BL.DB.PgSql;
 using NUnit.Framework.Constraints;
+using System.Data.Entity;
 
 namespace KnowledgeTestingTests
 {
@@ -63,24 +64,32 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void CreateQuestionAnswersTest()
 		{
-			DAO.Question _Question = new DAO.Question() { Text = "Вторая планета Солнечной системы?" };
-			// Удаляем созданный вопрос, т.к. если вопрос существует то тест пойдет уже не так.
-			_DbContext.Questions.Remove(_DbContext.Questions.First(x => x.Text == _Question.Text));
+			// Модель создаваемого вопроса.
+			DAO.Question _Question = new DAO.Question() { Text = "CreateQuestionAnswersTest?" };
+
+			// Удаляем если вопрос существует.
+			DAO.Question _RemoveQuestion = _DbContext.Questions.FirstOrDefault(x => x.Text == _Question.Text);
+			if (_RemoveQuestion != null)
+				_DbContext.Questions.Remove(_RemoveQuestion);
 			_DbContext.SaveChanges();
 
+			// Создаем вопрос.
+			_QuestionManagement.CreateQuestion(_Question);
+			// Получаем сущность из БД - если не получить, то EF подумает, что надо создать новую.
+			_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
+
 			DAO.Answer[] _Answers = new DAO.Answer[]{
-				_DbContext.Answers.First(x => x.Text == "Венера"),
-				_DbContext.Answers.First(x => x.Text == "Меркурий"),
-				_DbContext.Answers.First(x => x.Text == "Земля")
-			};
+						_DbContext.Answers.Single(x => x.Text == "Венера"),
+						_DbContext.Answers.Single(x => x.Text == "Меркурий"),
+						_DbContext.Answers.Single(x => x.Text == "Земля")
+					};
 			_QuestionManagement.AddAnswer(_Question, _Answers);
 
-			// Создаем вопрос до того, как назначили правильный ответ - ошибка.
-			Assert.Throws<Exception>(() => _QuestionManagement.CreateQuestion(_Question));
-
 			// Назначаем правильный ответ и создаем вопрос - верно.
-			_QuestionManagement.SetCorrectAnswer(_Question, _DbContext.Answers.First(x => x.Text == "Венера"));
-			Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+			_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
+			DAO.Answer _Answer = _DbContext.Answers.Where(x => x.Text == "Венера").Include(x => x.Questions).Single();
+			Assert.True(_Question.Answers.Count() == 3);
+			Assert.True(_Answer.Questions.Contains(_Question));
 
 			// Мелкие проверки на всякий случай.
 			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);

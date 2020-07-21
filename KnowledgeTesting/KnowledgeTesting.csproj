@@ -172,6 +172,7 @@
     <Compile Include="BL\AnswerManagement.cs" />
     <Compile Include="BL\DAO\Answer.cs" />
     <Compile Include="BL\DAO\Question.cs" />
+    <Compile Include="BL\DAO\QuestionAnswers.cs" />
     <Compile Include="BL\DAO\Test.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
@@ -184,14 +185,6 @@
     <Compile Include="Controllers\TestingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.cs" />
-    <Compile Include="Migrations\202007201459338_AnswerQuestion_MToM.designer.cs">
-      <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007201934075_CorrectAnswerRequired.cs" />
-    <Compile Include="Migrations\202007201934075_CorrectAnswerRequired.designer.cs">
-      <DependentUpon>202007201934075_CorrectAnswerRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -363,14 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007201459338_AnswerQuestion_MToM.resx">
-      <DependentUpon>202007201459338_AnswerQuestion_MToM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007201934075_CorrectAnswerRequired.resx">
-      <DependentUpon>202007201934075_CorrectAnswerRequired.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
