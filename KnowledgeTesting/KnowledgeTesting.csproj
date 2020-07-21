@@ -197,6 +197,7 @@
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\Test.cs" />
     <Compile Include="BL\DB\PgSql\DbPgSqlContext.cs" />
+    <Compile Include="BL\InterviweeManagement.cs" />
     <Compile Include="BL\QuestionManagement.cs" />
     <Compile Include="BL\TestingManagement.cs" />
     <Compile Include="BL\TestManagement.cs" />
