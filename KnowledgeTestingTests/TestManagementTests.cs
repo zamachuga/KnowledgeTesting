@@ -13,31 +13,24 @@ namespace KnowledgeTestingTests
 	[TestFixture]
 	public class TestManagementTests
 	{
-		//TestManagement _TestManagement = new TestManagement();
+		TestManagement _TestManagement = new TestManagement();
+		KnowledgeTesting.BL.DB.PgSql.DbPgSqlContext _DbContext = KnowledgeTesting.BL.DB.PgSql.DbPgSqlContext.Instance();
 
-		//[Test]
-		//public void CheckTestDataTest()
-		//{
-		//	string _LogCheck = "";
+		[Test]
+		public void CreateTest()
+		{
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Test _Test = new DAO.Test() { Name = "CreateTest", Description = "Descr" };
 
-		//	DTO.Test _Test = new DTO.Test() {
-		//		Id = 0,
-		//		Name = "Test1",
-		//		Description = "Des"
-		//	};
+				Assert.DoesNotThrow(() => _TestManagement.CreateTest(_Test));
+				_DbContext.SaveChanges();
 
-		//	Assert.True(_TestManagement.CheckTestData(_Test, out _LogCheck));
-		//	Assert.True(string.IsNullOrEmpty(_LogCheck));
-		//}
+				var _FindTest = _DbContext.Tests.Where(x => x.Name == _Test.Name).SingleOrDefault();
+				Assert.True(_FindTest != null);
 
-		//[Test]
-		//public void CreateTestTest()
-		//{
-		//	DTO.Test _Test = new DTO.Test();
-		//	_Test.Name = "T1";
-		//	_Test.Description = "Test 1 Nunit.";
-
-		//	Assert.DoesNotThrow(() => _TestManagement.CreateTest(_Test));
-		//}
+				_Transaction.Rollback();
+			}
+		}
 	}
 }
