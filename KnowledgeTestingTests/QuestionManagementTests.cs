@@ -41,18 +41,27 @@ namespace KnowledgeTestingTests
 		{
 			using (var _Transaction = _DbContext.Database.BeginTransaction())
 			{
-				DAO.Question _Question = new DAO.Question();
+				// Создаем вопрос.
+				DAO.Question _Question = new DAO.Question() { Text = "SetCorrectAnswerTest?" };
+				_QuestionManagement.CreateQuestion(_Question);
+				_DbContext.SaveChanges();
 
-				var _Answer1 = new DAO.Answer() { };
-				var _Answer2 = new DAO.Answer() { };
-				var _Answer3 = new DAO.Answer() { };
-				var _Answer4 = new DAO.Answer() { };
-				_QuestionManagement.AddAnswer(_Question, _Answer1);
-				_QuestionManagement.AddAnswer(_Question, _Answer2);
-				_QuestionManagement.AddAnswer(_Question, _Answer3);
+				// Получаем сущность из БД - если не получить, то EF подумает, что надо создать новую.
+				_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
 
-				Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer3));
-				Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _Answer4));
+				// Выбираем ответы для заполнения.
+				DAO.Answer[] _Answers = new DAO.Answer[]{
+						_DbContext.Answers.Single(x => x.Text == "Венера"),
+						_DbContext.Answers.Single(x => x.Text == "Меркурий"),
+						_DbContext.Answers.Single(x => x.Text == "Земля")
+					};
+				_QuestionManagement.AddAnswer(_Question, _Answers);
+				_DbContext.SaveChanges();
+
+				Assert.DoesNotThrow(() => _QuestionManagement.SetCorrectAnswer(_Question, _DbContext.Answers.Single(x => x.Text == "Венера")));
+
+				var _UnCorrectAnswer = _DbContext.Answers.Single(x => x.Text == "101010");
+				Assert.Throws<Exception>(() => _QuestionManagement.SetCorrectAnswer(_Question, _UnCorrectAnswer));
 
 				_Transaction.Rollback();
 			}
@@ -69,6 +78,7 @@ namespace KnowledgeTestingTests
 				DAO.Question _Question = new DAO.Question() { Text = "wtf?" };
 
 				Assert.DoesNotThrow(() => _QuestionManagement.CreateQuestion(_Question));
+				_DbContext.SaveChanges();
 				Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
 
 				_Transaction.Rollback();
@@ -81,29 +91,29 @@ namespace KnowledgeTestingTests
 		[Test]
 		public void CreateQuestionAnswersTest()
 		{
-			// Модель создаваемого вопроса.
-			DAO.Question _Question = new DAO.Question() { Text = "CreateQuestionAnswersTest?" };
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				// Создаем вопрос.
+				DAO.Question _Question = new DAO.Question() { Text = "CreateQuestionAnswersTest?" };
+				_QuestionManagement.CreateQuestion(_Question);
+				_DbContext.SaveChanges();
 
-			// Удаляем если вопрос существует.
-			DAO.Question _RemoveQuestion = _DbContext.Questions.FirstOrDefault(x => x.Text == _Question.Text);
-			if (_RemoveQuestion != null)
-				_DbContext.Questions.Remove(_RemoveQuestion);
+				// Получаем сущность из БД - если не получить, то EF подумает, что надо создать новую.
+				_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
 
-			// Создаем вопрос.
-			_QuestionManagement.CreateQuestion(_Question);
-			// Получаем сущность из БД - если не получить, то EF подумает, что надо создать новую.
-			_Question = _DbContext.Questions.Include("Answers").Single(x => x.Text == _Question.Text);
-
-			DAO.Answer[] _Answers = new DAO.Answer[]{
+				// Выбираем ответы для заполнения.
+				DAO.Answer[] _Answers = new DAO.Answer[]{
 						_DbContext.Answers.Single(x => x.Text == "Венера"),
 						_DbContext.Answers.Single(x => x.Text == "Меркурий"),
 						_DbContext.Answers.Single(x => x.Text == "Земля")
 					};
-			_QuestionManagement.AddAnswer(_Question, _Answers);
+				_QuestionManagement.AddAnswer(_Question, _Answers);
+				_DbContext.SaveChanges();
 
-			// Мелкие проверки на всякий случай.
-			Assert.True(_DbContext.Questions.Where(x => x.Text == _Question.Text).Count() == 1);
-			Assert.True(_DbContext.Answers.Where(x => x.Text == "Венера").Count() == 1);
+				Assert.True(_Question.Answers.Count() == 3);
+
+				_Transaction.Rollback();
+			}
 		}
 	}
 }
