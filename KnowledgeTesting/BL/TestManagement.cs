@@ -39,5 +39,14 @@ namespace KnowledgeTesting.BL
 			bool _IsExist = _FinKey != null || _FindText > 0;
 			return _IsExist;
 		}
+
+		/// <summary>
+		/// Получить список тестов.
+		/// </summary>
+		/// <returns></returns>
+		public DAO.Test[] GetListTests()
+		{
+			return _DbContext.Tests.ToArray();
+		}
 	}
 }

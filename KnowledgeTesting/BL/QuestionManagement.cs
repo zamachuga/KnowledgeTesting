@@ -20,10 +20,12 @@ namespace KnowledgeTesting.BL
 		{
 			if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
 
-			DAO.QuestionAnswers _QuestionAnswers = new DAO.QuestionAnswers() { 
-				AnswerId = Answer.Id, 
-				QuestionId = Question.Id, 
-				IsCorrect = false };
+			DAO.QuestionAnswers _QuestionAnswers = new DAO.QuestionAnswers()
+			{
+				AnswerId = Answer.Id,
+				QuestionId = Question.Id,
+				IsCorrect = false
+			};
 
 			_DbContext.QuestionAnswers.Add(_QuestionAnswers);
 		}
@@ -63,6 +65,17 @@ namespace KnowledgeTesting.BL
 		/// <summary>
 		/// Создать вопрос.
 		/// </summary>
+		public void CreateQuestion(params DAO.Question[] Questions)
+		{
+			foreach (var _Question in Questions)
+			{
+				CreateQuestion(_Question);
+			}
+		}
+
+		/// <summary>
+		/// Создать вопрос.
+		/// </summary>
 		public void CreateQuestion(DAO.Question Question)
 		{
 			if (IsExist(Question)) return;
@@ -77,10 +90,10 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		private bool IsExist(DAO.Question Question)
 		{
-			DAO.Question _FinKey = _DbContext.Questions.Find(Question.Id);
+			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == Question.Id).FirstOrDefault();
 			int _FindText = _DbContext.Questions.Where(x => x.Text.ToLower().Replace(" ", "") == Question.Text.ToLower().Replace(" ", "")).Count();
 
-			bool _IsExist = _FinKey != null || _FindText > 0;
+			bool _IsExist = (_FinKey != null && _FinKey.Id > 0) || _FindText > 0;
 			return _IsExist;
 		}
 	}
