@@ -14,9 +14,13 @@
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="btn-group" role="group" aria-label="...">
-        @Html.ActionLink("Редактирование теста", "Index", "TestManagement", new { area = "" }, new { @class = "btn btn-default" })
-        @Html.ActionLink("Тестирование", "Index", "Testing", new { area = "" }, new { @class = "btn btn-default" })
-        @Html.ActionLink("Статистика", "Index", "Statistics", new { area = "" }, new { @class = "btn btn-default" })
+        <div id="DivGeneralMenu"></div>
+        @*<button id="btn_GoTestManagement" class="btn btn-default">Редактирование теста</button>
+        <button id="btn_GoTesting" class="btn btn-default">Пройти тестирование</button>
+        <button id="btn_GoStatistic" class="btn btn-default">Статистика</button>*@
+        @*@Html.ActionLink("Редактирование теста", "Index", "TestManagement", new { area = "" }, new { @class = "btn btn-default" })
+          @Html.ActionLink("Тестирование", "Index", "Testing", new { area = "" }, new { @class = "btn btn-default" })
+          @Html.ActionLink("Статистика", "Index", "Statistics", new { area = "" }, new { @class = "btn btn-default" })*@
       </div>
     </div>
   </div>
@@ -31,7 +35,7 @@
 
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/bootstrap")
-  @Scripts.Render("~/bundles/AjaxCore")
+  @Scripts.Render("~/bundles/JsCore")
   @RenderSection("scripts", required: false)
 </body>
 

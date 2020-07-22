@@ -8,12 +8,17 @@ namespace KnowledgeTesting
 		// Дополнительные сведения об объединении см. на странице https://go.microsoft.com/fwlink/?LinkId=301862
 		public static void RegisterBundles(BundleCollection bundles)
 		{
-			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-									"~/Scripts/jquery-{version}.js"));
-			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-								"~/Scripts/bootstrap.js"));
-			bundles.Add(new ScriptBundle("~/bundles/AjaxCore").Include(
-					"~/Scripts/AjaxCore/SiteCore.js.js"));
+			bundles.Add(new ScriptBundle("~/bundles/jquery")
+				.Include("~/Scripts/jquery-{version}.js")
+			);
+			bundles.Add(new ScriptBundle("~/bundles/bootstrap")
+				.Include("~/Scripts/bootstrap.js")
+			);
+			bundles.Add(new ScriptBundle("~/bundles/JsCore")
+				//.Include("~/Scripts/Vue.js")
+				.Include("~/Scripts/JsCore/PageTestManagement.js")
+				.Include("~/Scripts/JsCore/SiteCore.js")
+			);
 
 
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
