@@ -216,6 +216,10 @@
     <Compile Include="Migrations\202007211738346_TestQuestionsMTM.designer.cs">
       <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007221022404_Testing.cs" />
+    <Compile Include="Migrations\202007221022404_Testing.designer.cs">
+      <DependentUpon>202007221022404_Testing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
     <Compile Include="Models\TestsViewModel.cs" />
@@ -393,6 +397,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007211738346_TestQuestionsMTM.resx">
       <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007221022404_Testing.resx">
+      <DependentUpon>202007221022404_Testing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

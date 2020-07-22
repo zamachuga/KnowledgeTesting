@@ -13,8 +13,8 @@ namespace KnowledgeTesting.BL.DAO
 		/// TODO: тут большуший косяк
 		/// промахнулся с полем и указал InterviweeId вместо InterviweeTests.
 		public int Id { get; set; }
-		public int InterviweeId { get; set; }
-		public Interviwee Interviwee { get; set; }
+		public int InterviweeTestsId { get; set; }
+		public InterviweeTests InterviweeTests { get; set; }
 		public int QuestionId { get; set; }
 		public Question Question { get; set; }
 		public int AnswerId { get; set; }
