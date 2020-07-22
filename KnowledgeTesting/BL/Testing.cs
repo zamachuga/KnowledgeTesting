@@ -53,14 +53,20 @@ namespace KnowledgeTesting.BL
 			// Если прохождение теста завершено.
 			if (InterviweeTest.IsComplete) return null;
 
-			// Получим вопросы на которые еще не ответили.
-			DAO.TestQuestions[] _QuestionsNotAnswer = (
-			// Вопросы из теста.
-			from q in InterviweeTest.Test.Questions
-				// На которые еще нет ответа.
-			where _DbContext.TestingResults.SingleOrDefault(x => x.Question.Equals(q)) == null
-			select q
-		).AsEnumerable().ToArray();
+			// Получим массив вопросов с ответами.
+			DAO.Question[] _QuestionResults = _DbContext.TestingResults
+				.Where(x => x.InterviweeTestsId == InterviweeTest.Id)
+				.Select(x => x.Question)
+				.ToArray();
+
+			// Получим массив вопросов теста.
+			DAO.Question[] _QuestionsTest = _DbContext.TestQuestions
+				.Where(x => x.TestId == InterviweeTest.TestId)
+				.Select(x => x.Question)
+				.ToArray();
+
+			// Получим массив незаданных вопросов.
+			DAO.Question[] _QuestionsNotAnswer = _QuestionsTest.Except(_QuestionResults).ToArray();
 
 			DAO.Question _Question = RandomQuestion(_QuestionsNotAnswer);
 			return _Question;
@@ -74,11 +80,23 @@ namespace KnowledgeTesting.BL
 		public DAO.Question RandomQuestion(DAO.TestQuestions[] Questions)
 		{
 			// Получим следующий случайный вопрос.
+			var _Question = RandomQuestion(Questions.Select(x => x.Question).ToArray());
+			return _Question;
+		}
+
+		/// <summary>
+		/// Выбрать случайный вопрос.
+		/// </summary>
+		/// <param name="Questions">Вопросы</param>
+		/// <returns></returns>
+		public DAO.Question RandomQuestion(DAO.Question[] Questions)
+		{
+			// Получим следующий случайный вопрос.
 			if (Questions.Length > 0)
 			{
 				Random _Random = new Random(Guid.NewGuid().GetHashCode());
 				int _NextQuestion = _Random.Next(0, Questions.Count() - 1);
-				return Questions[_NextQuestion].Question;
+				return Questions[_NextQuestion];
 			}
 
 			return null;
@@ -109,17 +127,13 @@ namespace KnowledgeTesting.BL
 
 			// Добавить в результаты теста.
 			_DbContext.TestingResults.Add(_TestingResult);
-
-			// Определить статус прохождения теста.
-			InterviweeTest.IsComplete = IsAllAnswersTest(InterviweeTest);
-			if (_DbContext.Entry(InterviweeTest).State != EntityState.Unchanged) _DbContext.SaveChanges();
 		}
 
 		/// <summary>
-		/// Получить статус завершения теста по количеству ответов.
+		/// Получить статус завершения теста.
 		/// </summary>
 		/// <returns></returns>
-		public bool IsAllAnswersTest(DAO.InterviweeTests InterviweeTest)
+		public bool DetermineStatusComplete(DAO.InterviweeTests InterviweeTest)
 		{
 			// Количество вопросов с ответом.
 			int _CounTestResults = _DbContext.TestingResults.Where(x => x.InterviweeTestsId == InterviweeTest.Id).Count();
