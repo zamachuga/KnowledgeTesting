@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
+using Moq;
+using KnowledgeTesting.BL.DAO;
 
 namespace KnowledgeTestingTests
 {
@@ -15,26 +18,43 @@ namespace KnowledgeTestingTests
 	class TestingManagementTests
 	{
 		TestingManagement _TestingManagement = new TestingManagement();
-		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
 		public void StartTest()
 		{
-			using ( var _Trns = _DbContext.Database.BeginTransaction())
+			DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
+			using (var _Trns = _DbContext.Database.BeginTransaction())
 			{
-				DAO.Interviwee _Interviwee = new DAO.Interviwee() { FirstName = "sdad", LasName = "adasd"};
+				Interviwee _Interviwee = new DAO.Interviwee() { FirstName = "sdad", LasName = "adasd" };
 				_Interviwee = _DbContext.Interviwees.Add(_Interviwee);
-				DAO.Test _Test = new DAO.Test() { Name = "sdasdasd"};
+				Test _Test = new DAO.Test() { Name = "sdasdasd" };
 				_Test = _DbContext.Tests.Add(_Test);
 				_DbContext.SaveChanges();
 
-				DAO.InterviweeTests _Result = _TestingManagement.StartTest(_Interviwee, _Test);
+				InterviweeTests _Result = _TestingManagement.StartTest(_Interviwee, _Test);
 				_DbContext.SaveChanges();
 
 				Assert.True(_Result.Id > 0);
 
 				_Trns.Rollback();
 			}
+		}
+
+		[Test]
+		public void RandomQuestion()
+		{
+			TestQuestions[] _TestQuestions = new TestQuestions[]{
+				new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },
+				new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },
+				new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },
+				new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },
+				new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },new TestQuestions(){ Question = new Question() {Text = Guid.NewGuid().ToString() } },
+			};
+
+			var Q1 = _TestingManagement.RandomQuestion(_TestQuestions);
+			var Q2 = _TestingManagement.RandomQuestion(_TestQuestions);
+
+			Assert.False(Q1.Equals(Q2));
 		}
 	}
 }

@@ -48,10 +48,35 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		public DAO.Question GetNextQuestion(DAO.InterviweeTests InterviweeTest)
 		{
+			// Получим вопросы на которые еще не ответили.
+			DAO.TestQuestions[] _QuestionsNotAnswer = (
+				// Вопросы из теста.
+				from q in InterviweeTest.Test.Questions
+					// На которые еще нет ответа.
+				where _DbContext.TestingResults.SingleOrDefault(x => x.Question.Equals(q)) == null
+				select q
+			).AsEnumerable().ToArray();
+
+			DAO.Question _Question = RandomQuestion(_QuestionsNotAnswer);
+			return _Question;
+		}
+
+		/// <summary>
+		/// Выбрать случайный вопрос.
+		/// </summary>
+		/// <param name="Questions">Вопросы</param>
+		/// <returns></returns>
+		public DAO.Question RandomQuestion(DAO.TestQuestions[] Questions)
+		{
+			// Получим следующий случайный вопрос.
+			if (Questions.Length > 0)
+			{
+				Random _R = new Random();
+				int _NextQuestion = _R.Next(0, Questions.Count() - 1);
+				return Questions[_NextQuestion].Question;
+			}
+
 			return null;
-			//DAO.Question _NextQuestion = from q in InterviweeTest.Test.Questions
-			//														 where _DbContext.TestingResults.SingleOrDefault(x => x.IsCorrect == false).tofi
-			//														 ;
 		}
 	}
 }
