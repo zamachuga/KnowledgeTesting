@@ -11,13 +11,14 @@ using System.Threading.Tasks;
 using System.Data.Entity.Infrastructure;
 using Moq;
 using KnowledgeTesting.BL.DAO;
+using System.Threading;
 
 namespace KnowledgeTestingTests
 {
 	[TestFixture]
-	class TestingManagementTests
+	class TestingTests
 	{
-		TestingManagement _TestingManagement = new TestingManagement();
+		Testing _TestingManagement = new Testing();
 
 		[Test]
 		public void StartTest()
@@ -52,9 +53,10 @@ namespace KnowledgeTestingTests
 			};
 
 			var Q1 = _TestingManagement.RandomQuestion(_TestQuestions);
+			Thread.Sleep(10);
 			var Q2 = _TestingManagement.RandomQuestion(_TestQuestions);
 
-			Assert.False(Q1.Equals(Q2));
+			Assert.False(Q1?.Equals(Q2));
 		}
 	}
 }
