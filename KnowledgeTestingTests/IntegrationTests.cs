@@ -20,7 +20,7 @@ namespace KnowledgeTestingTests
 		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		/// <summary>
-		/// Создаем вопросы.
+		/// Создать вопрос.
 		/// </summary>
 		[Test]
 		public void CreateQuestionTest()
@@ -41,7 +41,7 @@ namespace KnowledgeTestingTests
 		}
 
 		/// <summary>
-		/// Добавляем ответы в вопросы.
+		/// Добавить ответ в вопрос.
 		/// </summary>
 		[Test]
 		public void AddAswerToQuestion()
@@ -78,6 +78,35 @@ namespace KnowledgeTestingTests
 
 			Assert.True(_Question.Answers.Count() == 3);
 			Assert.True(_Question.Answers.Where(x => x.AnswerId == _AnswerManagement.GetAnswer(Answers.A14).Id).Count() == 1);
+		}
+
+		/// <summary>
+		/// Установить правильный ответ для вопроса.
+		/// </summary>
+		[Test]
+		public void SetCorrectAnswerToQuestion()
+		{
+			QuestionManagement _QuestionManagement = new QuestionManagement();
+			AnswerManagement _AnswerManagement = new AnswerManagement();
+
+			DAO.Question _Question = _QuestionManagement.GetQuestion(Questions.Q1);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A1));
+
+			_Question = _QuestionManagement.GetQuestion(Questions.Q2);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A6));
+
+			_Question = _QuestionManagement.GetQuestion(Questions.Q3);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A7));
+
+			_Question = _QuestionManagement.GetQuestion(Questions.Q4);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A11));
+
+			_Question = _QuestionManagement.GetQuestion(Questions.Q5);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A13));
+
+			_DbContext.SaveChanges();
+
+			Assert.True(_Question.Answers.Where(x => x.AnswerId == _AnswerManagement.GetAnswer(Answers.A13).Id & x.IsCorrect).Count() == 1);
 		}
 	}
 
