@@ -28,17 +28,24 @@ namespace KnowledgeTesting.BL
 			return _DbContext.Answers.Find(Id);
 		}
 
+		public DAO.Answer GetAnswer(string Text)
+		{
+			var _Answer = _DbContext.Answers.Where(x => x.Text.ToLower().Replace(" ", "") == Text.ToLower().Replace(" ", "")).FirstOrDefault();
+			return _Answer;
+		}
+
 		/// <summary>
 		/// Поиск ответа в БД.
 		/// </summary>
 		/// <param name="Answer"></param>
 		/// <returns></returns>
+		/// 
 		private bool IsExist(DAO.Answer Answer)
 		{
-			DAO.Answer _FinKey = _DbContext.Answers.Find(Answer.Id);
-			int _FindText = _DbContext.Answers.Where(x => x.Text.ToLower().Replace(" ", "") == Answer.Text.ToLower().Replace(" ", "")).Count();
+			DAO.Answer _FinKey = GetAnswer(Answer.Id);
+			DAO.Answer _FindText = GetAnswer(Answer.Text);
 
-			bool _IsExist = _FinKey != null || _FindText > 0;
+			bool _IsExist = _FinKey != null || _FindText != null;
 			return _IsExist;
 		}
 	}
