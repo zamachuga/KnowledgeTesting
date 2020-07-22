@@ -34,10 +34,10 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		private bool IsExist(DAO.Test Test)
 		{
-			DAO.Test _FinKey = _DbContext.Tests.Find(Test.Id);
-			int _FindText = _DbContext.Tests.Where(x => x.Name.ToLower().Replace(" ", "") == Test.Name.ToLower().Replace(" ", "")).Count();
+			DAO.Test _FinKey = GetTest(Test.Id);
+			DAO.Test _FindText = GetTest(Test.Name);
 
-			bool _IsExist = _FinKey != null || _FindText > 0;
+			bool _IsExist = _FinKey != null || _FindText != null;
 			return _IsExist;
 		}
 
@@ -48,6 +48,24 @@ namespace KnowledgeTesting.BL
 		public DAO.Test[] GetListTests()
 		{
 			return _DbContext.Tests.ToArray();
+		}
+
+		/// <summary>
+		/// Получить тест по названию.
+		/// </summary>
+		public DAO.Test GetTest(string Name)
+		{
+			var _Test = _DbContext.Tests.Where(x => x.Name.ToLower().Replace(" ", "") == Name.ToLower().Replace(" ", "")).FirstOrDefault();
+			return _Test;
+		}
+
+		/// <summary>
+		/// Получить тест по коду.
+		/// </summary>
+		public DAO.Test GetTest(int id)
+		{
+			var _Test = _DbContext.Tests.Find(id);
+			return _Test;
 		}
 	}
 }

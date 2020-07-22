@@ -27,15 +27,15 @@ namespace KnowledgeTestingTests
 		{
 			QuestionManagement _QuestionManagement = new QuestionManagement();
 
-			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = Questions.Q1 });
-			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = Questions.Q2 });
-			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = Questions.Q3 });
-			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = Questions.Q4 });
-			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = Questions.Q5 });
+			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = StaticQuestions.Q1 });
+			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = StaticQuestions.Q2 });
+			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = StaticQuestions.Q3 });
+			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = StaticQuestions.Q4 });
+			_QuestionManagement.CreateQuestion(new DAO.Question() { Text = StaticQuestions.Q5 });
 
 			_DbContext.SaveChanges();
 
-			var _Result = _QuestionManagement.GetQuestion(Questions.Q4);
+			var _Result = _QuestionManagement.GetQuestion(StaticQuestions.Q4);
 
 			Assert.True(_Result != null & _Result.Id > 0);
 		}
@@ -49,35 +49,35 @@ namespace KnowledgeTestingTests
 			QuestionManagement _QuestionManagement = new QuestionManagement();
 			AnswerManagement _AnswerManagement = new AnswerManagement();
 
-			DAO.Question _Question = _QuestionManagement.GetQuestion(Questions.Q1);
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A1));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A2));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A3));
+			DAO.Question _Question = _QuestionManagement.GetQuestion(StaticQuestions.Q1);
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A1));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A2));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A3));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q2);
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A4));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A5));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A6));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q2);
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A4));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A5));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A6));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q3);
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A7));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A8));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A9));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q3);
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A7));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A8));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A9));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q4);
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A10));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A11));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A12));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q4);
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A10));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A11));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A12));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q5);
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A13));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A14));
-			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A15));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q5);
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A13));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A14));
+			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A15));
 
 			_DbContext.SaveChanges();
 
 			Assert.True(_Question.Answers.Count() == 3);
-			Assert.True(_Question.Answers.Where(x => x.AnswerId == _AnswerManagement.GetAnswer(Answers.A14).Id).Count() == 1);
+			Assert.True(_Question.Answers.Where(x => x.AnswerId == _AnswerManagement.GetAnswer(StaticAnswers.A14).Id).Count() == 1);
 		}
 
 		/// <summary>
@@ -89,28 +89,49 @@ namespace KnowledgeTestingTests
 			QuestionManagement _QuestionManagement = new QuestionManagement();
 			AnswerManagement _AnswerManagement = new AnswerManagement();
 
-			DAO.Question _Question = _QuestionManagement.GetQuestion(Questions.Q1);
-			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A1));
+			DAO.Question _Question = _QuestionManagement.GetQuestion(StaticQuestions.Q1);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A1));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q2);
-			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A6));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q2);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A6));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q3);
-			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A7));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q3);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A7));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q4);
-			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A11));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q4);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A11));
 
-			_Question = _QuestionManagement.GetQuestion(Questions.Q5);
-			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(Answers.A13));
+			_Question = _QuestionManagement.GetQuestion(StaticQuestions.Q5);
+			_QuestionManagement.SetCorrectAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A13));
 
 			_DbContext.SaveChanges();
 
-			Assert.True(_Question.Answers.Where(x => x.AnswerId == _AnswerManagement.GetAnswer(Answers.A13).Id & x.IsCorrect).Count() == 1);
+			Assert.True(_Question.Answers.Where(x => x.AnswerId == _AnswerManagement.GetAnswer(StaticAnswers.A13).Id & x.IsCorrect).Count() == 1);
+		}
+
+		/// <summary>
+		/// Создать тест.
+		/// </summary>
+		[Test]
+		public void CreateTest()
+		{
+			TestManagement _TestManagement = new TestManagement();
+
+			DAO.Test _Test = new DAO.Test() { Name = StaticTests.T1, Description = "Проверка создания тестов." };
+
+			_TestManagement.CreateTest(_Test);
+			_DbContext.SaveChanges();
+
+			Assert.True(_TestManagement.GetTest(StaticTests.T1).Id > 0);
 		}
 	}
 
-	public static class Questions
+	public static class StaticTests
+	{
+		public static string T1 = "StaticTests";
+	}
+
+	public static class StaticQuestions
 	{
 		public const string Q1 = "Вторая планета Солнечной системы?";
 		public const string Q2 = "Число 27 в двоичной системе исчисления?";
@@ -119,7 +140,7 @@ namespace KnowledgeTestingTests
 		public const string Q5 = "Сколько граней у куба?";
 	}
 
-	public static class Answers
+	public static class StaticAnswers
 	{
 		public const string A1 = "Венера";
 		public const string A2 = "Меркурий";
