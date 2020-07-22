@@ -1,8 +1,6 @@
 # KnowledgeTesting
-В идеале подключить:
-NUnit,
-Ninject,
-Moq
+Подключено: NUnit, Moq, EF6, PostgreSql
+В идеале подключить: Ninject
 
 ERD:
 
