@@ -23,8 +23,9 @@ namespace KnowledgeTesting.BL
 		public void AddQuestion(DAO.Test Test, DAO.Question Question)
 		{
 			if (Test.Questions.Count() >= 10) throw new Exception("В тесте максимум 10 вопрсов.");
+			if (Question.Answers.Where(x => x.IsCorrect).Count() == 0) throw new Exception("В вопросе не указан правильный ответ.");
 
-			DAO.TestQuestions _TestQuestion = new DAO.TestQuestions() { TestId = Test .Id, QuestionId = Question .Id};
+			DAO.TestQuestions _TestQuestion = new DAO.TestQuestions() { TestId = Test.Id, QuestionId = Question.Id };
 			_DbContext.TestQuestions.Add(_TestQuestion);
 		}
 

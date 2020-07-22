@@ -18,6 +18,7 @@ namespace KnowledgeTesting.BL
 		/// <param name="Answer"></param>
 		public void AddAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
+			if (Question.Answers.Where(x => x.AnswerId == Answer.Id).Count() == 1) return;
 			if ((Question.Answers.Count() >= 3)) throw new Exception("Вопрос может содержать не более 3 вариантов ответа.");
 
 			DAO.QuestionAnswers _QuestionAnswers = new DAO.QuestionAnswers()
@@ -81,6 +82,17 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Question)) return;
 
 			_DbContext.Questions.Add(Question);
+		}
+
+		/// <summary>
+		/// Получить вопрос.
+		/// </summary>
+		/// <param name="Text">Название.</param>
+		/// <returns></returns>
+		public DAO.Question GetQuestion(string Text)
+		{
+			var _Question = _DbContext.Questions.Where(x => x.Text == Text).FirstOrDefault();
+			return _Question;
 		}
 
 		/// <summary>
