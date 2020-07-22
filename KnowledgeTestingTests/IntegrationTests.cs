@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KnowledgeTesting.BL;
+using KnowledgeTesting.Migrations;
 
 namespace KnowledgeTestingTests
 {
@@ -44,7 +45,7 @@ namespace KnowledgeTestingTests
 		/// Добавить ответ в вопрос.
 		/// </summary>
 		[Test]
-		public void AddAswerToQuestion()
+		public void AddAswerToQuestionTest()
 		{
 			QuestionManagement _QuestionManagement = new QuestionManagement();
 			AnswerManagement _AnswerManagement = new AnswerManagement();
@@ -84,7 +85,7 @@ namespace KnowledgeTestingTests
 		/// Установить правильный ответ для вопроса.
 		/// </summary>
 		[Test]
-		public void SetCorrectAnswerToQuestion()
+		public void SetCorrectAnswerToQuestionTest()
 		{
 			QuestionManagement _QuestionManagement = new QuestionManagement();
 			AnswerManagement _AnswerManagement = new AnswerManagement();
@@ -149,7 +150,7 @@ namespace KnowledgeTestingTests
 		/// Создать тестируемого.
 		/// </summary>
 		[Test]
-		public void CreateInterviewer()
+		public void CreateInterviewerTest()
 		{
 			InterviweeManagement _InterviweeManagement = new InterviweeManagement();
 
@@ -169,6 +170,53 @@ namespace KnowledgeTestingTests
 					x.Id == _Interviwee.Id
 				).Count() == 1
 			);
+		}
+
+		/// <summary>
+		/// Пройти тест.
+		/// </summary>
+		[Test]
+		public void TestingTest()
+		{
+			TestManagement _TestManagement = new TestManagement();
+			InterviweeManagement _InterviweeManagement = new InterviweeManagement();
+			KnowledgeTesting.BL.Testing _Testing = new KnowledgeTesting.BL.Testing();
+
+			
+
+			DAO.Interviwee _Interviwee = _InterviweeManagement.GetInterviwee(StaticInterviwee.LasName, StaticInterviwee.FirstName, StaticInterviwee.SecondName);
+			DAO.Test _Test = _TestManagement.GetTest(StaticTests.T1);
+
+			int _CountCompleteTeststBefore = _Interviwee.Tests.Count();				
+
+			DAO.InterviweeTests _InterviweeTests = _Testing.StartTest(_Interviwee, _Test);
+
+			int _CountQuestions = 0;
+			while (!_InterviweeTests.IsComplete)
+			{
+				// Определить статус завершения.
+				_InterviweeTests.IsComplete = _Testing.DetermineStatusComplete(_InterviweeTests);
+
+				if (!_InterviweeTests.IsComplete)
+				{
+					// Получить следующий вопрос.
+					DAO.Question _Question = _Testing.GetNextQuestion(_InterviweeTests);
+					// Отвтеить на вопрос.
+					if (_Question != null)
+						_Testing.AnswerToQuestion(_InterviweeTests, _Question, _Question.Answers.First().Answer);
+				}
+
+				// Сохранить изменения - БЕЗ этого не возможно определить статус завершения теста.
+				_DbContext.SaveChanges();
+
+				_CountQuestions++;
+				Assert.True(_CountQuestions <= 10);
+			}
+
+			int _CountCompleteTeststAfter = _Interviwee.Tests.Count();
+
+			Assert.True(_DbContext.InterviweeTests.Where(x => x.Id == _InterviweeTests.Id).First().IsComplete);
+			Assert.True(_CountCompleteTeststAfter > _CountCompleteTeststBefore);
 		}
 	}
 
