@@ -124,6 +124,59 @@ namespace KnowledgeTestingTests
 
 			Assert.True(_TestManagement.GetTest(StaticTests.T1).Id > 0);
 		}
+
+		/// <summary>
+		/// Добавить вопрос в тест.
+		/// </summary>
+		[Test]
+		public void AddQuestionToTest()
+		{
+			TestManagement _TestManagement = new TestManagement();
+			QuestionManagement _QuestionManagement = new QuestionManagement();
+
+			DAO.Test _Test = _TestManagement.GetTest(StaticTests.T1);
+			_TestManagement.AddQuestion(_Test, _QuestionManagement.GetQuestion(StaticQuestions.Q1));
+			_TestManagement.AddQuestion(_Test, _QuestionManagement.GetQuestion(StaticQuestions.Q2));
+			_TestManagement.AddQuestion(_Test, _QuestionManagement.GetQuestion(StaticQuestions.Q3));
+			_TestManagement.AddQuestion(_Test, _QuestionManagement.GetQuestion(StaticQuestions.Q4));
+			_TestManagement.AddQuestion(_Test, _QuestionManagement.GetQuestion(StaticQuestions.Q5));
+			_DbContext.SaveChanges();
+
+			Assert.True(_Test.Questions.Where(x => x.QuestionId == _QuestionManagement.GetQuestion(StaticQuestions.Q3).Id).Count() == 1);
+		}
+
+		/// <summary>
+		/// Создать тестируемого.
+		/// </summary>
+		[Test]
+		public void CreateInterviewer()
+		{
+			InterviweeManagement _InterviweeManagement = new InterviweeManagement();
+
+			DAO.Interviwee _Interviwee = new DAO.Interviwee()
+			{
+				LasName = StaticInterviwee.LasName,
+				FirstName = StaticInterviwee.FirstName,
+				SecondName = StaticInterviwee.SecondName
+			};
+
+			_InterviweeManagement.CreateInterviwee(_Interviwee);
+			_DbContext.SaveChanges();
+
+			_Interviwee = _InterviweeManagement.GetInterviwee(StaticInterviwee.LasName, StaticInterviwee.FirstName, StaticInterviwee.SecondName);
+			Assert.True(
+				_DbContext.Interviwees.Where(x =>
+					x.Id == _Interviwee.Id
+				).Count() == 1
+			);
+		}
+	}
+
+	public static class StaticInterviwee
+	{
+		public const string LasName = "Фамилия";
+		public const string FirstName = "Имя";
+		public const string SecondName = "Отчество";
 	}
 
 	public static class StaticTests
@@ -163,4 +216,3 @@ namespace KnowledgeTestingTests
 		public const string A15 = "12";
 	}
 }
-
