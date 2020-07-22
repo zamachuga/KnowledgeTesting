@@ -199,7 +199,7 @@
     <Compile Include="BL\DB\PgSql\DbPgSqlContext.cs" />
     <Compile Include="BL\InterviweeManagement.cs" />
     <Compile Include="BL\QuestionManagement.cs" />
-    <Compile Include="BL\TestingManagement.cs" />
+    <Compile Include="BL\Testing.cs" />
     <Compile Include="BL\TestManagement.cs" />
     <Compile Include="BL\Utils.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
@@ -215,6 +215,10 @@
     <Compile Include="Migrations\202007211738346_TestQuestionsMTM.cs" />
     <Compile Include="Migrations\202007211738346_TestQuestionsMTM.designer.cs">
       <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007221022404_Testing.cs" />
+    <Compile Include="Migrations\202007221022404_Testing.designer.cs">
+      <DependentUpon>202007221022404_Testing.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CreateTestModel.cs" />
@@ -393,6 +397,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007211738346_TestQuestionsMTM.resx">
       <DependentUpon>202007211738346_TestQuestionsMTM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007221022404_Testing.resx">
+      <DependentUpon>202007221022404_Testing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

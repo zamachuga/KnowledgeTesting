@@ -18,7 +18,6 @@ namespace KnowledgeTesting.BL
 			if (string.IsNullOrEmpty(Interviwee.LasName)) throw new Exception("Пустая фамилия.");
 
 			_DbContext.Interviwees.Add(Interviwee);
-			_DbContext.SaveChanges();
 		}
 	}
 }
