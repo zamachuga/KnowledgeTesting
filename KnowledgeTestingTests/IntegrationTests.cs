@@ -14,7 +14,7 @@ namespace KnowledgeTestingTests
 	/// <summary>
 	/// Интеграционное тестирование по сценариям.
 	/// </summary>
-	//[Ignore("Интеграционный тест проускаем, его не надо каждый раз запускать.")]
+	[Ignore("Интеграционный тест проускаем, его не надо каждый раз запускать.")]
 	[TestFixture]
 	public class IntegrationTests
 	{
@@ -191,6 +191,8 @@ namespace KnowledgeTestingTests
 
 			DAO.InterviweeTests _InterviweeTests = _Testing.StartTest(_Interviwee, _Test);
 
+			// Количество отвеченных вопросов 
+			// (в конце на 1 больше чем вопрсов из-за последнего прохода цикла для определения статуса завершения).
 			int _CountQuestions = 0;
 			while (!_InterviweeTests.IsComplete)
 			{
@@ -217,6 +219,7 @@ namespace KnowledgeTestingTests
 
 			Assert.True(_DbContext.InterviweeTests.Where(x => x.Id == _InterviweeTests.Id).First().IsComplete);
 			Assert.True(_CountCompleteTeststAfter > _CountCompleteTeststBefore);
+			Assert.True(_InterviweeTests.TestingResults.Count() > 0);
 		}
 	}
 
