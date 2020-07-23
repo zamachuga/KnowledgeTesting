@@ -8,5 +8,5 @@ class ClassSettingsGlobal {
 let SettingsGlobal = new ClassSettingsGlobal();
 
 export default {
-	Global
+	Global: SettingsGlobal
 };
