@@ -3,6 +3,7 @@ using DAO = KnowledgeTesting.BL.DAO;
 using DTO = KnowledgeTesting.BL.DTO;
 using System.Linq;
 using NUnit.Framework;
+using KnowledgeTesting.BL.DAO;
 
 namespace KnowledgeTesting.BL
 {
@@ -28,6 +29,16 @@ namespace KnowledgeTesting.BL
 
 			DAO.TestQuestions _TestQuestion = new DAO.TestQuestions() { TestId = Test.Id, QuestionId = Question.Id };
 			_DbContext.TestQuestions.Add(_TestQuestion);
+		}
+
+		/// <summary>
+		/// Получить все тесты.
+		/// </summary>
+		/// <returns></returns>
+		public Test[] GetAllTests()
+		{
+			var _AllTests = _DbContext.Tests.ToArray();
+			return _AllTests;
 		}
 
 		/// <summary>

@@ -7,14 +7,8 @@ namespace KnowledgeTesting.BL.DTO
 {
 	public class Test
 	{
-		public Test()
-		{
-			Questions = new List<Question>();
-		}
-
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public List<Question> Questions { get; private set; }
 	}
 }

@@ -221,8 +221,6 @@
       <DependentUpon>202007221022404_Testing.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\CreateTestModel.cs" />
-    <Compile Include="Models\TestsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +236,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\JsCore\PageTestManagement.js" />
+    <Content Include="Scripts\JsCore\SiteCore.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -349,6 +349,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -373,12 +375,12 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Testing\Index.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
-    <Content Include="Views\TestManagement\CreateTest.cshtml" />
     <Content Include="Views\TestManagement\Ajax\CreateTest.cshtml" />
     <Content Include="Views\TestManagement\Ajax\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
