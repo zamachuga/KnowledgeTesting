@@ -81,6 +81,6 @@ function ShowGeneralMenu() {
   );
 }
 
-function MessageLoadContent(DivId) {
+function ProgressLoadContent(DivId) {
   $('#' + DivId).html("Загрузка контента...");
 }

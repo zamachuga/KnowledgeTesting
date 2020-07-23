@@ -8,13 +8,14 @@ using DTO = KnowledgeTesting.BL.DTO;
 using DAO = KnowledgeTesting.BL.DAO;
 using Newtonsoft.Json;
 using DB = KnowledgeTesting.BL.DB.PgSql;
+using KnowledgeTesting.BL;
 
 namespace KnowledgeTesting.Controllers
 {
 	public class TestManagementController : Controller
 	{
 		BL.TestManagement _TestManagement = new BL.TestManagement();
-		DB.DbPgSqlContext _DbContext = DB.DbPgSqlContext.Instance();
+		//DB.DbPgSqlContext _DbContext = DB.DbPgSqlContext.Instance();
 
 		public ActionResult Index()
 		{
@@ -24,7 +25,10 @@ namespace KnowledgeTesting.Controllers
 		public string GetAllTests()
 		{
 			DAO.Test[] _AllTests = _TestManagement.GetAllTests();
-			string _JsonFormat = JsonConvert.SerializeObject(_AllTests);
+			DTO.Test[] _DtoAllTests = Utils.ConverObjectByJson<DTO.Test[]>(_AllTests);
+
+			string _JsonFormat = Utils.JsonSerialize(_DtoAllTests);
+
 			return _JsonFormat;
 		}
 
