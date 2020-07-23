@@ -26,8 +26,6 @@ function ShowAllTests(CurrentContext) {
 
   //console.log("ShowAllTests"); console.log(CurrentContext.DataModels.AllTests);
   $.each(CurrentContext.DataModels.AllTests, function (index, Test) {
-    console.log(Test);
-
     _strResult += "<tr>";
     _strResult += "<td>" + Test.Id + "</td>";
     _strResult += "<td>" + Test.Name + "</td>";
