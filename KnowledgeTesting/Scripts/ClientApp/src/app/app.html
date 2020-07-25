@@ -1,20 +1,20 @@
 <div class="Component" id="ContainerComponentApp">
 	<div>
-		<component-navi v-bind:store="store"></component-navi>
+		<ComponentNavi></ComponentNavi>
 	</div>
 
-	<div class="Component" id="ContainerErrorMessage">
+	<!-- <div class="Component" id="ContainerErrorMessage">
 		Ошибки: <br>
 		<textarea id="TextError" readonly></textarea>
-	</div>
+	</div> -->
 
 	<div>
 		<!-- 
 			exclude - исключает компоненты по названиям.
 			include - не объявляем иначе надо будет заполнять.
 		-->
-		<keep-alive exclude="">
-			<route-view :store="strore"></route-view>
-		</keep-alive>
+		<!-- <keep-alive exclude=""> -->
+		<route-view></route-view>
+		<!-- </keep-alive> -->
 	</div>
 </div>

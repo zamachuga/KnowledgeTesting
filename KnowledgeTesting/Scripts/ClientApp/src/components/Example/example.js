@@ -2,7 +2,7 @@ import ApiProxy from './api-proxy.js';
 
 export default {
 	name: '',
-	props: ["globalarray"],
+	props: ["storage"],
 	data() {
 		return {
 			UserAuthDataRequestModel: {
@@ -25,7 +25,7 @@ export default {
 			ApiProxy.LogIn(
 				_This.UserAuthDataRequestModel,
 				Data => {
-					_This.globalarray.IsAuth = true;
+					//_This.globalarray.IsAuth = true;
 					_This.$router.push('/');
 				},
 				Err => {

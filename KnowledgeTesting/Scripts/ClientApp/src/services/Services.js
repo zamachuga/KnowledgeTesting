@@ -7,7 +7,7 @@ class ClassServices{
 		this.m_ServiceBus = ServiceBus.Bus;
 	}
 
-	get Bus(){return this.m_ServiceBus;}
+	get GetBus(){return this.m_ServiceBus;}
 	get GetServiceAxios(){return this.m_ServiceAxios;}
 }
 
@@ -15,5 +15,5 @@ let m_Services = new ClassServices();
 
 export default{
 	Axios: m_Services.GetServiceAxios,
-	Bus: m_Services.Bus
-}
+	Bus: m_Services.GetBus
+};
