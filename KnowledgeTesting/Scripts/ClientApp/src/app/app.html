@@ -1,9 +1,12 @@
 <div class="Component" id="ContainerComponentApp">
 	<div>
-		<ComponentNavi></ComponentNavi>
+		<!-- 
+			v-bind:storage="storage" - для передачи в props компонентам через навигацию.
+		-->
+		<ComponentNavi v-bind:storage="storage"></ComponentNavi>
 	</div>
 
-	<div class="Component" id="ContainerErrorMessage">
+	<div class="Component" id="ContainerErrorMessage" v-if="storage.Settings.IsDebug">
 		Ошибки: <br>
 		<textarea id="TextError" readonly></textarea>
 	</div>
@@ -14,7 +17,10 @@
 			include - не объявляем иначе надо будет заполнять.
 		-->
 		<keep-alive exclude="">
-			<router-view></router-view>
+			<!-- 
+				:storage="storage" - для передачи в props компонентам через маршрутизацию.
+			 -->
+			<router-view :storage="storage"></router-view>
 		</keep-alive>
 	</div>
 </div>

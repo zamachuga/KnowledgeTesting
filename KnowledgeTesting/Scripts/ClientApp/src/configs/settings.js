@@ -5,7 +5,7 @@ class ClassSettingsGlobal {
 	}
 	// True - включить режим отладки приложения.
 	get IsDebug(){
-		return false;
+		return true;
 	}
 }
 

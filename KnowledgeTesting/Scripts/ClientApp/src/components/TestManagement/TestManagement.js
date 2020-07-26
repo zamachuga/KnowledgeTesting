@@ -1,3 +1,4 @@
 export default {
-	name: 'TestManagement'
+	name: 'TestManagement',
+	props: ['storage']
 };
