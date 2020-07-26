@@ -1,7 +1,11 @@
 class ClassSettingsGlobal {
 	// Базовый URL к Api.
 	get UrlApi() {
-		return 'http://localhost/';
+		return 'http://localhost:57735/';
+	}
+	// True - включить режим отладки приложения.
+	get IsDebug(){
+		return false;
 	}
 }
 
