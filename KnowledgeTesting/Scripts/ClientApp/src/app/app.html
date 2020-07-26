@@ -8,7 +8,8 @@
 
 	<div class="Component" id="ContainerErrorMessage" v-if="storage.Settings.IsDebug">
 		Ошибки: <br>
-		<textarea id="TextError" readonly></textarea>
+		<textarea id="TextError" readonly>{{storage.DegubText}}</textarea>
+		<button type="button" class="btn btn-secondary" v-on:click="ClearErrors()">Очистить</button>
 	</div>
 
 	<div>

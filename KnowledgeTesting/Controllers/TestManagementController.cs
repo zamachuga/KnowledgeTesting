@@ -22,6 +22,7 @@ namespace KnowledgeTesting.Controllers
 			return View();
 		}
 
+		[HttpPost]
 		public string GetAllTests()
 		{
 			DAO.Test[] _AllTests = _TestManagement.GetAllTests();
@@ -30,6 +31,36 @@ namespace KnowledgeTesting.Controllers
 			string _JsonFormat = Utils.JsonSerialize(_DtoAllTests);
 
 			return _JsonFormat;
+		}
+
+		[HttpPost]
+		public string GetTest(int Id)
+		{
+			DAO.Test _Test = _TestManagement.GetTest(Id);
+			DTO.Test _DtoTest = Utils.ConverObjectByJson<DTO.Test>(_Test);
+
+			string _JsonFormat = Utils.JsonSerialize(_DtoTest);
+
+			return _JsonFormat;
+		}
+
+		/// <summary>
+		/// Сохранить изменения по тесту.
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		[HttpPost]
+		public string SaveChangeTest(DTO.Test DtoTest)
+		{
+			_TestManagement.SaveTest(DtoTest);
+			return string.Empty;
+		}
+
+		[HttpPost]
+		public string CreateTest(DTO.Test DtoTest)
+		{
+			_TestManagement.CreateTest(DtoTest);
+			return string.Empty;
 		}
 
 		//public ActionResult CreateTest(CreateTestModel Model)

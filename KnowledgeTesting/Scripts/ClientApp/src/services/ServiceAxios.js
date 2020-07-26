@@ -15,7 +15,7 @@ class ClassServiceAxios {
 
 	// Выполнить стаднартный запрос WebApi.
 	PostApi(Controller, Action, Request, Try, Cath) {
-		let _URL = Settings.Global.URL + Controller + '/' + Action;
+		let _URL = Settings.Global.UrlApi + Controller + '/' + Action;
 
 		return this.m_Api
 			// POST запрос.

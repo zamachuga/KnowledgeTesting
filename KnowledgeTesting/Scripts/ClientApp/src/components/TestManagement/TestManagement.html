@@ -1,4 +1,64 @@
 <div>
 	<h1>Управление тестами</h1>
-	<div v-if="storage.Settings.IsDebug"><h3>Внимание включен режим отладки</h3></div>
+
+	<div v-if="IsTestView">
+		<!-- Номер -->
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Номер</span>
+			</div>
+			<input readonly :value="ModelTest.Id" type="text" class="form-control" aria-label="Small"
+				aria-describedby="inputGroup-sizing-sm" />
+		</div>
+
+		<!-- Название -->
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Название</span>
+			</div>
+			<input v-model="ModelTest.Name" type="text" class="form-control" aria-label="Small"
+				aria-describedby="inputGroup-sizing-sm" />
+		</div>
+
+		<!-- Описание -->
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Описание</span>
+			</div>
+			<input v-model="ModelTest.Description" type="text" class="form-control" aria-label="Small"
+				aria-describedby="inputGroup-sizing-sm" />
+		</div>
+
+		<button v-if="IsCreateTest" type="button" class="btn btn-secondary" v-on:click="CreateTest()">Создать</button>
+		<button v-if="IsCreateTest == false" type="button" class="btn btn-secondary"
+			v-on:click="SaveChangeTest()">Сохранить</button>
+		<button type="button" class="btn btn-secondary" v-on:click="CancelChangeTest()">Отмена</button>
+	</div>
+
+	<div v-else>
+		<button type="button" class="btn btn-secondary" v-on:click="GoCreateTest()">Создать</button>
+		<br>
+		<!-- Список всех тетстов. -->
+		<table class="TableTestList">
+			<tr>
+				<td>№ Теста</td>
+				<td>Название</td>
+				<td>Описание</td>
+				<td>Управление</td>
+			</tr>
+			<tr v-for="test in listtests" :key="test.Id">
+				<td>{{test.Id}}</td>
+				<td>{{test.Name}}</td>
+				<td>{{test.Description}}</td>
+				<td>
+					<button :id="test.Id" type="button" class="btn btn-secondary"
+						v-on:click="GoEditTest(test.Id)">Изменить</button>
+					<button :id="test.Id" type="button" class="btn btn-secondary"
+						v-on:click="GoTestQuestionsView(test.Id)">Вопросы</button>
+					<button :id="test.Id" type="button" class="btn btn-secondary"
+						v-on:click="RemoveTest(test.Id)">Удалить тест</button>
+				</td>
+			</tr>
+		</table>
+	</div>
 </div>

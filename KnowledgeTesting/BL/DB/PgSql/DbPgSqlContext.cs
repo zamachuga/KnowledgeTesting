@@ -58,6 +58,7 @@ namespace KnowledgeTesting.BL.DB.PgSql
 
 		public static DbPgSqlContext Instance()
 		{
+			//return new DbPgSqlContext();
 			return _DbContext;
 		}
 

@@ -13,20 +13,25 @@ export default {
 		return {
 			// Хранилищей передающееся между компонентами.
 			storage: {
-				//
+				// Сообщение отладки.
+				DegubText: null,
+				// Общие настройки приложения.
 				Settings: null,
 				// Шина данных.
-				Bus: null,
-				// Тестовые данные.
-				TextTest: 'Test text'
+				Bus: null
 			}
 		};
 	},
-	created(){
+	created() {
 		this.storage.Bus = Services.Bus;
 		this.storage.Settings = Settings.Global;
 	},
-	components:{
+	methods:{
+		ClearErrors(){
+			this.storage.DegubText = null;
+		}
+	},
+	components: {
 		ComponentHome,
 		ComponentExample,
 		ComponentNavi
