@@ -202,6 +202,7 @@
     <Compile Include="BL\Testing.cs" />
     <Compile Include="BL\TestManagement.cs" />
     <Compile Include="BL\Utils.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\TestManagementController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\TestingController.cs" />
@@ -16296,10 +16297,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\TestManagement\Index.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\_ViewStart.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\Shared\Error.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\Shared\_Layout.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\TestManagement\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -16310,10 +16311,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Testing\Index.cshtml" />
-    <Content Include="Views\Statistics\Index.cshtml" />
-    <Content Include="Views\TestManagement\Ajax\CreateTest.cshtml" />
-    <Content Include="Views\TestManagement\Ajax\Index.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\Testing\Index.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\Statistics\Index.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\TestManagement\Ajax\CreateTest.cshtml" />
+    <Content Include="Views\OldVersionNotVueJs\TestManagement\Ajax\Index.cshtml" />
+    <Content Include="Views\Index\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
