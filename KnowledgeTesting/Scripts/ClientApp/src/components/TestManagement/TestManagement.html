@@ -35,7 +35,51 @@
 		<button type="button" class="btn btn-secondary" v-on:click="CancelChangeTest()">Отмена</button>
 	</div>
 
-	<div v-else>
+	<div v-if="IsTestQuestionsView">
+		<!-- Выбор из списка существующих вопросов. -->
+		<div>
+			<!-- Управление фильтром -->
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<button class="btn btn-outline-secondary" type="button">Обновить</button>
+					<button class="btn btn-outline-secondary" type="button">Сброс</button>
+					<button class="btn btn-outline-secondary" type="button">Найти</button>
+				</div>
+				<input type="text" class="form-control" placeholder="Введите фильтр вопросов" aria-label=""
+					aria-describedby="basic-addon1">
+			</div>
+
+			<!-- Отображение списка привязанных вопросов. -->
+			<div>
+				<ul class="list-group">
+					<li v-for="questiontest in listtestquestions" :key="questiontest.id" class="list-group-item">Cras justo odio</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Поиск в списке ответов. -->
+		<div>
+			<!-- Управление фильтром -->
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<button class="btn btn-outline-secondary" type="button">Обновить</button>
+					<button class="btn btn-outline-secondary" type="button">Сброс</button>
+					<button class="btn btn-outline-secondary" type="button">Найти</button>
+				</div>
+				<input type="text" class="form-control" placeholder="Введите фильтр ответов" aria-label=""
+					aria-describedby="basic-addon1">
+			</div>
+
+			<!-- Отображение списка ответов. -->
+			<div>
+
+			</div>
+		</div>
+
+		<button type="button" class="btn btn-secondary" v-on:click="CancelQuestionsView()">Отмена</button>
+	</div>
+
+	<div v-if="(IsTestQuestionsView || IsTestView) == false">
 		<button type="button" class="btn btn-secondary" v-on:click="GoCreateTest()">Создать</button>
 		<br>
 		<!-- Список всех тетстов. -->
@@ -55,8 +99,8 @@
 						v-on:click="GoEditTest(test.Id)">Изменить</button>
 					<button :id="test.Id" type="button" class="btn btn-secondary"
 						v-on:click="GoTestQuestionsView(test.Id)">Вопросы</button>
-					<button :id="test.Id" type="button" class="btn btn-secondary"
-						v-on:click="RemoveTest(test.Id)">Удалить тест</button>
+					<button :id="test.Id" type="button" class="btn btn-secondary" v-on:click="RemoveTest(test.Id)">Удалить
+						тест</button>
 				</td>
 			</tr>
 		</table>

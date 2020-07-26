@@ -15,6 +15,7 @@ namespace KnowledgeTesting.Controllers
 	public class TestManagementController : Controller
 	{
 		BL.TestManagement _TestManagement = new BL.TestManagement();
+		BL.QuestionManagement _QuestionManagement = new QuestionManagement();
 		//DB.DbPgSqlContext _DbContext = DB.DbPgSqlContext.Instance();
 
 		public ActionResult Index()
@@ -61,6 +62,12 @@ namespace KnowledgeTesting.Controllers
 		{
 			_TestManagement.CreateTest(DtoTest);
 			return string.Empty;
+		}
+
+		[HttpPost]
+		public string GetListQuestionForTest(int Id)
+		{
+			_QuestionManagement.get
 		}
 
 		//public ActionResult CreateTest(CreateTestModel Model)
