@@ -4,6 +4,9 @@ using DTO = KnowledgeTesting.BL.DTO;
 using System.Linq;
 using NUnit.Framework;
 using KnowledgeTesting.BL.DAO;
+using System.Data.Entity;
+using System.Dynamic;
+using KnowledgeTesting.BL.DTO;
 
 namespace KnowledgeTesting.BL
 {
@@ -19,6 +22,63 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Test)) return;
 
 			_DbContext.Tests.Add(Test);
+			_DbContext.SaveChanges();
+		}
+
+		/// <summary>
+		/// Сохранить изменения.
+		/// </summary>
+		/// <param name="Test">Объект для фиксирования изменений.</param>
+		public void SaveTest(DAO.Test Test)
+		{
+			if (_DbContext.Entry(Test).State == EntityState.Detached)
+				_DbContext.Entry(Test).State = EntityState.Modified;
+
+			_DbContext.SaveChanges();
+		}
+
+		/// <summary>
+		/// Сохранить изменения.
+		/// </summary>
+		/// <param name="DtoTest"></param>
+		public void SaveTest(DTO.Test DtoTest)
+		{
+			using (var _Trns = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Test _DaoTest = GetTest(DtoTest.Id);
+
+				_DaoTest.Name = DtoTest.Name;
+				_DaoTest.Description = DtoTest.Description;
+
+				SaveTest(_DaoTest);
+
+				_Trns.Commit();
+			}
+		}
+
+		/// <summary>
+		/// Получить состояние объекта в БД.
+		/// </summary>
+		/// <param name="Test"></param>
+		/// <returns></returns>
+		public EntityState GetState(DAO.Test Test)
+		{
+			return _DbContext.Entry(Test).State;
+		}
+
+		/// <summary>
+		/// Создать тест.
+		/// </summary>
+		/// <param name="dtoTest"></param>
+		internal void CreateTest(DTO.Test dtoTest)
+		{
+			using (var _Trns = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Test _DaoTest = Utils.ConverObjectByJson<DAO.Test>(dtoTest);
+				CreateTest(_DaoTest);
+
+				_Trns.Commit();
+			}
 		}
 
 		public void AddQuestion(DAO.Test Test, DAO.Question Question)
@@ -35,7 +95,7 @@ namespace KnowledgeTesting.BL
 		/// Получить все тесты.
 		/// </summary>
 		/// <returns></returns>
-		public Test[] GetAllTests()
+		public DAO.Test[] GetAllTests()
 		{
 			var _AllTests = _DbContext.Tests.ToArray();
 			return _AllTests;

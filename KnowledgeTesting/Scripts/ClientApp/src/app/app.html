@@ -1,0 +1,27 @@
+<div class="Component" id="ContainerComponentApp">
+	<div>
+		<!-- 
+			v-bind:storage="storage" - для передачи в props компонентам через навигацию.
+		-->
+		<ComponentNavi v-bind:storage="storage"></ComponentNavi>
+	</div>
+
+	<div class="Component" id="ContainerErrorMessage" v-if="storage.Settings.IsDebug">
+		Ошибки: <br>
+		<textarea id="TextError" readonly>{{storage.DegubText}}</textarea>
+		<button type="button" class="btn btn-secondary" v-on:click="ClearErrors()">Очистить</button>
+	</div>
+
+	<div>
+		<!-- 
+			exclude - исключает компоненты по названиям.
+			include - не объявляем иначе надо будет заполнять.
+		-->
+		<keep-alive exclude="">
+			<!-- 
+				:storage="storage" - для передачи в props компонентам через маршрутизацию.
+			 -->
+			<router-view :storage="storage"></router-view>
+		</keep-alive>
+	</div>
+</div>
