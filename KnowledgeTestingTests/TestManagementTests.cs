@@ -33,5 +33,24 @@ namespace KnowledgeTestingTests
 				_Transaction.Rollback();
 			}
 		}
+
+		[Test]
+		public void SaveTest()
+		{
+			using (var _Transaction = _DbContext.Database.BeginTransaction())
+			{
+				DAO.Test _Test = new DAO.Test() { Name = "CreateTest", Description = "Descr" };
+				_TestManagement.CreateTest(_Test);
+				_DbContext.SaveChanges();
+
+				_Test = _TestManagement.GetTest(_Test.Name);
+				_Test.Name = "TestChangeName";
+				_TestManagement.SaveTest(_Test);
+
+				var _TestResult = _TestManagement.GetTest(_Test.Name);
+				Assert.True(_TestResult.Name == "TestChangeName");
+				Assert.True(_TestResult.Id == _Test.Id);
+			}
+		}
 	}
 }
