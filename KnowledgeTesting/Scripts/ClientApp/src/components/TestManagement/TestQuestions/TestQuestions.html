@@ -1,0 +1,54 @@
+<div>
+	<!-- Информация о тесте для которого происходит управление вопросами. -->
+	<div>
+		<h3>#{{ModelTest.Id}} {{ModelTest.Name}}</h3>
+	</div>
+
+	<!-- Выбор из списка существующих вопросов. -->
+	<div>
+		<!-- Управление фильтром. -->
+		<!-- <div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<button class="btn btn-outline-secondary" type="button" v-model="FilterQuestion">Сброс</button>
+				<button class="btn btn-outline-secondary" type="button"
+					v-on:click="GetAllQuestions(FilterQuestion)">Найти</button>
+			</div>
+			<input type="text" class="form-control" placeholder="Введите фильтр вопросов" aria-label=""
+				aria-describedby="basic-addon1">
+		</div> -->
+		<!-- Выбор вопроса для добавления. -->
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<button class="btn btn-outline-secondary" type="button" v-on:click="GetAllQuestions(FilterQuestion)">Обновить</button>
+				<button class="btn btn-outline-secondary" type="button" v-on:click="AddQuestionToTest()">Добавить вопрос в тест</button>
+			</div>
+			<select v-model="SelectedQuestionToAdd" class="custom-select" id="inputGroupSelect03">
+				<option selected>Выберите вопрос для добавления...</option>
+				<option v-for="question in listquestions" :key="question.Id" v-bind:value="question.Id">{{question.Text}}</option>
+			</select>
+		</div>
+	</div>
+
+	<!-- Отображение списка привязанных вопросов. -->
+	<div>
+		<!-- Список всех тетстов. -->
+		<table class="table">
+			<tr>
+				<th scope="col">№</th>
+				<th>Вопрос</th>
+				<th>Управление</th>
+			</tr>
+			<tr v-for="questiontest in listtestquestions" :key="questiontest.id">
+				<td>{{questiontest.Id}}</td>
+				<td>{{questiontest.Text}}</td>
+				<td>
+					<button :id="questiontest.Id" type="button" class="btn btn-secondary"
+						v-on:click="RemoveQuestion(questiontest.Id)">Удалить
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<button type="button" class="btn btn-secondary" v-on:click="$emit('HideChildComponent')">Закрыть</button>
+</div>

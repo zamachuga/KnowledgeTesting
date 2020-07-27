@@ -1,5 +1,9 @@
-﻿using System;
+﻿using KnowledgeTesting.BL.DAO;
+using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data.Linq.SqlClient;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace KnowledgeTesting.BL
@@ -91,7 +95,10 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		public DAO.Question GetQuestion(string Text)
 		{
-			var _Question = _DbContext.Questions.Where(x => x.Text == Text).FirstOrDefault();
+			var _Question = _DbContext.Questions
+				.Where(x => x.Text.ToLower().Replace(" ", "") == Text.ToLower().Replace(" ", ""))
+				.FirstOrDefault();
+
 			return _Question;
 		}
 
@@ -102,11 +109,42 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		private bool IsExist(DAO.Question Question)
 		{
-			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == Question.Id).FirstOrDefault();
-			int _FindText = _DbContext.Questions.Where(x => x.Text.ToLower().Replace(" ", "") == Question.Text.ToLower().Replace(" ", "")).Count();
+			DAO.Question _FinKey = GetQuestion(Question.Id);
+			DAO.Question _FindText = GetQuestion(Question.Text);
 
-			bool _IsExist = (_FinKey != null && _FinKey.Id > 0) || _FindText > 0;
+			bool _IsExist = _FinKey != null || _FindText != null;
+
 			return _IsExist;
+		}
+
+		/// <summary>
+		/// Получить вопрос по коду.
+		/// </summary>
+		/// <param name="QuestionId">Код вопроса.</param>
+		/// <returns></returns>
+		internal Question GetQuestion(int QuestionId)
+		{
+			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
+			return _FinKey; 
+		}
+
+		/// <summary>
+		/// Получить список всех квестов.
+		/// </summary>
+		/// <param name="FilterName">Фильтр по наименованию.</param>
+		/// <returns></returns>
+		internal DAO.Question[] GetAllQuestions(string FilterName)
+		{
+			//NpgsqlParameter _PFiltername = new NpgsqlParameter("@FilterName", $@"%{FilterName.ToLower().Replace(' ','%')}%");
+
+			//Question[] _Questions = _DbContext.Questions
+			//	.SqlQuery("Select * From dbo.\"Questions\" q Where Lower(q.\"Text\" ) Like '@FilterName'", _PFiltername)
+			//	.ToArray();
+			//;
+
+			Question[] _Questions = _DbContext.Questions.ToArray();
+
+			return _Questions;
 		}
 	}
 }

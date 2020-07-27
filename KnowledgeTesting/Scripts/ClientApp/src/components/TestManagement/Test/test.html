@@ -1,0 +1,34 @@
+<div>
+	<!-- Номер -->
+	<div class="input-group input-group-sm mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-sm">Номер</span>
+		</div>
+		<input readonly :value="ModelTest.Id" type="text" class="form-control" aria-label="Small"
+			aria-describedby="inputGroup-sizing-sm" />
+	</div>
+
+	<!-- Название -->
+	<div class="input-group input-group-sm mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-sm">Название</span>
+		</div>
+		<input v-model="ModelTest.Name" type="text" class="form-control" aria-label="Small"
+			aria-describedby="inputGroup-sizing-sm" />
+	</div>
+
+	<!-- Описание -->
+	<div class="input-group input-group-sm mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-sm">Описание</span>
+		</div>
+		<input v-model="ModelTest.Description" type="text" class="form-control" aria-label="Small"
+			aria-describedby="inputGroup-sizing-sm" />
+	</div>
+
+	<button v-if="CurrentComponent.Action == 'Create'" type="button" class="btn btn-secondary"
+		v-on:click="CreateTest()">Создать</button>
+	<button v-if="CurrentComponent.Action == 'Edit'" type="button" class="btn btn-secondary"
+		v-on:click="SaveChangeTest()">Сохранить</button>
+	<button type="button" class="btn btn-secondary" v-on:click="$emit('HideChildComponent')">Закрыть</button>
+</div>
