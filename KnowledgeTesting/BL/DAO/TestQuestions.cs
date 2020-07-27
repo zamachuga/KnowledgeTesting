@@ -13,6 +13,6 @@ namespace KnowledgeTesting.BL.DAO
 		public int TestId { get; set; }
 		public Test Test { get; set; }
 		public int QuestionId { get; set; }
-		public Question Question { get; set; }
+		public virtual Question Question { get; set; }
 	}
 }
