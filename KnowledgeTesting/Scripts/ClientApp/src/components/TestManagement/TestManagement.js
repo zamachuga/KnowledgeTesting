@@ -1,13 +1,15 @@
 import Proxy from './api-proxy.js';
+import ComponentTest from './Test/test-component.vue';
 
 export default {
 	name: 'TestManagement',
 	props: ['storage'],
 	data() {
 		return {
-			IsTestView: false,
-			IsTestQuestionsView: false,
-			IsCreateTest: false,
+			CurrentComponent: {
+				Component: null,
+				Action: null
+			},
 			// Модель теста с которой работаем на текущий момент.
 			// Представление "TestView".
 			ModelTest: {
@@ -39,38 +41,6 @@ export default {
 		this.GetListTests();
 	},
 	methods: {
-		// Создать тест.
-		CreateTest() {
-			let _This = this;
-
-			Proxy.CreateTest(
-				_This.ModelTest,
-				Data => {
-					_This.IsTestView = false;
-					_This.GetListTests();
-				},
-				Error => {
-					_This.ShowMessage("Ошибка <Proxy.CreateTest>: " + Error);
-				}
-			);
-		},
-
-		// Сохранить изменения теста.
-		SaveChangeTest() {
-			let _This = this;
-
-			Proxy.SaveChangeTest(
-				_This.ModelTest,
-				Data => {
-					_This.IsTestView = false;
-					_This.GetListTests();
-				},
-				Error => {
-					_This.ShowMessage("Ошибка <Proxy.SaveChangeTest>: " + Error);
-				}
-			);
-		},
-
 		// Отменить изменения.
 		CancelChangeTest() {
 			let _This = this;
@@ -112,32 +82,22 @@ export default {
 			);
 		},
 
-		// Перейти к просотру Список тестов.
-		GoTestsView() {
-			let _This = this;
-
-			_This.IsTestView = false;
-			_This.IsTestQuestionsView = false;
-
-			_This.GetListTests();
-		},
-
 		// Перейти к Создать тест.
 		GoCreateTest() {
 			let _This = this;
+			
+			_This.ModelTest.Id = null;
+			_This.ModelTest.Name = null;
+			_This.ModelTest.Description = null;
 
-			_This.ModelTest.Id = "";
-			_This.ModelTest.Name = "";
-			_This.ModelTest.Description = "";
-
-			_This.IsTestView = true;
-			_This.IsCreateTest = true;
+			_This.CurrentComponent.Component = 'ComponentTest';
+			_This.CurrentComponent.Action = 'Create';
 		},
 
 		// Перейти к Редактировать тест.
 		GoEditTest(IdTest) {
 			let _This = this;
-
+			
 			Proxy.GetTest(
 				{ Id: IdTest },
 				Data => {
@@ -150,8 +110,8 @@ export default {
 				}
 			);
 
-			_This.IsTestView = true;
-			_This.IsCreateTest = false;
+			_This.CurrentComponent.Component = 'ComponentTest';
+			_This.CurrentComponent.Action = 'Edit';
 		},
 
 		// Удалить тест.
@@ -181,6 +141,16 @@ export default {
 			let _This = this;
 			_This.storage.DegubText = Text;
 			console.log(Text);
+		},
+
+		// Скрыть дочерний компонент.
+		HideChildComponent(){
+			let _This = this;
+			
+			_This.CurrentComponent.Component = null;
 		}
+	},
+	components: {
+		ComponentTest
 	}
 };
