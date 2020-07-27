@@ -15,7 +15,7 @@ namespace KnowledgeTestingTests
 	/// <summary>
 	/// Интеграционное тестирование по сценариям.
 	/// </summary>
-	//[Ignore("Интеграционный тест проускаем, его не надо каждый раз запускать.")]
+	[Ignore("Интеграционный тест проускаем, его не надо каждый раз запускать.")]
 	[TestFixture]
 	public class IntegrationTests
 	{
@@ -223,7 +223,7 @@ namespace KnowledgeTestingTests
 			Assert.True(_InterviweeTests.TestingResults.Count() > 0);
 		}
 
-		//[Ignore("Временный тест для конкрнетного случая.")]
+		[Ignore("Временный тест для конкрнетного случая.")]
 		[Test]		
 		public void GetListQuestionForTestTest()
 		{
