@@ -1,5 +1,7 @@
-﻿using System;
+﻿using KnowledgeTesting.BL.DAO;
+using System;
 using System.Collections.Generic;
+using System.Data.Linq.SqlClient;
 using System.Linq;
 
 namespace KnowledgeTesting.BL
@@ -107,6 +109,21 @@ namespace KnowledgeTesting.BL
 
 			bool _IsExist = (_FinKey != null && _FinKey.Id > 0) || _FindText > 0;
 			return _IsExist;
+		}
+
+		/// <summary>
+		/// Получить список всех квестов.
+		/// </summary>
+		/// <param name="FilterName">Фильтр по наименованию.</param>
+		/// <returns></returns>
+		internal Question[] GetAllQuestions(string FilterName)
+		{
+			Question[] _Questions = _DbContext.Questions
+				.Where(x => SqlMethods.Like(x.Text, FilterName.Replace(' ', '%')))
+				.ToArray()
+			;
+
+			return _Questions;
 		}
 	}
 }

@@ -1,11 +1,13 @@
 import Proxy from './api-proxy.js';
 import ComponentTest from './Test/test-component.vue';
+import ComponentTestQuestions from './TestQuestions/TestQuestions-component.vue';
 
 export default {
 	name: 'TestManagement',
 	props: ['storage'],
 	data() {
 		return {
+			// Текущий компонент.
 			CurrentComponent: {
 				Component: null,
 				Action: null
@@ -18,67 +20,30 @@ export default {
 				Description: null
 			},
 			// Список существующих тестов.
-			listtests: [],
-			// Список вопросов теста.
-			listtestquestions: [],
-			// Модель вопроса.
-			ModelQuestion: {
-				Id: null,
-				Name: null
-			},
-			// Список существующих вопрсов.
-			listquestions: [],
-			// Модель ответа на вопрос.
-			ModelAnswer: {
-				Id: null,
-				Name: null
-			},
-			// Список существующих вопросов.
-			listanswers: []
+			listtests: []
 		};
 	},
 	created() {
 		this.GetListTests();
 	},
 	methods: {
-		// Отменить изменения.
-		CancelChangeTest() {
-			let _This = this;
-
-			_This.ModelTest.Id = null;
-			_This.ModelTest.Name = null;
-			_This.ModelTest.Description = null;
-
-			_This.IsTestView = false;
-			_This.GetListTests();
-		},
-
 		// Перейти к Управление вопросами.
 		GoTestQuestionsView(IdTest) {
 			let _This = this;
 
-			_This.IsTestQuestionsView = true;
-
-			_This.GetListQuestionForTest(IdTest);
-		},
-
-		// Отменить просмотр списка вопросов.
-		CancelQuestionsView() {
-			let _This = this;
-
-			_This.GoTestsView();
-		},
-
-		// Получить список вопросов теста.
-		GetListQuestionForTest(IdTest) {
-			let _This = this;
-
-			Proxy.GetListQuestionForTest(
+			Proxy.GetTest(
 				{ Id: IdTest },
 				Data => {
-					_This.listtestquestions = Data;
+					_This.ModelTest.Id = Data.Id;
+					_This.ModelTest.Name = Data.Name;
+					_This.ModelTest.Description = Data.Description;
+
+					_This.CurrentComponent.Component = ComponentTestQuestions;
+					_This.CurrentComponent.Action = null;
 				},
-				Error => { _This.ShowMessage("Ошибка <Proxy.GetListQuestionForTest>: " + Error); }
+				Error => {
+					_This.ShowMessage("Ошибка <Proxy.GetTest>: " + Error);
+				}
 			);
 		},
 
@@ -104,14 +69,14 @@ export default {
 					_This.ModelTest.Id = Data.Id;
 					_This.ModelTest.Name = Data.Name;
 					_This.ModelTest.Description = Data.Description;
+
+					_This.CurrentComponent.Component = ComponentTest;
+					_This.CurrentComponent.Action = 'Edit';
 				},
 				Error => {
 					_This.ShowMessage("Ошибка <Proxy.GetTest>: " + Error);
 				}
 			);
-
-			_This.CurrentComponent.Component = 'ComponentTest';
-			_This.CurrentComponent.Action = 'Edit';
 		},
 
 		// Удалить тест.
@@ -151,6 +116,7 @@ export default {
 		}
 	},
 	components: {
-		ComponentTest
+		ComponentTest,
+		ComponentTestQuestions
 	}
 };

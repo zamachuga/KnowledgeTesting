@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using KnowledgeTesting.BL;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BL = KnowledgeTesting.BL;
-using DTO = KnowledgeTesting.BL.DTO;
 using DAO = KnowledgeTesting.BL.DAO;
-using Newtonsoft.Json;
-using DB = KnowledgeTesting.BL.DB.PgSql;
-using KnowledgeTesting.BL;
+using DTO = KnowledgeTesting.BL.DTO;
 
 namespace KnowledgeTesting.Controllers
 {
 	public class TestManagementController : Controller
 	{
-		BL.TestManagement _TestManagement = new BL.TestManagement();
-		//DB.DbPgSqlContext _DbContext = DB.DbPgSqlContext.Instance();
+		TestManagement m_TestManagement = new TestManagement();
+		QuestionManagement m_QuestionManagement = new QuestionManagement();
 
 		public ActionResult Index()
 		{
@@ -25,7 +19,7 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string GetAllTests()
 		{
-			DAO.Test[] _AllTests = _TestManagement.GetAllTests();
+			DAO.Test[] _AllTests = m_TestManagement.GetAllTests();
 			DTO.Test[] _DtoAllTests = Utils.ConverObjectByJson<DTO.Test[]>(_AllTests);
 
 			string _JsonFormat = Utils.JsonSerialize(_DtoAllTests);
@@ -41,7 +35,7 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string GetTest(int Id)
 		{
-			DAO.Test _Test = _TestManagement.GetTest(Id);
+			DAO.Test _Test = m_TestManagement.GetTest(Id);
 			DTO.Test _DtoTest = Utils.ConverObjectByJson<DTO.Test>(_Test);
 
 			string _JsonFormat = Utils.JsonSerialize(_DtoTest);
@@ -57,14 +51,22 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string SaveChangeTest(DTO.Test DtoTest)
 		{
-			_TestManagement.SaveTest(DtoTest);
+			DAO.Test _DaoTest = m_TestManagement.GetTest(DtoTest.Id);
+			_DaoTest.Name = DtoTest.Name;
+			_DaoTest.Description = DtoTest.Description;
+
+			m_TestManagement.SaveTest(_DaoTest);
+
 			return string.Empty;
 		}
 
 		[HttpPost]
 		public string CreateTest(DTO.Test DtoTest)
 		{
-			_TestManagement.CreateTest(DtoTest);
+			DAO.Test _DaoTest = Utils.ConverObjectByJson<DAO.Test>(DtoTest);
+
+			m_TestManagement.CreateTest(_DaoTest);
+
 			return string.Empty;
 		}
 
@@ -76,8 +78,8 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string GetListQuestionForTest(int Id)
 		{
-			DAO.Test _DaoTest = _TestManagement.GetTest(Id);
-			DAO.Question[] _DaoQuestions = _DaoTest.Questions.Select(x=>x.Question).ToArray();
+			DAO.Test _DaoTest = m_TestManagement.GetTest(Id);
+			DAO.Question[] _DaoQuestions = _DaoTest.Questions.Select(x => x.Question).ToArray();
 
 			DTO.Question[] _DtoQuestions = Utils.ConverObjectByJson<DTO.Question[]>(_DaoQuestions);
 			string _DtoQuestionsJson = Utils.JsonSerialize(_DtoQuestions);
@@ -85,66 +87,31 @@ namespace KnowledgeTesting.Controllers
 			return _DtoQuestionsJson;
 		}
 
-		//public ActionResult CreateTest(CreateTestModel Model)
-		//{
-		//	CreateTestModel _Model = Model;
+		/// <summary>
+		/// Удалить вопрос из теста.
+		/// </summary>
+		/// <param name="DtoTestQuestion"></param>
+		/// <returns></returns>
+		[HttpPost]
+		public string RemoveQuesion(DTO.TestQuestions DtoTestQuestion)
+		{
+			m_TestManagement.RemoveQuestion(DtoTestQuestion.TestId, DtoTestQuestion.QuestionId);
+			return string.Empty;
+		}
 
-		//	ViewBag.Questions = new SelectList(GetQuestionsDtoModels(), "Id", "Text");
+		/// <summary>
+		/// Получить список всех вопросов.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string GetAllQuestions(string FilterName)
+		{
+			DAO.Question[] _DaoQuestions = m_QuestionManagement.GetAllQuestions(FilterName);
 
-		//	return View(Model);
-		//}
+			DTO.Question[] _DtoQuestions = Utils.ConverObjectByJson<DTO.Question[]>(_DaoQuestions);
+			string _Json = Utils.JsonSerialize(_DtoQuestions);
 
-		///// <summary>
-		///// Добавить вопрос в тест.
-		///// </summary>
-		///// <param name="Model"></param>
-		///// <returns></returns>
-		//public ActionResult AddQuestion(CreateTestModel Model)
-		//{
-		//	CreateTestModel _Model = Model;
-
-		//	string _Notification = "";
-
-		//	DTO.Question _Question = GetQuestionsDtoModels().First(x => x.Id == _Model.SelectedQuestionId);
-		//	_Model.Test.Questions.Add(_Question);
-
-		//	_Model.Notification = _Notification;
-
-		//	return CreateTest(_Model);
-		//}
-
-		//public ActionResult SaveNewTest(CreateTestModel Model)
-		//{
-		//	CreateTestModel _Model = Model;
-		//	string _Notification = "";
-
-		//	if (_TestManagement.CheckTestData(_Model.Test, out _Notification))
-		//	{
-		//		_Notification = $"Тест <{_Model.Test.Name}> сохранен.";
-		//	}
-
-		//	_Model.Notification = _Notification;
-
-		//	return CreateTest(_Model);
-		//}
-
-		//public string GetQuestions()
-		//{
-		//	DTO.Question[] _Questions = GetQuestionsDtoModels();
-		//	return JsonConvert.SerializeObject(_Questions);
-		//}
-
-		//private DTO.Question[] GetQuestionsDtoModels()
-		//{
-		//	DTO.Question[] _Questions = _DbContext.Questions.Select(
-		//		x => new DTO.Question()
-		//		{
-		//			Id = x.Id,
-		//			Text = x.Text
-		//		}
-		//	).ToArray();
-
-		//	return _Questions;
-		//}
+			return _Json;
+		}
 	}
 }

@@ -26,7 +26,8 @@
 			aria-describedby="inputGroup-sizing-sm" />
 	</div>
 
-	<button v-if="CurrentComponent.Action == 'Create'" type="button" class="btn btn-secondary" v-on:click="CreateTest()">Создать</button>
+	<button v-if="CurrentComponent.Action == 'Create'" type="button" class="btn btn-secondary"
+		v-on:click="CreateTest()">Создать</button>
 	<button v-if="CurrentComponent.Action == 'Edit'" type="button" class="btn btn-secondary"
 		v-on:click="SaveChangeTest()">Сохранить</button>
 	<button type="button" class="btn btn-secondary" v-on:click="$emit('HideChildComponent')">Закрыть</button>

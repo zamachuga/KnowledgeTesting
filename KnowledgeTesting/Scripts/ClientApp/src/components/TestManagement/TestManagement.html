@@ -1,19 +1,22 @@
 <div>
 	<h1>Управление тестами</h1>
 
-	<component v-bind:is="CurrentComponent.Component" v-bind:ModelTest="ModelTest" v-bind:CurrentComponent="CurrentComponent"
-		v-on:HideChildComponent="HideChildComponent()" v-on:IsChanged="GetListTests()"></component>
+	<!-- Динамическая смена компонента. -->
+	<component v-bind:is="CurrentComponent.Component" v-bind:ModelTest="ModelTest"
+		v-bind:CurrentComponent="CurrentComponent" v-on:HideChildComponent="HideChildComponent()"
+		v-on:IsChanged="GetListTests()"></component>
 
+	<!-- Текущий компонент Управление тестами. -->
 	<div v-if="CurrentComponent.Component == null">
 		<button type="button" class="btn btn-secondary" v-on:click="GoCreateTest()">Создать</button>
 		<br>
 		<!-- Список всех тетстов. -->
-		<table class="TableTestList">
+		<table class="table">
 			<tr>
-				<td>№ Теста</td>
-				<td>Название</td>
-				<td>Описание</td>
-				<td>Управление</td>
+				<th>№ Теста</th>
+				<th>Название</th>
+				<th>Описание</th>
+				<th>Управление</th>
 			</tr>
 			<tr v-for="test in listtests" :key="test.Id">
 				<td>{{test.Id}}</td>

@@ -7,6 +7,7 @@ using KnowledgeTesting.BL.DAO;
 using System.Data.Entity;
 using System.Dynamic;
 using KnowledgeTesting.BL.DTO;
+using System.Web.Mvc;
 
 namespace KnowledgeTesting.BL
 {
@@ -38,25 +39,6 @@ namespace KnowledgeTesting.BL
 		}
 
 		/// <summary>
-		/// Сохранить изменения.
-		/// </summary>
-		/// <param name="DtoTest"></param>
-		public void SaveTest(DTO.Test DtoTest)
-		{
-			using (var _Trns = _DbContext.Database.BeginTransaction())
-			{
-				DAO.Test _DaoTest = GetTest(DtoTest.Id);
-
-				_DaoTest.Name = DtoTest.Name;
-				_DaoTest.Description = DtoTest.Description;
-
-				SaveTest(_DaoTest);
-
-				_Trns.Commit();
-			}
-		}
-
-		/// <summary>
 		/// Получить состояние объекта в БД.
 		/// </summary>
 		/// <param name="Test"></param>
@@ -64,21 +46,6 @@ namespace KnowledgeTesting.BL
 		public EntityState GetState(DAO.Test Test)
 		{
 			return _DbContext.Entry(Test).State;
-		}
-
-		/// <summary>
-		/// Создать тест.
-		/// </summary>
-		/// <param name="dtoTest"></param>
-		internal void CreateTest(DTO.Test dtoTest)
-		{
-			using (var _Trns = _DbContext.Database.BeginTransaction())
-			{
-				DAO.Test _DaoTest = Utils.ConverObjectByJson<DAO.Test>(dtoTest);
-				CreateTest(_DaoTest);
-
-				_Trns.Commit();
-			}
 		}
 
 		public void AddQuestion(DAO.Test Test, DAO.Question Question)
@@ -138,6 +105,26 @@ namespace KnowledgeTesting.BL
 		{
 			var _Test = _DbContext.Tests.Find(id);
 			return _Test;
+		}
+
+		/// <summary>
+		/// Удалить вопрос из теста.
+		/// </summary>
+		public void RemoveQuestion(int TestId, int QuestionId)
+		{
+			DAO.TestQuestions _TestQuestion = _DbContext.TestQuestions.Find(TestId, QuestionId);
+
+			if (_TestQuestion != null)
+				RemoveQuestion(_TestQuestion);
+		}
+
+		/// <summary>
+		/// Удалить вопрос из теста.
+		/// </summary>
+		public void RemoveQuestion(DAO.TestQuestions TestQuestion)
+		{
+			_DbContext.TestQuestions.Remove(TestQuestion);
+			_DbContext.SaveChanges();
 		}
 	}
 }

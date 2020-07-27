@@ -1,57 +1,55 @@
 <div>
+	<!-- Информация о тесте для которого происходит управление вопросами. -->
+	<div>
+		<h3>#{{ModelTest.Id}} {{ModelTest.Name}}</h3>
+	</div>
+
 	<!-- Выбор из списка существующих вопросов. -->
 	<div>
-		<!-- Управление фильтром -->
+		<!-- Управление фильтром. -->
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="button">Обновить</button>
 				<button class="btn btn-outline-secondary" type="button">Сброс</button>
 				<button class="btn btn-outline-secondary" type="button">Найти</button>
 			</div>
 			<input type="text" class="form-control" placeholder="Введите фильтр вопросов" aria-label=""
 				aria-describedby="basic-addon1">
 		</div>
-
-		<!-- Отображение списка привязанных вопросов. -->
-		<div>
-			<!-- Список всех тетстов. -->
-			<table class="TableTestList">
-				<tr>
-					<td>№</td>
-					<td>Вопрос</td>
-					<td>Управление</td>
-				</tr>
-				<tr v-for="questiontest in listtestquestions" :key="questiontest.id">
-					<td>{{questiontest.Id}} = {{ModelTest.Id}}</td>
-					<td>{{questiontest.Text}}</td>
-					<td>
-						<button :id="questiontest.Id" type="button" class="btn btn-secondary"
-							v-on:click="RemoveQuestion(questiontest.Id)">Удалить
-						</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-
-	<!-- Поиск в списке ответов. -->
-	<div>
-		<!-- Управление фильтром -->
+		<!-- Выбор вопроса для добавления. -->
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<button class="btn btn-outline-secondary" type="button">Обновить</button>
-				<button class="btn btn-outline-secondary" type="button">Сброс</button>
-				<button class="btn btn-outline-secondary" type="button">Найти</button>
+				<button class="btn btn-outline-secondary" type="button">Добавить вопрос в тест</button>
 			</div>
-			<input type="text" class="form-control" placeholder="Введите фильтр ответов" aria-label=""
-				aria-describedby="basic-addon1">
-		</div>
-
-		<!-- Отображение списка ответов. -->
-		<div>
-
+			<select class="custom-select" id="inputGroupSelect03">
+				<option selected>Choose...</option>
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
 		</div>
 	</div>
 
-	<button type="button" class="btn btn-secondary" v-on:click="CancelQuestionsView()">Отмена</button>
+	<!-- Отображение списка привязанных вопросов. -->
+	<div>
+		<!-- Список всех тетстов. -->
+		<table class="table">
+			<tr>
+				<th scope="col">№</th>
+				<th>Вопрос</th>
+				<th>Управление</th>
+			</tr>
+			<tr v-for="questiontest in listtestquestions" :key="questiontest.id">
+				<td>{{questiontest.Id}}</td>
+				<td>{{questiontest.Text}}</td>
+				<td>
+					<button :id="questiontest.Id" type="button" class="btn btn-secondary"
+						v-on:click="RemoveQuestion(questiontest.Id)">Удалить
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<button type="button" class="btn btn-secondary" v-on:click="$emit('HideChildComponent')">Закрыть</button>
 </div>
