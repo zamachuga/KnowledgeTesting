@@ -55,7 +55,9 @@ namespace KnowledgeTesting.BL
 			if (Question.Answers.Where(x => x.IsCorrect).Count() == 0) throw new Exception("В вопросе не указан правильный ответ.");
 
 			DAO.TestQuestions _TestQuestion = new DAO.TestQuestions() { TestId = Test.Id, QuestionId = Question.Id };
+			
 			_DbContext.TestQuestions.Add(_TestQuestion);
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>

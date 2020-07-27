@@ -113,5 +113,17 @@ namespace KnowledgeTesting.Controllers
 
 			return _Json;
 		}
+
+		[HttpPost]
+		public string AddQuestionToTest(DTO.TestQuestions DtoTestQuestion)
+		{
+			DAO.Test _Test = m_TestManagement.GetTest(DtoTestQuestion.TestId);
+			DAO.Question _Question = m_QuestionManagement.GetQuestion(DtoTestQuestion.QuestionId);
+
+			if (_Test != null && _Question != null)
+				m_TestManagement.AddQuestion(_Test, _Question);
+
+			return string.Empty;
+		}
 	}
 }

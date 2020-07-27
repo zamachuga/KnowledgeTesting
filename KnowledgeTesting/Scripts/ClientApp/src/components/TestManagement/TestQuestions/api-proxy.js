@@ -6,6 +6,7 @@ let _Controller = "TestManagement";
 let _ActionGetListQuestionForTest = "GetListQuestionForTest";
 let _ActionRemoveQuesion = "RemoveQuesion";
 let _ActionGetAllQuestions = "GetAllQuestions";
+let _ActionAddQuestionToTest = "AddQuestionToTest";
 
 export default {
 	// Получить тест.
@@ -21,6 +22,10 @@ export default {
 	// Получить список всех вопросов.
 	GetAllQuestions(Request, CallbackTry, CallbackCath){
 		ServiceAxios.ServiceAxios.PostApi(_Controller, _ActionGetAllQuestions, Request, CallbackTry, CallbackCath);
+	},
+
+	// Добавить вопрос в тест.
+	AddQuestionToTest(Request, CallbackTry, CallbackCath){
+		ServiceAxios.ServiceAxios.PostApi(_Controller, _ActionAddQuestionToTest, Request, CallbackTry, CallbackCath);
 	}
 };
-

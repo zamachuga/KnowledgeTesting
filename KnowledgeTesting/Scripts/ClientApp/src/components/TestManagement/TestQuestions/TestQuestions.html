@@ -7,25 +7,24 @@
 	<!-- Выбор из списка существующих вопросов. -->
 	<div>
 		<!-- Управление фильтром. -->
-		<div class="input-group mb-3">
+		<!-- <div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="button">Сброс</button>
-				<button class="btn btn-outline-secondary" type="button">Найти</button>
+				<button class="btn btn-outline-secondary" type="button" v-model="FilterQuestion">Сброс</button>
+				<button class="btn btn-outline-secondary" type="button"
+					v-on:click="GetAllQuestions(FilterQuestion)">Найти</button>
 			</div>
 			<input type="text" class="form-control" placeholder="Введите фильтр вопросов" aria-label=""
 				aria-describedby="basic-addon1">
-		</div>
+		</div> -->
 		<!-- Выбор вопроса для добавления. -->
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="button">Обновить</button>
-				<button class="btn btn-outline-secondary" type="button">Добавить вопрос в тест</button>
+				<button class="btn btn-outline-secondary" type="button" v-on:click="GetAllQuestions(FilterQuestion)">Обновить</button>
+				<button class="btn btn-outline-secondary" type="button" v-on:click="AddQuestionToTest()">Добавить вопрос в тест</button>
 			</div>
-			<select class="custom-select" id="inputGroupSelect03">
-				<option selected>Choose...</option>
-				<option value="1">One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
+			<select v-model="SelectedQuestionToAdd" class="custom-select" id="inputGroupSelect03">
+				<option selected>Выберите вопрос для добавления...</option>
+				<option v-for="question in listquestions" :key="question.Id" v-bind:value="question.Id">{{question.Text}}</option>
 			</select>
 		</div>
 	</div>
