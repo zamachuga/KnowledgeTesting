@@ -105,8 +105,10 @@ export default {
 
 			Proxy.GetListQuestionForTest(
 				{ Id: IdTest },
-				Data => { listtestquestions = Data; },
-				Error => { _This.ShowMessage("Ошибка <Proxy.GetListQuestionForTest>: " + Error);}
+				Data => {
+					_This.listtestquestions = Data;
+				},
+				Error => { _This.ShowMessage("Ошибка <Proxy.GetListQuestionForTest>: " + Error); }
 			);
 		},
 

@@ -17,6 +17,7 @@ namespace KnowledgeTesting.BL.DAO
 		{
 			Answers = new List<QuestionAnswers>();
 			Tests = new List<TestQuestions>();
+			TestingResults = new List<TestingResult>();
 		}
 
 		public int Id { get; set; }

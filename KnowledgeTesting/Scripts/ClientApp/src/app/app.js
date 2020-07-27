@@ -29,6 +29,7 @@ export default {
 	methods:{
 		ClearErrors(){
 			this.storage.DegubText = null;
+			console.clear();
 		}
 	},
 	components: {

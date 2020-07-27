@@ -57,7 +57,10 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		public static T ConverObjectByJson<T>(object Object)
 		{
-			return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(Object, GetJsonSettings()), GetJsonSettings());
+			string _Json = JsonConvert.SerializeObject(Object, GetJsonSettings());
+			var _Object = JsonConvert.DeserializeObject<T>(_Json, GetJsonSettings());
+
+			return _Object;
 		}
 
 		///// <summary>
