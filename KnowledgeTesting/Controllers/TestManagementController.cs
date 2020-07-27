@@ -33,6 +33,11 @@ namespace KnowledgeTesting.Controllers
 			return _JsonFormat;
 		}
 
+		/// <summary>
+		/// Получить информацию по тесту.
+		/// </summary>
+		/// <param name="Id">Код теста.</param>
+		/// <returns></returns>
 		[HttpPost]
 		public string GetTest(int Id)
 		{
@@ -61,6 +66,23 @@ namespace KnowledgeTesting.Controllers
 		{
 			_TestManagement.CreateTest(DtoTest);
 			return string.Empty;
+		}
+
+		/// <summary>
+		/// Получить список вопросов для теста.
+		/// </summary>
+		/// <param name="Id">Код теста.</param>
+		/// <returns></returns>
+		[HttpPost]
+		public string GetListQuestionForTest(int Id)
+		{
+			DAO.Test _DaoTest = _TestManagement.GetTest(Id);
+			DAO.Question[] _DaoQuestions = _DaoTest.Questions.Select(x=>x.Question).ToArray();
+
+			DTO.Question[] _DtoQuestions = Utils.ConverObjectByJson<DTO.Question[]>(_DaoQuestions);
+			string _DtoQuestionsJson = Utils.JsonSerialize(_DtoQuestions);
+
+			return _DtoQuestionsJson;
 		}
 
 		//public ActionResult CreateTest(CreateTestModel Model)

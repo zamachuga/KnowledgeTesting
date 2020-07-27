@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KnowledgeTesting.BL;
 using KnowledgeTesting.Migrations;
+using KnowledgeTesting.Controllers;
 
 namespace KnowledgeTestingTests
 {
@@ -220,6 +221,14 @@ namespace KnowledgeTestingTests
 			Assert.True(_DbContext.InterviweeTests.Where(x => x.Id == _InterviweeTests.Id).First().IsComplete);
 			Assert.True(_CountCompleteTeststAfter > _CountCompleteTeststBefore);
 			Assert.True(_InterviweeTests.TestingResults.Count() > 0);
+		}
+
+		[Ignore("Временный тест для конкрнетного случая.")]
+		[Test]		
+		public void GetListQuestionForTestTest()
+		{
+			TestManagementController _Controller = new TestManagementController();
+			var Json = _Controller.GetListQuestionForTest(13);
 		}
 	}
 

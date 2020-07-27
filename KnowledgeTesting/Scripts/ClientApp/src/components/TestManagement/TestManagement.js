@@ -6,6 +6,7 @@ export default {
 	data() {
 		return {
 			IsTestView: false,
+			IsTestQuestionsView: false,
 			IsCreateTest: false,
 			// Модель теста с которой работаем на текущий момент.
 			// Представление "TestView".
@@ -15,7 +16,23 @@ export default {
 				Description: null
 			},
 			// Список существующих тестов.
-			listtests: []
+			listtests: [],
+			// Список вопросов теста.
+			listtestquestions: [],
+			// Модель вопроса.
+			ModelQuestion: {
+				Id: null,
+				Name: null
+			},
+			// Список существующих вопрсов.
+			listquestions: [],
+			// Модель ответа на вопрос.
+			ModelAnswer: {
+				Id: null,
+				Name: null
+			},
+			// Список существующих вопросов.
+			listanswers: []
 		};
 	},
 	created() {
@@ -23,12 +40,12 @@ export default {
 	},
 	methods: {
 		// Создать тест.
-		CreateTest(){
+		CreateTest() {
 			let _This = this;
 
 			Proxy.CreateTest(
 				_This.ModelTest,
-				Data => {					
+				Data => {
 					_This.IsTestView = false;
 					_This.GetListTests();
 				},
@@ -39,12 +56,12 @@ export default {
 		},
 
 		// Сохранить изменения теста.
-		SaveChangeTest(){
+		SaveChangeTest() {
 			let _This = this;
 
 			Proxy.SaveChangeTest(
 				_This.ModelTest,
-				Data => {					
+				Data => {
 					_This.IsTestView = false;
 					_This.GetListTests();
 				},
@@ -66,7 +83,46 @@ export default {
 			_This.GetListTests();
 		},
 
-		// Создать тест.
+		// Перейти к Управление вопросами.
+		GoTestQuestionsView(IdTest) {
+			let _This = this;
+
+			_This.IsTestQuestionsView = true;
+
+			_This.GetListQuestionForTest(IdTest);
+		},
+
+		// Отменить просмотр списка вопросов.
+		CancelQuestionsView() {
+			let _This = this;
+
+			_This.GoTestsView();
+		},
+
+		// Получить список вопросов теста.
+		GetListQuestionForTest(IdTest) {
+			let _This = this;
+
+			Proxy.GetListQuestionForTest(
+				{ Id: IdTest },
+				Data => {
+					_This.listtestquestions = Data;
+				},
+				Error => { _This.ShowMessage("Ошибка <Proxy.GetListQuestionForTest>: " + Error); }
+			);
+		},
+
+		// Перейти к просотру Список тестов.
+		GoTestsView() {
+			let _This = this;
+
+			_This.IsTestView = false;
+			_This.IsTestQuestionsView = false;
+
+			_This.GetListTests();
+		},
+
+		// Перейти к Создать тест.
 		GoCreateTest() {
 			let _This = this;
 
@@ -78,7 +134,7 @@ export default {
 			_This.IsCreateTest = true;
 		},
 
-		// Редактировать тест.
+		// Перейти к Редактировать тест.
 		GoEditTest(IdTest) {
 			let _This = this;
 
