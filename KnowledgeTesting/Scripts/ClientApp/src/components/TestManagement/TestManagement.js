@@ -1,6 +1,7 @@
 import Proxy from './api-proxy.js';
 import ComponentTest from './Test/test-component.vue';
 import ComponentTestQuestions from './TestQuestions/TestQuestions-component.vue';
+import ComponentQuestions from './Questions/Questions-component.vue';
 
 export default {
 	name: 'TestManagement',
@@ -27,7 +28,15 @@ export default {
 		this.GetListTests();
 	},
 	methods: {
-		// Перейти к Управление вопросами.
+		// Перейти к управлению вопросами.
+		GoQuestion(){
+			let _This = this;
+
+			_This.CurrentComponent.Component = ComponentQuestions;
+			_This.CurrentComponent.Action = null;
+		},
+
+		// Перейти к Управление вопросами теста.
 		GoTestQuestionsView(IdTest) {
 			let _This = this;
 
@@ -117,6 +126,7 @@ export default {
 	},
 	components: {
 		ComponentTest,
-		ComponentTestQuestions
+		ComponentTestQuestions,
+		ComponentQuestions
 	}
 };
