@@ -1,5 +1,7 @@
 ﻿using KnowledgeTesting.BL;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using DAO = KnowledgeTesting.BL.DAO;
 using DTO = KnowledgeTesting.BL.DTO;
@@ -10,6 +12,7 @@ namespace KnowledgeTesting.Controllers
 	{
 		TestManagement m_TestManagement = new TestManagement();
 		QuestionManagement m_QuestionManagement = new QuestionManagement();
+		BL.DB.PgSql.DbPgSqlContext _DbContext = BL.DB.PgSql.DbPgSqlContext.Instance();
 
 		public ActionResult Index()
 		{
@@ -106,11 +109,33 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string GetAllQuestions(string FilterName)
 		{
-			DAO.Question[] _DaoQuestions = m_QuestionManagement.GetAllQuestions(FilterName);
+			// Получить список вопросов.
+			var _DaoQuestions = m_QuestionManagement.GetAllQuestions(string.Empty);
 
-			DTO.Question[] _DtoQuestions = Utils.ConverObjectByJson<DTO.Question[]>(_DaoQuestions);
+			// Получить список ответов на вопросы.
+			List<DTO.Question> _DtoQuestions = new List<DTO.Question>();
+			foreach (var _DaoQuestion in _DaoQuestions)
+			{
+				// Вопрос.
+				var _DtoQuestion = new DTO.Question() { Id = _DaoQuestion.Id, Text = _DaoQuestion.Text };
+				// Ответы.
+				foreach (var _DaoAnswers in _DaoQuestion.Answers)
+				{
+					DTO.QuestionAnswers _DtoAnswer = new DTO.QuestionAnswers()
+					{
+						QuestionId = _DaoAnswers.QuestionId,
+						AnswerId = _DaoAnswers.Answer.Id,
+						AnswerText = _DaoAnswers.Answer.Text,
+						IsCorrect = _DaoAnswers.IsCorrect
+					};
+
+					_DtoQuestion.Answers.Add(_DtoAnswer);
+				}
+
+				_DtoQuestions.Add(_DtoQuestion);
+			}
+
 			string _Json = Utils.JsonSerialize(_DtoQuestions);
-
 			return _Json;
 		}
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Linq.SqlClient;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace KnowledgeTesting.BL
 {
@@ -101,6 +102,17 @@ namespace KnowledgeTesting.BL
 
 			return _Question;
 		}
+		
+		/// <summary>
+		/// Получить вопрос по коду.
+		/// </summary>
+		/// <param name="QuestionId">Код вопроса.</param>
+		/// <returns></returns>
+		internal Question GetQuestion(int QuestionId)
+		{
+			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
+			return _FinKey;
+		}
 
 		/// <summary>
 		/// Найти вопрос.
@@ -118,25 +130,15 @@ namespace KnowledgeTesting.BL
 		}
 
 		/// <summary>
-		/// Получить вопрос по коду.
-		/// </summary>
-		/// <param name="QuestionId">Код вопроса.</param>
-		/// <returns></returns>
-		internal Question GetQuestion(int QuestionId)
-		{
-			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
-			return _FinKey; 
-		}
-
-		/// <summary>
 		/// Получить список всех квестов.
 		/// </summary>
 		/// <param name="FilterName">Фильтр по наименованию.</param>
 		/// <returns></returns>
 		internal DAO.Question[] GetAllQuestions(string FilterName)
 		{
+			// TODO: настроить Like по запросу.
+			// эта черхарда и тут сопротивляется.
 			//NpgsqlParameter _PFiltername = new NpgsqlParameter("@FilterName", $@"%{FilterName.ToLower().Replace(' ','%')}%");
-
 			//Question[] _Questions = _DbContext.Questions
 			//	.SqlQuery("Select * From dbo.\"Questions\" q Where Lower(q.\"Text\" ) Like '@FilterName'", _PFiltername)
 			//	.ToArray();

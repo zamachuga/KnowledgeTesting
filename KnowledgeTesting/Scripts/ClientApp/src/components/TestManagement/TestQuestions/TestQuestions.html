@@ -6,26 +6,19 @@
 
 	<!-- Выбор из списка существующих вопросов. -->
 	<div>
-		<!-- Управление фильтром. -->
-		<!-- <div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="button" v-model="FilterQuestion">Сброс</button>
-				<button class="btn btn-outline-secondary" type="button"
-					v-on:click="GetAllQuestions(FilterQuestion)">Найти</button>
-			</div>
-			<input type="text" class="form-control" placeholder="Введите фильтр вопросов" aria-label=""
-				aria-describedby="basic-addon1">
-		</div> -->
 		<!-- Выбор вопроса для добавления. -->
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="button" v-on:click="GetAllQuestions(FilterQuestion)">Обновить</button>
 				<button class="btn btn-outline-secondary" type="button" v-on:click="AddQuestionToTest()">Добавить вопрос в тест</button>
+				<button class="btn btn-outline-secondary" type="button" v-on:click="GetAllQuestions(FilterQuestion)">Обновить</button>
 			</div>
 			<select v-model="SelectedQuestionToAdd" class="custom-select" id="inputGroupSelect03">
 				<option selected>Выберите вопрос для добавления...</option>
 				<option v-for="question in listquestions" :key="question.Id" v-bind:value="question.Id">{{question.Text}}</option>
 			</select>
+			<!-- <div class="input-group-prepend">
+				<button class="btn btn-outline-secondary" type="button" v-on:click="">Новый</button>
+			</div> -->
 		</div>
 	</div>
 

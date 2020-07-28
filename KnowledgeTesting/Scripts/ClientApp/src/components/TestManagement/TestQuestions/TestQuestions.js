@@ -41,7 +41,6 @@ export default {
 						QuestionId: _This.SelectedQuestionToAdd
 					},
 					Data => {
-
 						_This.GetAllTestQuestions();
 					},
 					Error => { }
