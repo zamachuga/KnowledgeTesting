@@ -135,8 +135,9 @@ namespace KnowledgeTesting.BL
 		/// <returns></returns>
 		internal DAO.Question[] GetAllQuestions(string FilterName)
 		{
+			// TODO: настроить Like по запросу.
+			// эта черхарда и тут сопротивляется.
 			//NpgsqlParameter _PFiltername = new NpgsqlParameter("@FilterName", $@"%{FilterName.ToLower().Replace(' ','%')}%");
-
 			//Question[] _Questions = _DbContext.Questions
 			//	.SqlQuery("Select * From dbo.\"Questions\" q Where Lower(q.\"Text\" ) Like '@FilterName'", _PFiltername)
 			//	.ToArray();
