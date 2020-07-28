@@ -5,7 +5,7 @@ export default {
 	props: ['CurrentComponent'],
 	DataCue() {
 		return {
-			megalist: []
+			ListQuestions: []
 		};
 	},
 	created() {
@@ -20,14 +20,13 @@ export default {
 		// Получить список всех вопросов.
 		GetAllQuestions() {
 			let _This = this;
-			_This.megalist = [];
+			_This.ListQuestions = [];
 
 			Proxy.GetAllQuestions(
 				{ FilterName: null },
 				Data => {
-					_This.megalist = Data;
+					_This.ListQuestions = Data;
 					_This.$forceUpdate();
-					console.log(_This.megalist);
 				},
 				Error => { }
 			);
