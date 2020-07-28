@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Linq.SqlClient;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace KnowledgeTesting.BL
 {
@@ -101,6 +102,17 @@ namespace KnowledgeTesting.BL
 
 			return _Question;
 		}
+		
+		/// <summary>
+		/// Получить вопрос по коду.
+		/// </summary>
+		/// <param name="QuestionId">Код вопроса.</param>
+		/// <returns></returns>
+		internal Question GetQuestion(int QuestionId)
+		{
+			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
+			return _FinKey;
+		}
 
 		/// <summary>
 		/// Найти вопрос.
@@ -115,17 +127,6 @@ namespace KnowledgeTesting.BL
 			bool _IsExist = _FinKey != null || _FindText != null;
 
 			return _IsExist;
-		}
-
-		/// <summary>
-		/// Получить вопрос по коду.
-		/// </summary>
-		/// <param name="QuestionId">Код вопроса.</param>
-		/// <returns></returns>
-		internal Question GetQuestion(int QuestionId)
-		{
-			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
-			return _FinKey; 
 		}
 
 		/// <summary>

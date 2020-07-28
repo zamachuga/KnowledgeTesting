@@ -197,6 +197,7 @@
     <Compile Include="BL\DAO\TestQuestions.cs" />
     <Compile Include="BL\DAO\TestingResult.cs" />
     <Compile Include="BL\DTO\Question.cs" />
+    <Compile Include="BL\DTO\QuestionAnswers.cs" />
     <Compile Include="BL\DTO\Test.cs" />
     <Compile Include="BL\DB\PgSql\DbPgSqlContext.cs" />
     <Compile Include="BL\DTO\TestQuestions.cs" />
