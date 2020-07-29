@@ -2,6 +2,7 @@
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Linq.SqlClient;
 using System.Data.SqlClient;
 using System.Linq;
@@ -54,10 +55,10 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public void SetCorrectAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
-			DAO.QuestionAnswers _Answer = _DbContext.QuestionAnswers.Find(Question.Id, Answer.Id);
+			DAO.QuestionAnswers _QuestionAnswer = _DbContext.QuestionAnswers.Find(Question.Id, Answer.Id);
 			DAO.QuestionAnswers _CurrentCorrectAnswer = _DbContext.QuestionAnswers.SingleOrDefault(x => x.QuestionId == Question.Id & x.IsCorrect);
 
-			if (_Answer == null) throw new Exception("Правильный ответ должен содержаться в вопросе.");
+			if (_QuestionAnswer == null) throw new Exception("Правильный ответ должен содержаться в вопросе.");
 
 			if (_CurrentCorrectAnswer != null)
 			{
@@ -65,7 +66,8 @@ namespace KnowledgeTesting.BL
 				else _CurrentCorrectAnswer.IsCorrect = false;
 			}
 
-			_Answer.IsCorrect = true;
+			_QuestionAnswer.IsCorrect = true;
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>

@@ -12,7 +12,8 @@ namespace KnowledgeTesting.Controllers
 	{
 		TestManagement m_TestManagement = new TestManagement();
 		QuestionManagement m_QuestionManagement = new QuestionManagement();
-		BL.DB.PgSql.DbPgSqlContext _DbContext = BL.DB.PgSql.DbPgSqlContext.Instance();
+		AnswerManagement m_AnswerManagement = new AnswerManagement();
+		//BL.DB.PgSql.DbPgSqlContext _DbContext = BL.DB.PgSql.DbPgSqlContext.Instance();
 
 		public ActionResult Index()
 		{
@@ -139,6 +140,11 @@ namespace KnowledgeTesting.Controllers
 			return _Json;
 		}
 
+		/// <summary>
+		/// Добавить вопрос в тест.
+		/// </summary>
+		/// <param name="DtoTestQuestion"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public string AddQuestionToTest(DTO.TestQuestions DtoTestQuestion)
 		{
@@ -148,6 +154,20 @@ namespace KnowledgeTesting.Controllers
 			if (_Test != null && _Question != null)
 				m_TestManagement.AddQuestion(_Test, _Question);
 
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Установить правильный ответ на вопрос.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string SetCorrectAnswer(DTO.QuestionAnswers CorrectAnswer)
+		{
+			DAO.Question _Question = m_QuestionManagement.GetQuestion(CorrectAnswer.QuestionId);
+			DAO.Answer _Answer = m_AnswerManagement.GetAnswer(CorrectAnswer.AnswerId);
+
+			m_QuestionManagement.SetCorrectAnswer(_Question, _Answer);
 			return string.Empty;
 		}
 	}
