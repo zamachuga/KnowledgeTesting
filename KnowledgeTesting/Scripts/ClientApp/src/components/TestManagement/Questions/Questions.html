@@ -16,6 +16,7 @@
 			<td>{{question.Id}}</td>
 			<td>{{question.Text}}</td>
 			<td>
+				<!-- Отображение вопросов. -->
 				<div v-for="answer in question.Answers" class="input-group mb-3">
 					<input :id="answer.AnswerId" :value="answer.AnswerText" type="text" class="form-control">
 					<input v-if="answer.IsCorrect" :id="answer.QuestionId+'#'+answer.AnswerId" type="text" class="form-control"
@@ -35,6 +36,11 @@
 								v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)">
 						</div>
 					</div> -->
+				</div>
+
+				<!-- Добавление нового вопроса. -->
+				<div>
+					<button type="button" class="btn btn-secondary" v-on:click="">Добавить вопрос</button>
 				</div>
 			</td>
 		</tr>
