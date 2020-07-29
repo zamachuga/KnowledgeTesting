@@ -1,0 +1,12 @@
+<div>
+	<h3>Вопрос: {{QuestionText}}</h3>
+
+	<input v-model="QuestionText" type="text" class="form-control" placeholder="Введите текст нового ответа" aria-label=""
+		aria-describedby="basic-addon1">
+
+	<button v-if="CurrentComponent.Action == 'Create'" type="button" class="btn btn-secondary"
+		v-on:click="EventCreate(QuestionText)">Создать</button>
+	<button v-if="CurrentComponent.Action == 'Edit'" type="button" class="btn btn-secondary"
+		v-on:click="EventEdit()">Сохранить</button>
+	<button type="button" class="btn btn-secondary" v-on:click="CloseComponent()">Закрыть</button>
+</div>

@@ -2,8 +2,9 @@
 	<h3>Управление вопросами</h3>
 
 	<div>
-		<button type="button" class="btn btn-secondary" v-on:click="">Создать</button>
+		<button type="button" class="btn btn-secondary" v-on:click="GoCreateQuestion()">Создать</button>
 		<button type="button" class="btn btn-secondary" v-on:click="GetAllQuestions()">Обновить</button>
+		<button type="button" class="btn btn-secondary" v-on:click="$emit('HideChildComponent')">Закрыть</button>
 	</div>
 
 	<table class="table">
@@ -14,27 +15,46 @@
 		</tr>
 		<tr v-for="question in ListQuestions">
 			<td>{{question.Id}}</td>
-			<td>{{question.Text}}</td>
 			<td>
+				{{question.Text}}
+				<div>
+					<button type="button" class="btn btn-secondary"
+						v-on:click="GoEditQuestion(question.Id, question.Text)">Редактировать</button>
+				</div>
+			</td>
+			<td>
+				<!-- Отображение вопросов. -->
 				<div v-for="answer in question.Answers" class="input-group mb-3">
 					<input :id="answer.AnswerId" :value="answer.AnswerText" type="text" class="form-control">
 					<input v-if="answer.IsCorrect" :id="answer.QuestionId+'#'+answer.AnswerId" type="text" class="form-control"
-						v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)" value="Правильный" readonly>
+						v-on:click="" value="Правильный" readonly>
 					<button v-if="answer.IsCorrect == false" :id="answer.QuestionId+'#'+answer.AnswerId" type="button"
 						class="btn btn-secondary" v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)">Выбрать</button>
 					<button v-if="answer.IsCorrect == false" :id="answer.QuestionId+'#'+answer.AnswerId" type="button"
-						class="btn btn-secondary" v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)">Удалить</button>
-					<!-- Что-то не зашло сделать красиво с чек-боксами. Так и не захотел адекватно работать с ними.
+						class="btn btn-secondary" v-on:click="RemoveAnswer(answer.QuestionId, answer.AnswerId)">Удалить</button>
+				</div>
+
+				<!-- Выбор ответа для добавления. -->
+				<div>
+					<div class="input-group mb-3">
+						<!-- Выбор существующего. -->
 						<div class="input-group-prepend">
-						<div class="input-group-text">
-							<input v-if="answer.IsCorrect" :id="answer.QuestionId+'#'+answer.AnswerId" type="checkbox"
-								aria-label="Checkbox for following text input"
-								v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)" checked>
-							<input v-if="answer.IsCorrect == false" :id="answer.QuestionId+'#'+answer.AnswerId" type="checkbox"
-								aria-label="Checkbox for following text input"
-								v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)">
+							<button class="btn btn-outline-secondary" type="button"
+								v-on:click="AddAnswerToQuestion(question.Id, SelectedAnswerToAdd)">Добавить ответ</button>
+							<button class="btn btn-outline-secondary" type="button" v-on:click="GetAllAnswers()">Обновить</button>
 						</div>
-					</div> -->
+						<select v-model="SelectedAnswerToAdd" class="custom-select" id="inputGroupSelect03">
+							<option selected>Выбор ответа для добавления...</option>
+							<option v-for="answer in ListAnswers" :key="answer.Id" v-bind:value="answer.Id">{{answer.Text}}
+							</option>
+						</select>
+
+						<!-- Создание нового -->
+						<button v-on:click="CreateAnswerToQuestion(question.Id, TextNewAnswer)" class="btn btn-outline-secondary"
+							type="button">Создать</button>
+						<input v-model="TextNewAnswer" type="text" class="form-control" placeholder="Введите текст нового ответа"
+							aria-label="" aria-describedby="basic-addon1">
+					</div>
 				</div>
 			</td>
 		</tr>

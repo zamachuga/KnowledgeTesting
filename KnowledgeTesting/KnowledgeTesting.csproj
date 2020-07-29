@@ -196,6 +196,8 @@
     <Compile Include="BL\DAO\Test.cs" />
     <Compile Include="BL\DAO\TestQuestions.cs" />
     <Compile Include="BL\DAO\TestingResult.cs" />
+    <Compile Include="BL\DTO\Answer.cs" />
+    <Compile Include="BL\DTO\NewAnswerToQuestion.cs" />
     <Compile Include="BL\DTO\Question.cs" />
     <Compile Include="BL\DTO\QuestionAnswers.cs" />
     <Compile Include="BL\DTO\Test.cs" />

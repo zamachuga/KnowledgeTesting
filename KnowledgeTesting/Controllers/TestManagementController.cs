@@ -12,13 +12,22 @@ namespace KnowledgeTesting.Controllers
 	{
 		TestManagement m_TestManagement = new TestManagement();
 		QuestionManagement m_QuestionManagement = new QuestionManagement();
-		BL.DB.PgSql.DbPgSqlContext _DbContext = BL.DB.PgSql.DbPgSqlContext.Instance();
+		AnswerManagement m_AnswerManagement = new AnswerManagement();
+		//BL.DB.PgSql.DbPgSqlContext _DbContext = BL.DB.PgSql.DbPgSqlContext.Instance();
 
+		/// <summary>
+		/// Стартовая страница приложения.
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult Index()
 		{
 			return View();
 		}
 
+		/// <summary>
+		/// Получить список всех тестов.
+		/// </summary>
+		/// <returns></returns>
 		[HttpPost]
 		public string GetAllTests()
 		{
@@ -63,6 +72,11 @@ namespace KnowledgeTesting.Controllers
 			return string.Empty;
 		}
 
+		/// <summary>
+		/// Создать тест.
+		/// </summary>
+		/// <param name="DtoTest"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public string CreateTest(DTO.Test DtoTest)
 		{
@@ -139,6 +153,11 @@ namespace KnowledgeTesting.Controllers
 			return _Json;
 		}
 
+		/// <summary>
+		/// Добавить вопрос в тест.
+		/// </summary>
+		/// <param name="DtoTestQuestion"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public string AddQuestionToTest(DTO.TestQuestions DtoTestQuestion)
 		{
@@ -148,6 +167,108 @@ namespace KnowledgeTesting.Controllers
 			if (_Test != null && _Question != null)
 				m_TestManagement.AddQuestion(_Test, _Question);
 
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Установить правильный ответ на вопрос.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string SetCorrectAnswer(DTO.QuestionAnswers CorrectAnswer)
+		{
+			DAO.Question _Question = m_QuestionManagement.GetQuestion(CorrectAnswer.QuestionId);
+			DAO.Answer _Answer = m_AnswerManagement.GetAnswer(CorrectAnswer.AnswerId);
+
+			m_QuestionManagement.SetCorrectAnswer(_Question, _Answer);
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Удалить ответ из вопроса.
+		/// </summary>
+		/// <param name="QuestionAnswer"></param>
+		/// <returns></returns>
+		[HttpPost]
+		public string RemoveAnswerFromQuestion(DTO.QuestionAnswers QuestionAnswer)
+		{
+			DAO.QuestionAnswers _QuestionAnswer = m_QuestionManagement.GetAnswer(QuestionAnswer.QuestionId, QuestionAnswer.AnswerId);
+
+			m_QuestionManagement.RemoveAnswer(_QuestionAnswer);
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Получить все ответы.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string GetAllAnswers()
+		{
+			DAO.Answer[] _DaoAnswers = m_AnswerManagement.GetAllAnswers();
+			DTO.Answer[] _DtoAnswers = Utils.ConverObjectByJson<DTO.Answer[]>(_DaoAnswers);
+
+			string _Json = Utils.JsonSerialize(_DtoAnswers);
+			return _Json;
+		}
+
+		/// <summary>
+		/// Добавить ответ в вопрос.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string AddAnswerToQuestion(DTO.QuestionAnswers QuestionAnswer)
+		{
+			DAO.Question _Question = m_QuestionManagement.GetQuestion(QuestionAnswer.QuestionId);
+			DAO.Answer _Answer = m_AnswerManagement.GetAnswer(QuestionAnswer.AnswerId);
+
+			m_QuestionManagement.AddAnswer(_Question, _Answer);
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Создать новый ответ для вопроса.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string CreateAnswerToQuestion(DTO.NewAnswerToQuestion NewAnswerToQuestion)
+		{
+			DAO.Answer _Answer = new DAO.Answer() { Text = NewAnswerToQuestion.AnswerText };
+			DAO.Question _Question = m_QuestionManagement.GetQuestion(NewAnswerToQuestion.QuestionId);
+
+			m_AnswerManagement.CreateAnswer(_Answer);
+
+			_Answer = m_AnswerManagement.GetAnswer(NewAnswerToQuestion.AnswerText);
+			if (_Answer != null)
+				m_QuestionManagement.AddAnswer(_Question, _Answer);
+
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Создать вопрос.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string CreateQuestion(DTO.Question DtoQuestion)
+		{
+			DAO.Question _DaoQuestion = new DAO.Question() { Text = DtoQuestion.Text };
+
+			m_QuestionManagement.CreateQuestion(_DaoQuestion);
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Редактировать вопрос.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string EditQuestion(DTO.Question DtoQuestion)
+		{
+			DAO.Question _DaoQuestion = m_QuestionManagement.GetQuestion(DtoQuestion.Id);
+			_DaoQuestion.Text = DtoQuestion.Text;
+
+			m_QuestionManagement.SaveQuestion(_DaoQuestion);
 			return string.Empty;
 		}
 	}
