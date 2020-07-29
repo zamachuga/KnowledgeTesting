@@ -10,8 +10,13 @@ export default {
 		return {
 			// Текущий компонент.
 			CurrentComponent: {
+				// Какой подчиненный компонент необходимо отобразить.
+				// null - главный компонент.
 				Component: null,
-				Action: null
+				// Действие ожидаемое от Component.
+				Action: null,
+				// Содержит объект параметров для Component.
+				Parameters: null
 			},
 			// Модель теста с которой работаем на текущий момент.
 			// Представление "TestView".
@@ -29,7 +34,7 @@ export default {
 	},
 	methods: {
 		// Перейти к управлению вопросами.
-		GoQuestion(){
+		GoQuestion() {
 			let _This = this;
 
 			_This.CurrentComponent.Component = ComponentQuestions;
@@ -59,7 +64,7 @@ export default {
 		// Перейти к Создать тест.
 		GoCreateTest() {
 			let _This = this;
-			
+
 			_This.ModelTest.Id = null;
 			_This.ModelTest.Name = null;
 			_This.ModelTest.Description = null;
@@ -71,7 +76,7 @@ export default {
 		// Перейти к Редактировать тест.
 		GoEditTest(IdTest) {
 			let _This = this;
-			
+
 			Proxy.GetTest(
 				{ Id: IdTest },
 				Data => {
@@ -118,9 +123,9 @@ export default {
 		},
 
 		// Скрыть дочерний компонент.
-		HideChildComponent(){
+		HideChildComponent() {
 			let _This = this;
-			
+
 			_This.CurrentComponent.Component = null;
 		}
 	},

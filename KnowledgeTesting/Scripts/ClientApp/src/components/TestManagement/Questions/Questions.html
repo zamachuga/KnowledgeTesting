@@ -24,7 +24,7 @@
 						class="btn btn-secondary" v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)">Выбрать</button>
 					<button v-if="answer.IsCorrect == false" :id="answer.QuestionId+'#'+answer.AnswerId" type="button"
 						class="btn btn-secondary" v-on:click="SetCorrectAnswer(answer.QuestionId, answer.AnswerId)">Удалить</button>
-					<!-- Что-то не зашло сделать красиво с чек-боксами. Так и не захотел адекватно работать с ними.
+					<!-- Что-то не зашло сделать красиво с чек-боксами. Так и не смог адекватно работать с ними.
 						<div class="input-group-prepend">
 						<div class="input-group-text">
 							<input v-if="answer.IsCorrect" :id="answer.QuestionId+'#'+answer.AnswerId" type="checkbox"
