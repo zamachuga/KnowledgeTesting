@@ -8,7 +8,7 @@
 2. Серверная часть - стандартный C# AspNet.
 3. Клиентская чать (VueJs):
 
-Потребуется Visual Studio Code.
+Потребуется Visual Studio Code и NodeJs(для компиляции webpack и отслеживания зависимостей).
 
 Открыть папку "Scripts/ClientApp".
 
