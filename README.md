@@ -29,6 +29,6 @@ PS: в проекте Visual Studio лучше настроить, чтобы н
 Компилируем в VSCode терминале командой "npm run build". На выходе получим файл "Scripts\ClientApp\dist\build.js" (+ дополнительные). Всё.
 Стартовая страница в проекте Visual Studio уже настравлена на файл скомпилированной версии клиента (поэтому было бесполезно запускать просмотр до компиляции клиента).
 
-ERD:
+# ERD:
 
 ![ERD](https://github.com/zamachuga/KnowledgeTesting/blob/master/ERD.JPG)
