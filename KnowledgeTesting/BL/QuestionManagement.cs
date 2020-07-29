@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Linq.SqlClient;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 
 namespace KnowledgeTesting.BL
@@ -35,6 +36,7 @@ namespace KnowledgeTesting.BL
 			};
 
 			_DbContext.QuestionAnswers.Add(_QuestionAnswers);
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -89,6 +91,7 @@ namespace KnowledgeTesting.BL
 			if (IsExist(Question)) return;
 
 			_DbContext.Questions.Add(Question);
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -104,7 +107,7 @@ namespace KnowledgeTesting.BL
 
 			return _Question;
 		}
-		
+
 		/// <summary>
 		/// Получить вопрос по коду.
 		/// </summary>
@@ -149,6 +152,41 @@ namespace KnowledgeTesting.BL
 			Question[] _Questions = _DbContext.Questions.ToArray();
 
 			return _Questions;
+		}
+
+		/// <summary>
+		/// Удалить ответ из вопроса.
+		/// </summary>
+		/// <param name="QuestionAnswer"></param>
+		internal void RemoveAnswer(DAO.QuestionAnswers QuestionAnswer)
+		{
+			_DbContext.QuestionAnswers.Remove(QuestionAnswer);
+			_DbContext.SaveChanges();
+		}
+
+		/// <summary>
+		/// Получить ответ на вопрос.
+		/// (содержится в вопросе).
+		/// </summary>
+		/// <param name="QuestionId">Код вопроса.</param>
+		/// <param name="AnswerId">Код ответа.</param>
+		/// <returns></returns>
+		internal QuestionAnswers GetAnswer(int QuestionId, int AnswerId)
+		{
+			var _QuestionAnswer = _DbContext.QuestionAnswers.Where(x => x.QuestionId == QuestionId & x.AnswerId == AnswerId).FirstOrDefault();
+			return _QuestionAnswer;
+		}
+
+		/// <summary>
+		/// Сохранить изменение вопроса.
+		/// </summary>
+		/// <param name="Question">Вопрос.</param>
+		internal void SaveQuestion(DAO.Question Question)
+		{
+			if (_DbContext.Entry(Question).State == EntityState.Detached)
+				_DbContext.Entry(Question).State = EntityState.Modified;
+
+			_DbContext.SaveChanges();
 		}
 	}
 }

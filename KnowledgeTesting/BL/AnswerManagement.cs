@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KnowledgeTesting.BL.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,9 +19,11 @@ namespace KnowledgeTesting.BL
 		/// <param name="Text">Текст вопроса.</param>
 		public void CreateAnswer(DAO.Answer Answer)
 		{
+			if (Answer.Text.Replace(" ", "").Length <= 0) return;
 			if (IsExist(Answer)) return;
 
 			_DbContext.Answers.Add(Answer);
+			_DbContext.SaveChanges();
 		}
 
 		public DAO.Answer GetAnswer(int Id)
@@ -47,6 +50,15 @@ namespace KnowledgeTesting.BL
 
 			bool _IsExist = _FinKey != null || _FindText != null;
 			return _IsExist;
+		}
+
+		/// <summary>
+		/// Получить все ответы.
+		/// </summary>
+		/// <returns></returns>
+		internal Answer[] GetAllAnswers()
+		{
+			return _DbContext.Answers.ToArray();
 		}
 	}
 }

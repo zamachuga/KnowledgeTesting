@@ -2,6 +2,7 @@ import Proxy from './api-proxy.js';
 import ComponentTest from './Test/test-component.vue';
 import ComponentTestQuestions from './TestQuestions/TestQuestions-component.vue';
 import ComponentQuestions from './Questions/Questions-component.vue';
+import ComponentQuestion from './Question/Question-component.vue';
 
 export default {
 	name: 'TestManagement',
@@ -132,6 +133,7 @@ export default {
 	components: {
 		ComponentTest,
 		ComponentTestQuestions,
-		ComponentQuestions
+		ComponentQuestions,
+		ComponentQuestion
 	}
 };

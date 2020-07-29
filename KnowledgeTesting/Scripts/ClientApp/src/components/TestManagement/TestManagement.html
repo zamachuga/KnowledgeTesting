@@ -2,7 +2,7 @@
 	<h1>Управление тестами</h1>
 
 	<!-- Динамическая смена компонента. -->
-	<component v-bind:is="CurrentComponent.Component" v-bind:ModelTest="ModelTest"
+	<component v-bind:is="CurrentComponent.Component" v-bind:ModelTest="ModelTest" v-bind:storage="storage"
 		v-bind:CurrentComponent="CurrentComponent" v-on:HideChildComponent="HideChildComponent()"
 		v-on:IsChanged="GetListTests()"></component>
 
