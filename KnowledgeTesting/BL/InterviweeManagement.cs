@@ -16,11 +16,12 @@ namespace KnowledgeTesting.BL
 		public void CreateInterviwee(DAO.Interviwee Interviwee)
 		{
 			if (string.IsNullOrEmpty(Interviwee.FirstName)) throw new Exception("Пустое имя.");
-			if (string.IsNullOrEmpty(Interviwee.LasName)) throw new Exception("Пустая фамилия.");
+			if (string.IsNullOrEmpty(Interviwee.LastName)) throw new Exception("Пустая фамилия.");
 			if (string.IsNullOrEmpty(Interviwee.SecondName)) throw new Exception("Пустое отчество.");
 			if (IsExist(Interviwee)) return;
 
 			_DbContext.Interviwees.Add(Interviwee);
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
@@ -29,7 +30,7 @@ namespace KnowledgeTesting.BL
 		public DAO.Interviwee GetInterviwee(string LasName, string FirstName, string SecondName)
 		{
 			var _Test = _DbContext.Interviwees.Where(x =>
-				x.LasName.ToLower().Replace(" ", "") == LasName.ToLower().Replace(" ", "")
+				x.LastName.ToLower().Replace(" ", "") == LasName.ToLower().Replace(" ", "")
 				&& x.FirstName.ToLower().Replace(" ", "") == FirstName.ToLower().Replace(" ", "")
 				&& x.SecondName.ToLower().Replace(" ", "") == SecondName.ToLower().Replace(" ", "")
 			).FirstOrDefault();
@@ -52,7 +53,7 @@ namespace KnowledgeTesting.BL
 		private bool IsExist(DAO.Interviwee Interviwee)
 		{
 			DAO.Interviwee _FinKey = GetInterviwee(Interviwee.Id);
-			DAO.Interviwee _FindText = GetInterviwee(Interviwee.LasName, Interviwee.FirstName, Interviwee.SecondName);
+			DAO.Interviwee _FindText = GetInterviwee(Interviwee.LastName, Interviwee.FirstName, Interviwee.SecondName);
 
 			bool _IsExist = _FinKey != null || _FindText != null;
 			return _IsExist;

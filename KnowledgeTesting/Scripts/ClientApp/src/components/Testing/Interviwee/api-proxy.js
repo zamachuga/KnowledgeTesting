@@ -1,20 +1,12 @@
-import Proxy from './api-proxy.js';
+import ServiceAxios from '../../../services/ServiceAxios.js';
+
+let _Controller = "Testing";
+
+let _ActionAuth = "Auth";
 
 export default {
-	name: 'Testing',
-	props: ['storage'],
-	data() {
-		return {
-			// Текущий компонент.
-			CurrentComponent: {
-				// Какой подчиненный компонент необходимо отобразить.
-				// null - главный компонент.
-				Component: null,
-				// Действие ожидаемое от Component.
-				Action: null,
-				// Содержит объект параметров для Component.
-				Parameters: null
-			}
-		};
+	// Получить список всех тестов.
+	Auth(Request, CallbackTry, CallbackCath) {
+		ServiceAxios.ServiceAxios.PostApi(_Controller, _ActionAuth, Request, CallbackTry, CallbackCath);
 	}
 };

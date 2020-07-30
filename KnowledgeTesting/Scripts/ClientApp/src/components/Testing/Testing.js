@@ -22,6 +22,19 @@ export default {
 			Interviewee: null
 		};
 	},
+	created() {
+		this.storage.Bus.$on('EventAuth', this.EventAuth);
+		this.storage.Bus.$on('EventLogOut', this.EventLogOut);
+	},
+	methods: {
+		EventAuth(EventData) {
+			this.Interviewee = EventData;
+		},
+
+		EventLogOut(){
+			this.Interviewee = null;
+		}
+	},
 	components: {
 		ComponentInterviwee,
 		ComponentTestingProcess

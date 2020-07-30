@@ -1,3 +1,2 @@
-<template src='./Interviwee.html'>
-<script src='./Interviwee.js'>
-<style src='./Interviwee.css'>
+<script src='./Interviwee.js'/>
+<template src='./Interviwee.html'/>
