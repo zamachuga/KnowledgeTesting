@@ -9,9 +9,14 @@ using DAO = KnowledgeTesting.BL.DAO;
 
 namespace KnowledgeTesting.Controllers
 {
+	/// <summary>
+	/// Прохождение тестирования.
+	/// </summary>
 	public class TestingController : Controller
 	{
 		InterviweeManagement m_InterviweeManagement = new InterviweeManagement();
+		TestManagement m_TestManagement = new TestManagement();
+		Testing m_Testing = new Testing();
 
 		/// <summary>
 		/// Аутентификация тестируемого.
@@ -33,6 +38,26 @@ namespace KnowledgeTesting.Controllers
 			string _Json = Utils.JsonSerialize(_DtoInterviwee);
 
 			return _Json;
+		}
+
+		/// <summary>
+		/// Начать прохождение теста.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public DTO.InterviweeTest StartTest(DTO.InterviweeTest DtoInterviweeTest)
+		{
+			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
+			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(_DtoInterviweeTest.InterviweeId);
+			DAO.Test _DaoTest = m_TestManagement.GetTest(_DtoInterviweeTest.TestId);
+
+			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.StartTest(_DaoInterviwee, _DaoTest);
+			DAO.Question _DaoQuestion = m_Testing.GetNextQuestion(_DaoInterviweeTest);
+
+			_DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
+			_DtoInterviweeTest.CurrentQuestion = Utils.ConverObjectByJson<DTO.Question>(_DaoQuestion);
+
+			return _DtoInterviweeTest;
 		}
 	}
 }

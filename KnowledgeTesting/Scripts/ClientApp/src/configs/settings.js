@@ -1,7 +1,7 @@
 class ClassSettingsGlobal {
 	constructor(){
 		this.m_UrlApi = "http://localhost:57735/";
-		this.m_IsDebug = true;
+		this.m_IsDebug = false;
 	}
 
 	// Базовый URL к Api.

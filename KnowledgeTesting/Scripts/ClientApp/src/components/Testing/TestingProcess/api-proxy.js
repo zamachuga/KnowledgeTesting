@@ -1,12 +1,12 @@
 import ServiceAxios from '../../../services/ServiceAxios.js';
 
-let _Controller = "TestManagement";
+let _Controller = "Testing";
 
-let _ActionGetAllTests = "GetAllTests";
+let _Action = "";
 
 export default {
 	// Получить список всех тестов.
-	GetAllTests(Request, CallbackTry, CallbackCath) {
-		ServiceAxios.ServiceAxios.PostApi(_Controller, _ActionGetAllTests, Request, CallbackTry, CallbackCath);
+	Action(Request, CallbackTry, CallbackCath) {
+		ServiceAxios.ServiceAxios.PostApi(_Controller, _Action, Request, CallbackTry, CallbackCath);
 	}
 };

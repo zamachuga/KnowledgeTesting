@@ -1,4 +1,26 @@
-<div>
+<!--  v-if="this.Interviewee" -->
+<div class="Component">
 	<h5>Процесс тестирования.</h5>
-	Выберите тест. Ответьте на вопросы.
+	Выберите тест и начни прохождение. Предыдущее прохождение автоматически продолжится.
+
+	<!-- Выбор теста для прохождения. -->
+	<div>
+		<div class="input-group mb-3">
+			<button class="btn btn-secondary" type="button" v-on:click="">Обновить</button>
+
+			<select v-model="SelectedTestId" class="custom-select" id="inputGroupSelect03">
+				<option selected>Выбор теста для прохождения...</option>
+				<option v-for="test in ListTests" :key="test.Id" v-bind:value="test.Id">{{test.Name}}
+				</option>
+			</select>
+		</div>
+
+		<button class="btn btn-secondary" type="button" v-on:click="">Начать/продолжить прохождение</button>
+	</div>
+	
+	<!-- Прохождение теста. -->
+	<br>
+	<div>
+		<button class="btn btn-secondary" type="button" v-on:click="">Следующий вопрос</button>
+	</div>
 </div>
