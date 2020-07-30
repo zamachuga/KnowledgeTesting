@@ -26,7 +26,7 @@ namespace KnowledgeTestingTests
 			DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 			using (var _Trns = _DbContext.Database.BeginTransaction())
 			{
-				Interviwee _Interviwee = new DAO.Interviwee() { FirstName = "sdad", LasName = "adasd" };
+				Interviwee _Interviwee = new DAO.Interviwee() { FirstName = "sdad", LastName = "adasd" };
 				_Interviwee = _DbContext.Interviwees.Add(_Interviwee);
 				Test _Test = new DAO.Test() { Name = "sdasdasd" };
 				_Test = _DbContext.Tests.Add(_Test);

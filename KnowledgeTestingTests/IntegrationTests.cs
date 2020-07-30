@@ -157,7 +157,7 @@ namespace KnowledgeTestingTests
 
 			DAO.Interviwee _Interviwee = new DAO.Interviwee()
 			{
-				LasName = StaticInterviwee.LasName,
+				LastName = StaticInterviwee.LasName,
 				FirstName = StaticInterviwee.FirstName,
 				SecondName = StaticInterviwee.SecondName
 			};

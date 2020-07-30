@@ -9,7 +9,9 @@
 	<!-- Текущий компонент Управление тестами. -->
 	<div v-if="CurrentComponent.Component == null">
 		<button type="button" class="btn btn-secondary" v-on:click="GoCreateTest()">Создать</button>
+		<button type="button" class="btn btn-secondary" v-on:click="GetListTests()">Обновить</button>
 		<br>
+		
 		<!-- Список всех тетстов. -->
 		<table class="table">
 			<tr>
@@ -32,6 +34,7 @@
 				</td>
 			</tr>
 		</table>
+
 		<div>
 			<button type="button" class="btn btn-secondary" v-on:click="GoQuestion()">Управление вопросами</button>
 		</div>

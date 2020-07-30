@@ -1,0 +1,29 @@
+<div>
+	<h5>Анкета тестируемого</h5>
+
+	<!-- FIO -->
+	<div v-if="!this.Interviewee">
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<input v-model="FIO.LastName" type="text" class="form-control" placeholder="Фамилия" aria-label="Username"
+					aria-describedby="basic-addon1">
+				<input v-model="FIO.FirstName" type="text" class="form-control" placeholder="Имя" aria-label="Username"
+					aria-describedby="basic-addon1">
+				<input v-model="FIO.SecondName" type="text" class="form-control" placeholder="Отчетство" aria-label="Username"
+					aria-describedby="basic-addon1">
+			</div>
+		</div>
+
+		<button type="button" class="btn btn-secondary" v-on:click="Auth">Вход/Регистрация</button>
+	</div>
+
+	<!-- Exit -->
+	<div v-else>
+		Добро пожаловать, <b>{{this.Interviewee.LastName}} {{this.Interviewee.FirstName}} {{this.Interviewee.SecondName}}</b>.
+		<br> Если выйти, продолжить прохождение теста можно позже.
+
+		<br>
+		<button type="button" class="btn btn-secondary" v-on:click="LogOut">Выход</button>
+	</div>
+
+</div>
