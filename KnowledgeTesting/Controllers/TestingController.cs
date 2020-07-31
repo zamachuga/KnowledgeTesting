@@ -45,7 +45,7 @@ namespace KnowledgeTesting.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		public DTO.InterviweeTest StartTest(DTO.InterviweeTest DtoInterviweeTest)
+		public string StartTest(DTO.InterviweeTest DtoInterviweeTest)
 		{
 			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
 			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(_DtoInterviweeTest.InterviweeId);
@@ -57,7 +57,34 @@ namespace KnowledgeTesting.Controllers
 			_DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
 			_DtoInterviweeTest.CurrentQuestion = Utils.ConverObjectByJson<DTO.Question>(_DaoQuestion);
 
-			return _DtoInterviweeTest;
+			DAO.QuestionAnswers[] _DaoQuestionAnswers = _DaoQuestion.Answers.ToArray();
+			DTO.QuestionAnswers[] _DtoQuestionAnswers = Utils.ConverObjectByJson<DTO.QuestionAnswers[]>(_DaoQuestionAnswers);
+
+			List<DTO.QuestionAnswers> _ListAnswers = new List<DTO.QuestionAnswers>();
+			foreach (var _DaoQuestionAnswer in _DaoQuestionAnswers)
+			{
+				_ListAnswers.Add(new DTO.QuestionAnswers() { 
+					AnswerId = _DaoQuestionAnswer.Answer.Id,
+					AnswerText = _DaoQuestionAnswer.Answer.Text,
+					IsCorrect = false,
+					QuestionId = _DaoQuestionAnswer.QuestionId
+				});
+			}
+
+			_DtoInterviweeTest.CurrentQuestion.Answers = _ListAnswers;
+
+			string _Json = Utils.JsonSerialize(_DtoInterviweeTest);
+			return _Json;
+		}
+
+		/// <summary>
+		/// Получить следующий вопрос.
+		/// </summary>
+		/// <returns></returns>
+		[HttpPost]
+		public string GetNextQuestion()
+		{
+			return string.Empty;
 		}
 	}
 }

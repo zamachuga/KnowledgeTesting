@@ -6,21 +6,38 @@
 	<!-- Выбор теста для прохождения. -->
 	<div>
 		<div class="input-group mb-3">
-			<button class="btn btn-secondary" type="button" v-on:click="">Обновить</button>
+			<button class="btn btn-secondary" type="button" v-on:click="GetAllTests()">Обновить</button>
 
 			<select v-model="SelectedTestId" class="custom-select" id="inputGroupSelect03">
 				<option selected>Выбор теста для прохождения...</option>
-				<option v-for="test in ListTests" :key="test.Id" v-bind:value="test.Id">{{test.Name}}
-				</option>
+				<option v-for="test in ListTests" :key="test.Id" v-bind:value="test.Id">{{test.Name}}</option>
 			</select>
 		</div>
 
-		<button class="btn btn-secondary" type="button" v-on:click="">Начать/продолжить прохождение</button>
+		<button v-if="InterviweeTest.Id == null" class="btn btn-secondary" type="button"
+			v-on:click="StartTest()">Начать/продолжить прохождение</button>
 	</div>
-	
+
 	<!-- Прохождение теста. -->
 	<br>
 	<div>
-		<button class="btn btn-secondary" type="button" v-on:click="">Следующий вопрос</button>
+		<div>
+			<button v-if="IsViewButtonNextQuestion" class="btn btn-secondary" type="button"
+				v-on:click="GetNextQuestion()">Следующий
+				вопрос</button>
+		</div>
+		<div>
+			Вопрос: {{InterviweeTest.CurrentQuestion.Text}}
+
+			<br>
+			Выберите ответ:
+			<select v-model="InterviweeTest.CurrentQuestion.SelectedAnswerId" class="custom-select" id="inputGroupSelect03">
+				<option selected>Выбор теста для прохождения...</option>
+				<option v-for="Answer in InterviweeTest.CurrentQuestion.Answers" :key="Answer.AnswerId"
+					v-bind:value="Answer.AnswerId">{{Answer.AnswerText}}</option>
+			</select>
+			<br><br>
+			<button class="btn btn-secondary" type="button" v-on:click="">Ответить</button>
+		</div>
 	</div>
 </div>
