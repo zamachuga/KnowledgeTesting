@@ -76,9 +76,6 @@ namespace KnowledgeTesting.Controllers
 			// Вопрос.
 			_DtoInterviweeTest = GetNextQuestion(_DtoInterviweeTest, _DaoInterviweeTest, _CurrentQuestion);
 
-			// Прогресс прохождения теста текстом.
-			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
-
 			string _Json = Utils.JsonSerialize(_DtoInterviweeTest);
 			return _Json;
 		}
@@ -101,15 +98,14 @@ namespace KnowledgeTesting.Controllers
 			// Ответ на вопрос.
 			DAO.Answer _Answer = m_AnswerManagement.GetAnswer(_DtoInterviweeTest.CurrentQuestion.SelectedAnswerId);
 			m_Testing.AnswerToQuestion(_DaoInterviweeTest, _CurrentQuestion, _Answer);
+			// Определим завершенность теста.
+			m_Testing.DetermineStatusComplete(_DaoInterviweeTest);
 
 			// Прохождение теста - обновление после ответа.
 			_DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
 
 			// Вопрос.
 			_DtoInterviweeTest = GetNextQuestion(_DtoInterviweeTest, _DaoInterviweeTest, _CurrentQuestion);
-
-			// Прогресс прохождения теста текстом.
-			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
 
 			string _Json = Utils.JsonSerialize(_DtoInterviweeTest);
 			return _Json;
@@ -139,6 +135,8 @@ namespace KnowledgeTesting.Controllers
 
 			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.GetTesting(DtoInterviweeTest.Id);
 			DTO.InterviweeTest _DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
+			// Прогресс прохождения теста текстом.
+			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
 
 			DtoInterviweeTest = _DtoInterviweeTest;
 			return _DaoInterviweeTest;

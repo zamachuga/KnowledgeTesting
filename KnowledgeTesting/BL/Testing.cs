@@ -45,6 +45,11 @@ namespace KnowledgeTesting.BL
 			return _InterviweeTest;
 		}
 
+		/// <summary>
+		/// Получить процесс тестирования.
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 		internal InterviweeTests GetTesting(int Id)
 		{
 			// Найдем незавершенный тест.
@@ -173,17 +178,19 @@ namespace KnowledgeTesting.BL
 		}
 
 		/// <summary>
-		/// Получить статус завершения теста.
+		/// Опделить статус завершения теста.
 		/// </summary>
 		/// <returns></returns>
-		public bool DetermineStatusComplete(DAO.InterviweeTests InterviweeTest)
+		public void DetermineStatusComplete(DAO.InterviweeTests InterviweeTest)
 		{
 			// Количество вопросов с ответом.
 			int _CounTestResults = _DbContext.TestingResults.Where(x => x.InterviweeTestsId == InterviweeTest.Id).Count();
 			// Количество вопросов в тесте.
 			int _CountTestQustions = _DbContext.TestQuestions.Where(x => x.TestId == InterviweeTest.TestId).Count();
 
-			return _CounTestResults >= _CountTestQustions;
+			// Сохраним в БД состояние теста.
+			InterviweeTest.IsComplete = _CounTestResults >= _CountTestQustions;
+			_DbContext.SaveChanges();
 		}
 	}
 }
