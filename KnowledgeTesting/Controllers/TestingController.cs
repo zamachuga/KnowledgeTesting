@@ -131,11 +131,13 @@ namespace KnowledgeTesting.Controllers
 		/// <returns></returns>
 		private DAO.InterviweeTests GetInterviweeTestById(ref DTO.InterviweeTest DtoInterviweeTest)
 		{
-			if (DtoInterviweeTest.Id <= 0) throw new ArgumentException("Не задан Id входящего параметра.") ;
+			if (DtoInterviweeTest.Id <= 0) throw new ArgumentException("Не задан Id входящего параметра.");
+			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
 
 			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.GetTesting(DtoInterviweeTest.Id);
-			DTO.InterviweeTest _DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
-			// Прогресс прохождения теста текстом.
+
+			// Прогресс прохождения теста.
+			Utils.CopyPropObects(_DtoInterviweeTest, _DaoInterviweeTest);
 			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
 
 			DtoInterviweeTest = _DtoInterviweeTest;

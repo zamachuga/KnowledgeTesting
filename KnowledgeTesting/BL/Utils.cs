@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
 using Newtonsoft.Json;
 
 namespace KnowledgeTesting.BL
 {
-	public class Utils
+	public static class Utils
 	{
 		/// <summary>
 		/// Сериализация объекта в строку JSON.
@@ -70,6 +71,38 @@ namespace KnowledgeTesting.BL
 			var _B = TextB.Replace(" ", "").ToLower();
 
 			return _A == _B;
+		}
+
+		/// <summary>
+		/// Копировать свойства одного объекта в другой.
+		/// </summary>
+		/// <typeparam name="T">Тип объекта.</typeparam>
+		/// <param name="ObjectDestination">Объект назначения.</param>
+		/// <param name="ObjectSource">Объект ресурсов.</param>
+		/// <returns></returns>
+		public static T CopyPropObects<T>(T ObjectDestination, object ObjectSource)
+		{
+			string[] _SrcPropertiesName = ObjectSource
+				.GetType()
+				.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+				.Select(x => x.Name).ToArray();
+			string[] _DestPropertiesName = ObjectDestination
+				.GetType()
+				.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+				.Select(x => x.Name).ToArray();
+
+			// Одинаковые свойства
+			string[] _PropertiesToCopy = _DestPropertiesName.Intersect(_SrcPropertiesName).ToArray();
+
+			// Заполним значения из одного объекта в другой.
+			foreach (var _PropertyName in _PropertiesToCopy)
+			{
+				object _Value = ObjectSource.GetType().GetProperty(_PropertyName).GetValue(ObjectSource);
+				PropertyInfo _Property = ObjectDestination.GetType().GetProperty(_PropertyName);
+				_Property.SetValue(ObjectDestination, _Value);
+			}
+
+			return ObjectDestination;
 		}
 	}
 }

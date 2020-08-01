@@ -54,6 +54,9 @@ namespace KnowledgeTesting.BL
 		{
 			// Найдем незавершенный тест.
 			DAO.InterviweeTests _InterviweeTest = _DbContext.InterviweeTests
+				.Include(x => x.Test)
+				.Include(x => x.Interviwee)
+				.Include(x => x.TestingResults)
 				.Where(x => x.Id == Id)
 				.SingleOrDefault();
 
