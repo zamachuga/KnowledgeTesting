@@ -39,6 +39,19 @@ export default {
 		}
 	},
 	methods: {
+		// Ответить на вопрос.
+		AnswerTheQuestion(){
+			let _This = this;
+
+			Proxy.AnswerTheQuestion(
+				_This.InterviweeTest,
+				Data => { 
+					_This.InterviweeTest = Data;
+				},
+				Error => { }
+			);
+		},
+
 		// Получить следующий вопрос.
 		GetNextQuestion() {
 			let _This = this;

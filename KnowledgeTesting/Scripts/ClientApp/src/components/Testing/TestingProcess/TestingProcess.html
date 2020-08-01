@@ -36,7 +36,7 @@
 					<option v-for="Answer in InterviweeTest.CurrentQuestion.Answers" :key="Answer.AnswerId"
 						v-bind:value="Answer.AnswerId">{{Answer.AnswerText}}</option>
 				</select>
-				<button class="btn btn-secondary" type="button" v-on:click="">Ответить</button>
+				<button class="btn btn-secondary" type="button" v-on:click="AnswerTheQuestion">Ответить</button>
 			</div>
 		</div>
 		

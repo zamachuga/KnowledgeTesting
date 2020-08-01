@@ -6,8 +6,14 @@ let _ControllerTesting = "Testing";
 let _ActionStartTest = "StartTest";
 let _ActionGetAllTests = ApiTestManagement.GetAllTests;
 let _ActionGetNextQuestion = "GetNextQuestion";
+let _ActionAnswerTheQuestion = "AnswerTheQuestion";
 
 export default {
+	// Ответить на вопрос.
+	AnswerTheQuestion(Request, CallbackTry, CallbackCath) {
+		ServiceAxios.ServiceAxios.PostApi(_ControllerTesting, _ActionAnswerTheQuestion, Request, CallbackTry, CallbackCath);
+	},
+
 	// Получить следующий вопрос.
 	GetNextQuestion(Request, CallbackTry, CallbackCath) {
 		ServiceAxios.ServiceAxios.PostApi(_ControllerTesting, _ActionGetNextQuestion, Request, CallbackTry, CallbackCath);

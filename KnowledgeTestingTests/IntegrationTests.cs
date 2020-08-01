@@ -190,7 +190,7 @@ namespace KnowledgeTestingTests
 
 			int _CountCompleteTeststBefore = _Interviwee.Tests.Count();				
 
-			DAO.InterviweeTests _InterviweeTests = _Testing.StartTest(_Interviwee, _Test);
+			DAO.InterviweeTests _InterviweeTests = _Testing.GetTesting(_Interviwee, _Test);
 
 			// Количество отвеченных вопросов 
 			// (в конце на 1 больше чем вопрсов из-за последнего прохода цикла для определения статуса завершения).

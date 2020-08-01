@@ -17,6 +17,7 @@ namespace KnowledgeTesting.Controllers
 		InterviweeManagement m_InterviweeManagement = new InterviweeManagement();
 		TestManagement m_TestManagement = new TestManagement();
 		QuestionManagement m_QuestionManagement = new QuestionManagement();
+		AnswerManagement m_AnswerManagement = new AnswerManagement();
 		Testing m_Testing = new Testing();
 
 		/// <summary>
@@ -49,79 +50,31 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string StartTest(DTO.InterviweeTest DtoInterviweeTest)
 		{
-			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
+			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(DtoInterviweeTest.InterviweeId);
+			DAO.Test _DaoTest = m_TestManagement.GetTest(DtoInterviweeTest.TestId);
+			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.GetTesting(_DaoInterviwee, _DaoTest, true);
+			DTO.InterviweeTest _DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
 
-			// Прохождение теста.
-			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(_DtoInterviweeTest.InterviweeId);
-			DAO.Test _DaoTest = m_TestManagement.GetTest(_DtoInterviweeTest.TestId);
-			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.StartTest(_DaoInterviwee, _DaoTest);
-			_DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
-
-			// Текущий вопрос для исключения.
-			DAO.Question _ExcludeQuestion = m_QuestionManagement.GetQuestion(DtoInterviweeTest.CurrentQuestion.Id);
-
-			// Вопрос.
-			DAO.Question _DaoQuestion = m_Testing.GetNextQuestion(_DaoInterviweeTest, _ExcludeQuestion);
-			_DtoInterviweeTest.CurrentQuestion = Utils.ConverObjectByJson<DTO.Question>(_DaoQuestion);
-
-			// Ответы на вопрос.
-			DAO.QuestionAnswers[] _DaoQuestionAnswers = _DaoQuestion.Answers.ToArray();
-			List<DTO.QuestionAnswers> _ListAnswers = new List<DTO.QuestionAnswers>();
-			foreach (var _DaoQuestionAnswer in _DaoQuestionAnswers)
-			{
-				_ListAnswers.Add(new DTO.QuestionAnswers()
-				{
-					AnswerId = _DaoQuestionAnswer.Answer.Id,
-					AnswerText = _DaoQuestionAnswer.Answer.Text,
-					IsCorrect = false,
-					QuestionId = _DaoQuestionAnswer.QuestionId
-				});
-			}
-			_DtoInterviweeTest.CurrentQuestion.Answers = _ListAnswers;
-
-			// Прогресс прохождения теста текстом.
-			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
-
-			string _Json = Utils.JsonSerialize(_DtoInterviweeTest);
+			string _Json = GetNextQuestion(_DtoInterviweeTest);
 			return _Json;
 		}
 
 		/// <summary>
 		/// Получить следующий вопрос.
 		/// </summary>
-		/// TODO: нужен рефакторинг.
-		/// <returns></returns>
 		[HttpPost]
 		public string GetNextQuestion(DTO.InterviweeTest DtoInterviweeTest)
 		{
 			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
 
 			// Прохождение теста.
-			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(_DtoInterviweeTest.InterviweeId);
-			DAO.Test _DaoTest = m_TestManagement.GetTest(_DtoInterviweeTest.TestId);
-			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.StartTest(_DaoInterviwee, _DaoTest);
+			DAO.InterviweeTests _DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
 
-			// Текущий вопрос для исключения.
-			DAO.Question _ExcludeQuestion = m_QuestionManagement.GetQuestion(DtoInterviweeTest.CurrentQuestion.Id);
+			// Текущий вопрос.
+			DAO.Question _CurrentQuestion = m_QuestionManagement.GetQuestion(DtoInterviweeTest.CurrentQuestion.Id);
 
 			// Вопрос.
-			DAO.Question _DaoQuestion = m_Testing.GetNextQuestion(_DaoInterviweeTest, _ExcludeQuestion);
-			_DtoInterviweeTest.CurrentQuestion = Utils.ConverObjectByJson<DTO.Question>(_DaoQuestion);
-
-			// Ответы на вопрос.
-			DAO.QuestionAnswers[] _DaoQuestionAnswers = _DaoQuestion.Answers.ToArray();
-			List<DTO.QuestionAnswers> _ListAnswers = new List<DTO.QuestionAnswers>();
-			foreach (var _DaoQuestionAnswer in _DaoQuestionAnswers)
-			{
-				_ListAnswers.Add(new DTO.QuestionAnswers()
-				{
-					AnswerId = _DaoQuestionAnswer.Answer.Id,
-					AnswerText = _DaoQuestionAnswer.Answer.Text,
-					IsCorrect = false,
-					QuestionId = _DaoQuestionAnswer.QuestionId
-				});
-			}
-			_DtoInterviweeTest.CurrentQuestion.Answers = _ListAnswers;
+			_DtoInterviweeTest = GetNextQuestion(_DtoInterviweeTest, _DaoInterviweeTest, _CurrentQuestion);
 
 			// Прогресс прохождения теста текстом.
 			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
@@ -133,8 +86,6 @@ namespace KnowledgeTesting.Controllers
 		/// <summary>
 		/// Ответить на вопрос.
 		/// </summary>
-		/// TODO: нужен рефакторинг.
-		/// <param name="DtoInterviweeTest"></param>
 		/// <returns></returns>
 		[HttpPost]
 		public string AnswerTheQuestion(DTO.InterviweeTest DtoInterviweeTest)
@@ -142,31 +93,20 @@ namespace KnowledgeTesting.Controllers
 			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
 
 			// Прохождение теста.
-			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(_DtoInterviweeTest.InterviweeId);
-			DAO.Test _DaoTest = m_TestManagement.GetTest(_DtoInterviweeTest.TestId);
-			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.StartTest(_DaoInterviwee, _DaoTest);
+			DAO.InterviweeTests _DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
 
-			// Текущий вопрос для исключения.
-			DAO.Question _ExcludeQuestion = m_QuestionManagement.GetQuestion(DtoInterviweeTest.CurrentQuestion.Id);
+			// Текущий вопрос.
+			DAO.Question _CurrentQuestion = m_QuestionManagement.GetQuestion(_DtoInterviweeTest.CurrentQuestion.Id);
+
+			// Ответ на вопрос.
+			DAO.Answer _Answer = m_AnswerManagement.GetAnswer(_DtoInterviweeTest.CurrentQuestion.SelectedAnswerId);
+			m_Testing.AnswerToQuestion(_DaoInterviweeTest, _CurrentQuestion, _Answer);
+
+			// Прохождение теста - обновление после ответа.
+			_DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
 
 			// Вопрос.
-			DAO.Question _DaoQuestion = m_Testing.GetNextQuestion(_DaoInterviweeTest, _ExcludeQuestion);
-			_DtoInterviweeTest.CurrentQuestion = Utils.ConverObjectByJson<DTO.Question>(_DaoQuestion);
-
-			// Ответы на вопрос.
-			DAO.QuestionAnswers[] _DaoQuestionAnswers = _DaoQuestion.Answers.ToArray();
-			List<DTO.QuestionAnswers> _ListAnswers = new List<DTO.QuestionAnswers>();
-			foreach (var _DaoQuestionAnswer in _DaoQuestionAnswers)
-			{
-				_ListAnswers.Add(new DTO.QuestionAnswers()
-				{
-					AnswerId = _DaoQuestionAnswer.Answer.Id,
-					AnswerText = _DaoQuestionAnswer.Answer.Text,
-					IsCorrect = false,
-					QuestionId = _DaoQuestionAnswer.QuestionId
-				});
-			}
-			_DtoInterviweeTest.CurrentQuestion.Answers = _ListAnswers;
+			_DtoInterviweeTest = GetNextQuestion(_DtoInterviweeTest, _DaoInterviweeTest, _CurrentQuestion);
 
 			// Прогресс прохождения теста текстом.
 			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
@@ -186,6 +126,65 @@ namespace KnowledgeTesting.Controllers
 			int _CorrectAnswers = m_Testing.GetCountCorrectAnswers(DaoInterviweeTest);
 
 			return $"пройдено вопросов [{_QuestionsComplete}/{_Questions}] правильных ответов [{_CorrectAnswers}]";
+		}
+
+		/// <summary>
+		/// Получить прохождение теста.
+		/// </summary>
+		/// <param name="DtoInterviweeTest"></param>
+		/// <returns></returns>
+		private DAO.InterviweeTests GetInterviweeTestById(ref DTO.InterviweeTest DtoInterviweeTest)
+		{
+			if (DtoInterviweeTest.Id <= 0) throw new ArgumentException("Не задан Id входящего параметра.") ;
+
+			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.GetTesting(DtoInterviweeTest.Id);
+			DTO.InterviweeTest _DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
+
+			DtoInterviweeTest = _DtoInterviweeTest;
+			return _DaoInterviweeTest;
+		}
+
+		/// <summary>
+		/// Получить следующий вопрос.
+		/// </summary>
+		/// <returns></returns>
+		private DTO.InterviweeTest GetNextQuestion(
+			DTO.InterviweeTest DtoInterviweeTest,
+			DAO.InterviweeTests DaoInterviweeTest,
+			DAO.Question CurrentQuestion)
+		{
+			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
+
+			// Вопрос.
+			DAO.Question _DaoQuestion = m_Testing.GetNextQuestion(DaoInterviweeTest, CurrentQuestion);
+
+			if (_DaoQuestion == null)
+			{
+				_DtoInterviweeTest.CurrentQuestion = new DTO.Question();
+				return _DtoInterviweeTest;
+			}
+
+			if (_DaoQuestion != null)
+			{
+				_DtoInterviweeTest.CurrentQuestion = Utils.ConverObjectByJson<DTO.Question>(_DaoQuestion);
+
+				// Ответы на вопрос.
+				DAO.QuestionAnswers[] _DaoQuestionAnswers = _DaoQuestion.Answers.ToArray();
+				List<DTO.QuestionAnswers> _ListAnswers = new List<DTO.QuestionAnswers>();
+				foreach (var _DaoQuestionAnswer in _DaoQuestionAnswers)
+				{
+					_ListAnswers.Add(new DTO.QuestionAnswers()
+					{
+						AnswerId = _DaoQuestionAnswer.Answer.Id,
+						AnswerText = _DaoQuestionAnswer.Answer.Text,
+						IsCorrect = false,
+						QuestionId = _DaoQuestionAnswer.QuestionId
+					});
+				}
+				_DtoInterviweeTest.CurrentQuestion.Answers = _ListAnswers;
+			}
+
+			return _DtoInterviweeTest;
 		}
 	}
 }

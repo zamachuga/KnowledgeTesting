@@ -32,7 +32,7 @@ namespace KnowledgeTestingTests
 				_Test = _DbContext.Tests.Add(_Test);
 				_DbContext.SaveChanges();
 
-				InterviweeTests _Result = _TestingManagement.StartTest(_Interviwee, _Test);
+				InterviweeTests _Result = _TestingManagement.GetTesting(_Interviwee, _Test);
 				_DbContext.SaveChanges();
 
 				Assert.True(_Result.Id > 0);

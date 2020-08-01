@@ -1,4 +1,5 @@
-﻿using KnowledgeTesting.BL.DB.PgSql;
+﻿using KnowledgeTesting.BL.DAO;
+using KnowledgeTesting.BL.DB.PgSql;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,19 +17,19 @@ namespace KnowledgeTesting.BL
 		private DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		/// <summary>
-		/// Начать тестирование.
+		/// Начать/получить процесс тестирования.
 		/// </summary>
-		public DAO.InterviweeTests StartTest(DAO.Interviwee Interviwee, DAO.Test Test)
+		public DAO.InterviweeTests GetTesting(DAO.Interviwee Interviwee, DAO.Test Test, bool IsStart)
 		{
 			DAO.InterviweeTests _InterviweeTest = null;
 
 			// Найдем незавершенный тест.
 			_InterviweeTest = _DbContext.InterviweeTests
-				.Where(x => x.InterviweeId == Interviwee.Id & x.TestId == Test.Id & x.IsComplete == false)
+				.Where(x => x.InterviweeId == Interviwee.Id & x.TestId == Test.Id)
 				.SingleOrDefault();
 
 			// Не нашли - создать прохождение теста.
-			if (_InterviweeTest == null)
+			if (_InterviweeTest == null && IsStart)
 			{
 				_InterviweeTest = new DAO.InterviweeTests()
 				{
@@ -40,6 +41,16 @@ namespace KnowledgeTesting.BL
 				_InterviweeTest = _DbContext.InterviweeTests.Add(_InterviweeTest);
 				_DbContext.SaveChanges();
 			}
+
+			return _InterviweeTest;
+		}
+
+		internal InterviweeTests GetTesting(int Id)
+		{
+			// Найдем незавершенный тест.
+			DAO.InterviweeTests _InterviweeTest = _DbContext.InterviweeTests
+				.Where(x => x.Id == Id)
+				.SingleOrDefault();
 
 			return _InterviweeTest;
 		}
@@ -100,7 +111,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public int GetCountCorrectAnswers(DAO.InterviweeTests InterviweeTest)
 		{
-			int _CorrectAnswers = InterviweeTest.TestingResults.Where(x=>x.IsCorrect).Count();
+			int _CorrectAnswers = InterviweeTest.TestingResults.Where(x => x.IsCorrect).Count();
 
 			return _CorrectAnswers;
 		}
@@ -158,6 +169,7 @@ namespace KnowledgeTesting.BL
 
 			// Добавить в результаты теста.
 			_DbContext.TestingResults.Add(_TestingResult);
+			_DbContext.SaveChanges();
 		}
 
 		/// <summary>
