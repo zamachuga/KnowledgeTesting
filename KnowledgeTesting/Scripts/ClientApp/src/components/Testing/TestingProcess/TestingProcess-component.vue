@@ -1,3 +1,3 @@
-<template src='./TestingProcess.html'>
-<script src='./TestingProcess.js'>
-<style src='./TestingProcess.css'>
+<script src='./TestingProcess.js'/>
+<template src='./TestingProcess.html'/>
+<style src='./TestingProcess.css'/>

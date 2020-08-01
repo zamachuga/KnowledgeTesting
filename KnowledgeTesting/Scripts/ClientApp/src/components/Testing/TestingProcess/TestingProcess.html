@@ -1,4 +1,54 @@
-<div>
+<div v-if="Interviewee" class="Component">
 	<h5>Процесс тестирования.</h5>
-	Выберите тест. Ответьте на вопросы.
+	Выберите тест и начни прохождение. Предыдущее прохождение автоматически продолжится.
+
+	<!-- Выбор теста для прохождения. -->
+	<div v-if="InterviweeTest.Id == null || InterviweeTest.IsComplete">
+		<div class="input-group mb-3">
+			<button class="btn btn-secondary" type="button" v-on:click="GetAllTests()">Обновить</button>
+
+			<select v-model="SelectedTestId" class="custom-select" id="inputGroupSelect03">
+				<option selected>Выбор теста для прохождения...</option>
+				<option v-for="test in ListTests" :key="test.Id" v-bind:value="test.Id">{{test.Name}}</option>
+			</select>
+		</div>
+
+		<button class="btn btn-secondary" type="button" v-on:click="StartTest()">Начать/продолжить прохождение</button>
+	</div>
+
+	<!-- Прохождение теста. -->
+	<br>
+	<div>
+		<!-- Вопрос/ответ. -->
+		<div v-if="InterviweeTest.CurrentQuestion.Id">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Вопрос:</span>
+				</div>
+				<input :value="InterviweeTest.CurrentQuestion.Text" readonly type="text" class="form-control"
+					placeholder="Здесь появится текст вопроса" aria-label="Username" aria-describedby="basic-addon1">
+
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Ответ</span>
+				</div>
+				<select v-model="InterviweeTest.CurrentQuestion.SelectedAnswerId" class="custom-select" id="inputGroupSelect03">
+					<option v-for="Answer in InterviweeTest.CurrentQuestion.Answers" :key="Answer.AnswerId"
+						v-bind:value="Answer.AnswerId">{{Answer.AnswerText}}</option>
+				</select>
+				<button class="btn btn-secondary" type="button" v-on:click="AnswerTheQuestion">Ответить</button>
+			</div>
+		</div>
+
+		<div>
+			<b>Прогресс прохождения #{{InterviweeTest.Id}}:</b> {{InterviweeTest.ProgressText}}
+		</div>
+
+		<div>
+			<button v-if="IsViewButtonNextQuestion" class="btn btn-secondary" type="button"
+				v-on:click="GetNextQuestion()">Следующий
+				вопрос</button>
+			<button v-if="IsViewButtonNextQuestion" class="btn btn-secondary" type="button"
+				v-on:click="ExitTesting">Выйти</button>
+		</div>
+	</div>
 </div>
