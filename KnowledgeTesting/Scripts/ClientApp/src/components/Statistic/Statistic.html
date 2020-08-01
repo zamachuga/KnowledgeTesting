@@ -1,7 +1,32 @@
 <div>
 	<h1>Статистика прохождения тестов.</h1>
-	
-	<div>
-		<apexcharts width="500" :type="type" :options="chartOptions" :series="series"></apexcharts>
+
+	<div v-if="Interviewee">
+		<div>
+			Пользователь: {{Interviewee.LastName}} {{Interviewee.FirstName}} {{Interviewee.SecondName}}
+			<br>
+			Выберите тест для просмотра статистики.
+
+			<!-- Выбор теста для прохождения. -->
+			<div>
+				<div class="input-group mb-3">
+					<button class="btn btn-secondary" type="button" v-on:click="GetTestsInterviwee">Обновить</button>
+
+					<select v-model="SelectedTestId" v-on:change="GetStatisticTest" class="custom-select" id="inputGroupSelect03">
+						<option selected>Выбор теста для прохождения...</option>
+						<option v-for="test in ListTests" :key="test.Id" v-bind:value="test.Id">{{test.Name}}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<VueApexCharts width="500" :type="Chart.type" :options="Chart.chartOptions" :series="Chart.series">
+			</VueApexCharts>
+		</div>
+	</div>
+
+	<div v-else>
+		Необходима утентификация для просмотра статистики. Зайдите на страницу прохождения тестирования.
 	</div>
 </div>
