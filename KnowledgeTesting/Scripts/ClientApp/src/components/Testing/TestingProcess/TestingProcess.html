@@ -22,22 +22,34 @@
 	<br>
 	<div>
 		<div>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Вопрос:</span>
+				</div>
+				<input :value="InterviweeTest.CurrentQuestion.Text" readonly type="text" class="form-control"
+					placeholder="Здесь появится текст вопроса" aria-label="Username" aria-describedby="basic-addon1">
+
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Ответ</span>
+				</div>
+				<select v-model="InterviweeTest.CurrentQuestion.SelectedAnswerId" class="custom-select" id="inputGroupSelect03">
+					<option v-for="Answer in InterviweeTest.CurrentQuestion.Answers" :key="Answer.AnswerId"
+						v-bind:value="Answer.AnswerId">{{Answer.AnswerText}}</option>
+				</select>
+				<button class="btn btn-secondary" type="button" v-on:click="">Ответить</button>
+			</div>
+		</div>
+		
+		<div>
+			<b>Прогресс прохождения:</b> {{InterviweeTest.ProgressText}}
+		</div>
+
+		<br>
+
+		<div>
 			<button v-if="IsViewButtonNextQuestion" class="btn btn-secondary" type="button"
 				v-on:click="GetNextQuestion()">Следующий
 				вопрос</button>
-		</div>
-		<div>
-			Вопрос: {{InterviweeTest.CurrentQuestion.Text}}
-
-			<br>
-			Выберите ответ:
-			<select v-model="InterviweeTest.CurrentQuestion.SelectedAnswerId" class="custom-select" id="inputGroupSelect03">
-				<option selected>Выбор теста для прохождения...</option>
-				<option v-for="Answer in InterviweeTest.CurrentQuestion.Answers" :key="Answer.AnswerId"
-					v-bind:value="Answer.AnswerId">{{Answer.AnswerText}}</option>
-			</select>
-			<br><br>
-			<button class="btn btn-secondary" type="button" v-on:click="">Ответить</button>
 		</div>
 	</div>
 </div>

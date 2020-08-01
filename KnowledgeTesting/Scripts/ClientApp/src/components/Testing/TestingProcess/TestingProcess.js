@@ -15,6 +15,7 @@ export default {
 				InterviweeId: null,
 				TestId: null,
 				IsComplete: null,
+				ProgressText: null,
 				CurrentQuestion: {
 					Id: null,
 					Text: null,
@@ -39,8 +40,16 @@ export default {
 	},
 	methods: {
 		// Получить следующий вопрос.
-		GetNextQuestion(){
+		GetNextQuestion() {
+			let _This = this;
 
+			Proxy.GetNextQuestion(
+				_This.InterviweeTest,
+				Data => { 
+					_This.InterviweeTest = Data;
+				},
+				Error => { }
+			);
 		},
 
 		// Получить список всех тестов.

@@ -49,7 +49,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		/// <param name="InterviweeTests">Прохождение теста.</param>
 		/// <returns></returns>
-		public DAO.Question GetNextQuestion(DAO.InterviweeTests InterviweeTest)
+		public DAO.Question GetNextQuestion(DAO.InterviweeTests InterviweeTest, DAO.Question ExcludeQuestion = null)
 		{
 			// Если прохождение теста завершено.
 			if (InterviweeTest.IsComplete) return null;
@@ -69,35 +69,65 @@ namespace KnowledgeTesting.BL
 			// Получим массив незаданных вопросов.
 			DAO.Question[] _QuestionsNotAnswer = _QuestionsTest.Except(_QuestionResults).ToArray();
 
-			DAO.Question _Question = RandomQuestion(_QuestionsNotAnswer);
+			// Случайный вопрос.
+			DAO.Question _Question = RandomQuestion(_QuestionsNotAnswer, ExcludeQuestion);
+
 			return _Question;
+		}
+
+		/// <summary>
+		/// Получить количество ответов на вопрсы.
+		/// </summary>
+		public int GetCountCompletedQuestion(DAO.InterviweeTests InterviweeTest)
+		{
+			int _CompletedQuestion = InterviweeTest.TestingResults.Count();
+
+			return _CompletedQuestion;
+		}
+
+		/// <summary>
+		/// Получить количество вопросов.
+		/// </summary>
+		public int GetCountQuestions(DAO.InterviweeTests InterviweeTest)
+		{
+			int _CountQuestions = InterviweeTest.Test.Questions.Count();
+
+			return _CountQuestions;
+		}
+
+		/// <summary>
+		/// Получить количество правильных ответов.
+		/// </summary>
+		public int GetCountCorrectAnswers(DAO.InterviweeTests InterviweeTest)
+		{
+			int _CorrectAnswers = InterviweeTest.TestingResults.Where(x=>x.IsCorrect).Count();
+
+			return _CorrectAnswers;
 		}
 
 		/// <summary>
 		/// Выбрать случайный вопрос.
 		/// </summary>
 		/// <param name="Questions">Вопросы</param>
+		/// <param name="ExcludeQuestion">Вопрос для исключения из выборки. Не сработает если этот вопрос последний.</param>
 		/// <returns></returns>
-		public DAO.Question RandomQuestion(DAO.TestQuestions[] Questions)
+		public DAO.Question RandomQuestion(DAO.Question[] Questions, DAO.Question ExcludeQuestion = null)
 		{
-			// Получим следующий случайный вопрос.
-			var _Question = RandomQuestion(Questions.Select(x => x.Question).ToArray());
-			return _Question;
-		}
+			DAO.Question[] _Questions = null;
 
-		/// <summary>
-		/// Выбрать случайный вопрос.
-		/// </summary>
-		/// <param name="Questions">Вопросы</param>
-		/// <returns></returns>
-		public DAO.Question RandomQuestion(DAO.Question[] Questions)
-		{
+			// Исключим из выборки указанный вопрос.
+			if (Questions.Count() > 1 && ExcludeQuestion != null)
+				_Questions = Questions.Where(x => x.Id != ExcludeQuestion.Id).ToArray();
+			else
+				_Questions = Questions;
+
 			// Получим следующий случайный вопрос.
-			if (Questions.Length > 0)
+			if (_Questions.Length > 0)
 			{
 				Random _Random = new Random(Guid.NewGuid().GetHashCode());
-				int _NextQuestion = _Random.Next(0, Questions.Count() - 1);
-				return Questions[_NextQuestion];
+				int _MaxRangeNext = _Questions.Count() - 1;
+				int _NextQuestion = _Random.Next(0, _MaxRangeNext);
+				return _Questions[_NextQuestion];
 			}
 
 			return null;

@@ -11,19 +11,16 @@ namespace KnowledgeTesting.BL.DTO
 	/// </summary>
 	public class InterviweeTest
 	{
-		[DataMember]
 		public int Id { get; set; }
 
-		[DataMember]
 		public int InterviweeId { get; set; }
 
-		[DataMember]
 		public int TestId { get; set; }
 
-		[DataMember]
 		public bool IsComplete { get; set; }
 
-		[DataMember]
+		public string ProgressText { get; set; }
+
 		public Question CurrentQuestion { get; set; }
 	}
 }
