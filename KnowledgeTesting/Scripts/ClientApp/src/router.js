@@ -8,6 +8,7 @@ import VueRouter from 'vue-router';
 import ComponentHome from './components/Home/home-component.vue';
 import ComponentTestManagement from './components/TestManagement/TestManagement-component.vue';
 import ComponentTesting from './components/Testing/Testing-component.vue';
+import ComponentStatistic from './components/Statistic/Statistic-component.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,7 @@ export default new VueRouter({
 	routes: [
 		{ path: '/', name: 'Home', component: ComponentHome },
 		{ path: '/TestManagement', name: 'ComponentTestManagement', component: ComponentTestManagement },
-		{ path: '/Testing', name: 'ComponentTesting', component: ComponentTesting }
+		{ path: '/Testing', name: 'ComponentTesting', component: ComponentTesting },
+		{ path: '/Statistic', name: 'ComponentStatistic', component: ComponentStatistic }
 	]
 });
