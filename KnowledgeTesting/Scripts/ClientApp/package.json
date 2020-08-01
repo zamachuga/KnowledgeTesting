@@ -10,11 +10,13 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "apexcharts": "^3.20.0",
     "axios": "^0.19.2",
     "bootstrap-vue": "^2.15.0",
     "label-edit": "0.0.9",
     "package": "^1.0.1",
     "vue": "^2.5.11",
+    "vue-apexcharts": "^1.6.0",
     "vue-router": "^3.0.1",
     "vue-yandex-maps": "^0.7.9"
   },
