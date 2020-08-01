@@ -13,7 +13,13 @@ export default {
 				// И
 				FirstName: "",
 				// О
-				SecondName: ""
+				SecondName: "",
+				Clear() {
+					this.Id = null;
+					this.LastName = "";
+					this.FirstName = "";
+					this.SecondName = "";
+				}
 			}
 		};
 	},
@@ -30,7 +36,7 @@ export default {
 				},
 				Data => {
 					if (Data.Id > 0)
-						_This.storage.Bus.$emit('EventAuth',Data);
+						_This.storage.Bus.$emit('EventAuth', Data);
 				},
 				Error => {
 
@@ -38,8 +44,9 @@ export default {
 			);
 		},
 
-		LogOut(){
-			this.storage.Bus.$emit('LogOut');
+		LogOut() {
+			this.FIO.Clear();
+			this.storage.Bus.$emit('EventLogOut');
 		}
 	}
 };

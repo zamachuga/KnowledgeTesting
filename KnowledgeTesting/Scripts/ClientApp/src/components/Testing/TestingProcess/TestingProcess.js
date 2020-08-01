@@ -26,6 +26,10 @@ export default {
 			}
 		};
 	},
+	created() {
+		this.storage.Bus.$on('EventAuth', this.EventAuth);
+		this.storage.Bus.$on('EventLogOut', this.EventLogOut);
+	},
 	computed: {
 		IsViewButtonNextQuestion() {
 			let _This = this;
@@ -39,13 +43,40 @@ export default {
 		}
 	},
 	methods: {
+		EventAuth(EventData) {
+			this.ClearInterviweeTest();
+			this.GetAllTests();
+		},
+
+		EventLogOut() {
+			this.ClearInterviweeTest();
+		},
+
+		ClearInterviweeTest() {
+			this.InterviweeTest.Id = null;
+			this.InterviweeTest.InterviweeId = null;
+			this.InterviweeTest.TestId = null;
+			this.InterviweeTest.IsComplete = null;
+			this.InterviweeTest.ProgressText = null;
+			this.InterviweeTest.CurrentQuestion.Id = null;
+			this.InterviweeTest.CurrentQuestion.Text = null;
+			// Код выбранного ответа на вопрос.
+			this.InterviweeTest.CurrentQuestion.SelectedAnswerId = null;
+			this.InterviweeTest.CurrentQuestion.Answers = []
+		},
+
+		// Выход из прохождения теста.
+		ExitTesting() {
+			this.ClearInterviweeTest();
+		},
+
 		// Ответить на вопрос.
-		AnswerTheQuestion(){
+		AnswerTheQuestion() {
 			let _This = this;
 
 			Proxy.AnswerTheQuestion(
 				_This.InterviweeTest,
-				Data => { 
+				Data => {
 					_This.InterviweeTest = Data;
 				},
 				Error => { }
@@ -58,7 +89,7 @@ export default {
 
 			Proxy.GetNextQuestion(
 				_This.InterviweeTest,
-				Data => { 
+				Data => {
 					_This.InterviweeTest = Data;
 				},
 				Error => { }

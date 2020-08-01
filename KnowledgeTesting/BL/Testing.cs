@@ -19,17 +19,21 @@ namespace KnowledgeTesting.BL
 		/// <summary>
 		/// Начать/получить процесс тестирования.
 		/// </summary>
-		public DAO.InterviweeTests GetTesting(DAO.Interviwee Interviwee, DAO.Test Test, bool IsStart)
+		public DAO.InterviweeTests StartTesting(DAO.Interviwee Interviwee, DAO.Test Test)
 		{
 			DAO.InterviweeTests _InterviweeTest = null;
 
 			// Найдем незавершенный тест.
+			// Сначала необходимо завершить предыдущий, потом начинать заново.
 			_InterviweeTest = _DbContext.InterviweeTests
-				.Where(x => x.InterviweeId == Interviwee.Id & x.TestId == Test.Id)
+				.Include(x => x.Test)
+				.Include(x => x.Interviwee)
+				.Include(x => x.TestingResults)
+				.Where(x => x.InterviweeId == Interviwee.Id & x.TestId == Test.Id & x.IsComplete == false)
 				.SingleOrDefault();
 
 			// Не нашли - создать прохождение теста.
-			if (_InterviweeTest == null && IsStart)
+			if (_InterviweeTest == null)
 			{
 				_InterviweeTest = new DAO.InterviweeTests()
 				{

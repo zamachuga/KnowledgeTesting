@@ -50,10 +50,15 @@ namespace KnowledgeTesting.Controllers
 		[HttpPost]
 		public string StartTest(DTO.InterviweeTest DtoInterviweeTest)
 		{
+			// Получим объекты параметры для старта прохождения теста.
 			DAO.Interviwee _DaoInterviwee = m_InterviweeManagement.GetInterviwee(DtoInterviweeTest.InterviweeId);
 			DAO.Test _DaoTest = m_TestManagement.GetTest(DtoInterviweeTest.TestId);
-			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.GetTesting(_DaoInterviwee, _DaoTest, true);
+
+			// Создадим прохождение теста.
+			DAO.InterviweeTests _DaoInterviweeTest = m_Testing.StartTesting(_DaoInterviwee, _DaoTest);
+			// Заполним объект для клиента.			
 			DTO.InterviweeTest _DtoInterviweeTest = Utils.ConverObjectByJson<DTO.InterviweeTest>(_DaoInterviweeTest);
+			_DtoInterviweeTest.ProgressText = GetTextProgressTesting(_DaoInterviweeTest);
 
 			string _Json = GetNextQuestion(_DtoInterviweeTest);
 			return _Json;
@@ -68,10 +73,12 @@ namespace KnowledgeTesting.Controllers
 			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
 
 			// Прохождение теста.
-			DAO.InterviweeTests _DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
+			DAO.InterviweeTests _DaoInterviweeTest = GetInterviweeTestByDtoId(ref _DtoInterviweeTest);
 
 			// Текущий вопрос.
-			DAO.Question _CurrentQuestion = m_QuestionManagement.GetQuestion(DtoInterviweeTest.CurrentQuestion.Id);
+			DAO.Question _CurrentQuestion = null;
+			if (DtoInterviweeTest.CurrentQuestion != null)
+				_CurrentQuestion = m_QuestionManagement.GetQuestion(DtoInterviweeTest.CurrentQuestion.Id);
 
 			// Вопрос.
 			_DtoInterviweeTest = GetNextQuestion(_DtoInterviweeTest, _DaoInterviweeTest, _CurrentQuestion);
@@ -90,7 +97,7 @@ namespace KnowledgeTesting.Controllers
 			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;
 
 			// Прохождение теста.
-			DAO.InterviweeTests _DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
+			DAO.InterviweeTests _DaoInterviweeTest = GetInterviweeTestByDtoId(ref _DtoInterviweeTest);
 
 			// Текущий вопрос.
 			DAO.Question _CurrentQuestion = m_QuestionManagement.GetQuestion(_DtoInterviweeTest.CurrentQuestion.Id);
@@ -102,7 +109,7 @@ namespace KnowledgeTesting.Controllers
 			m_Testing.DetermineStatusComplete(_DaoInterviweeTest);
 
 			// Прохождение теста - обновление после ответа.
-			_DaoInterviweeTest = GetInterviweeTestById(ref _DtoInterviweeTest);
+			_DaoInterviweeTest = GetInterviweeTestByDtoId(ref _DtoInterviweeTest);
 
 			// Вопрос.
 			_DtoInterviweeTest = GetNextQuestion(_DtoInterviweeTest, _DaoInterviweeTest, _CurrentQuestion);
@@ -117,11 +124,12 @@ namespace KnowledgeTesting.Controllers
 		/// <returns></returns>
 		private string GetTextProgressTesting(DAO.InterviweeTests DaoInterviweeTest)
 		{
+			string _TestName = DaoInterviweeTest.Test.Name;
 			int _Questions = m_Testing.GetCountQuestions(DaoInterviweeTest);
 			int _QuestionsComplete = m_Testing.GetCountCompletedQuestion(DaoInterviweeTest);
 			int _CorrectAnswers = m_Testing.GetCountCorrectAnswers(DaoInterviweeTest);
 
-			return $"пройдено вопросов [{_QuestionsComplete}/{_Questions}] правильных ответов [{_CorrectAnswers}]";
+			return $"тест [{_TestName}] пройдено вопросов [{_QuestionsComplete}/{_Questions}] правильных ответов [{_CorrectAnswers}]";
 		}
 
 		/// <summary>
@@ -129,7 +137,7 @@ namespace KnowledgeTesting.Controllers
 		/// </summary>
 		/// <param name="DtoInterviweeTest"></param>
 		/// <returns></returns>
-		private DAO.InterviweeTests GetInterviweeTestById(ref DTO.InterviweeTest DtoInterviweeTest)
+		private DAO.InterviweeTests GetInterviweeTestByDtoId(ref DTO.InterviweeTest DtoInterviweeTest)
 		{
 			if (DtoInterviweeTest.Id <= 0) throw new ArgumentException("Не задан Id входящего параметра.");
 			DTO.InterviweeTest _DtoInterviweeTest = DtoInterviweeTest;

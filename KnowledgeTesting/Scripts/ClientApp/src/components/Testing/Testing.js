@@ -19,7 +19,8 @@ export default {
 			},
 			// Кто проходит тестирование 
 			// (ComponentInterviwee).
-			Interviewee: null
+			Interviewee: null,
+
 		};
 	},
 	created() {
