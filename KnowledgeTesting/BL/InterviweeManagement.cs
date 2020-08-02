@@ -64,7 +64,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		/// <param name="Interviwee"></param>
 		/// <returns></returns>
-		public DAO.Test[] GetTests(DAO.Interviwee Interviwee)
+		public DAO.Test[] GetCompleteTests(DAO.Interviwee Interviwee)
 		{
 			int[] IdTests = _DbContext
 				.InterviweeTests

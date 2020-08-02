@@ -12,17 +12,33 @@ namespace KnowledgeTesting.Controllers
 	public class StatisticsController : Controller
 	{
 		InterviweeManagement m_InterviweeManagement = new InterviweeManagement();
+		Statistic m_Statistic = new Statistic();
 
 		[HttpPost]
 		public string GetTestsInterviwee(DTO.Interviwee DtoInterviwee)
 		{
 			DAO.Interviwee _Interviwee = m_InterviweeManagement.GetInterviwee(DtoInterviwee.Id);
-			//List<DAO.InterviweeTests> _ListInterviweeTests = _Interviwee.Tests;
 
-			DAO.Test[] _DaoTests = m_InterviweeManagement.GetTests(_Interviwee);
+			DAO.Test[] _DaoTests = m_InterviweeManagement.GetCompleteTests(_Interviwee);
 			DTO.Test[] _DtoTests = Utils.ConverObjectByJson<DTO.Test[]>(_DaoTests);
 
 			string _Json = Utils.JsonSerialize(_DtoTests);
+			return _Json;
+		}
+
+		[HttpPost]
+		public string GetStatisticTest(DTO.InterviweeTest InterviweeTest)
+		{
+			// Статистика прохождения теста.
+			DTO.TestStatistic _TestStatistic = new DTO.TestStatistic();
+
+			// Количество прохождений теста.
+			_TestStatistic.CountComplete = m_Statistic.GetCountCompleteTest(InterviweeTest.InterviweeId, InterviweeTest.TestId);
+
+			// Статистика прохождений по вопросам.
+			_TestStatistic.ArrayData = m_Statistic.GetArrayQuestionStatistic(InterviweeTest.TestId);
+
+			string _Json = Utils.JsonSerialize(_TestStatistic);
 			return _Json;
 		}
 	}
