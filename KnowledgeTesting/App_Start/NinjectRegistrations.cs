@@ -12,6 +12,7 @@ namespace KnowledgeTesting.App_Start
 		public override void Load()
 		{
 			Bind<IAnswerManagement>().ToMethod(x => AnswerManagement.Instance());
+			Bind<IInterviweeManagement>().ToMethod(x => InterviweeManagement.Instance());
 		}
 	}
 }

@@ -208,6 +208,7 @@
     <Compile Include="BL\DTO\TestQuestions.cs" />
     <Compile Include="BL\DTO\TestStatistic.cs" />
     <Compile Include="BL\IAnswerManagement.cs" />
+    <Compile Include="BL\IInterviweeManagement.cs" />
     <Compile Include="BL\InterviweeManagement.cs" />
     <Compile Include="BL\QuestionManagement.cs" />
     <Compile Include="BL\Statistic.cs" />

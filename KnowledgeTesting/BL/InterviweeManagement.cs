@@ -9,8 +9,11 @@ namespace KnowledgeTesting.BL
 	/// <summary>
 	/// Управление тестируемыми.
 	/// </summary>
-	public class InterviweeManagement
+	public class InterviweeManagement : IInterviweeManagement
 	{
+		private InterviweeManagement() { }
+		public static IInterviweeManagement Instance() { return new InterviweeManagement(); }
+
 		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		public void CreateInterviwee(DAO.Interviwee Interviwee)
@@ -60,10 +63,8 @@ namespace KnowledgeTesting.BL
 		}
 
 		/// <summary>
-		/// Получить список тестов тестируемого.
+		/// Получить список завершенных тестов тестируемого.
 		/// </summary>
-		/// <param name="Interviwee"></param>
-		/// <returns></returns>
 		public DAO.Test[] GetCompleteTests(DAO.Interviwee Interviwee)
 		{
 			int[] IdTests = _DbContext

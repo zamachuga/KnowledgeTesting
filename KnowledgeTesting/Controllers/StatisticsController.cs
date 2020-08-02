@@ -11,7 +11,12 @@ namespace KnowledgeTesting.Controllers
 {
 	public class StatisticsController : Controller
 	{
-		InterviweeManagement m_InterviweeManagement = new InterviweeManagement();
+		public StatisticsController(IInterviweeManagement IInterviweeManagement)
+		{
+			m_InterviweeManagement = IInterviweeManagement;
+		}
+
+		IInterviweeManagement m_InterviweeManagement;
 		Statistic m_Statistic = new Statistic();
 
 		[HttpPost]

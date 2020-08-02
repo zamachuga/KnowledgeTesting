@@ -14,12 +14,13 @@ namespace KnowledgeTesting.Controllers
 	/// </summary>
 	public class TestingController : Controller
 	{
-		public TestingController(IAnswerManagement AnswerManagement)
+		public TestingController(IAnswerManagement AnswerManagement, IInterviweeManagement IInterviweeManagement)
 		{
 			m_AnswerManagement = AnswerManagement;
+			m_InterviweeManagement = IInterviweeManagement;
 		}
 
-		InterviweeManagement m_InterviweeManagement = new InterviweeManagement();
+		IInterviweeManagement m_InterviweeManagement;
 		TestManagement m_TestManagement = new TestManagement();
 		QuestionManagement m_QuestionManagement = new QuestionManagement();
 		IAnswerManagement m_AnswerManagement;
