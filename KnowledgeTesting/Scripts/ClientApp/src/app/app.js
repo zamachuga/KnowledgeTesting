@@ -17,7 +17,10 @@ export default {
 				// Общие настройки приложения.
 				Settings: null,
 				// Шина данных.
-				Bus: null
+				Bus: null,
+				// Кто проходит тестирование 
+				// (ComponentInterviwee).
+				Interviewee: null
 			}
 		};
 	},
@@ -25,8 +28,8 @@ export default {
 		this.storage.Bus = Services.Bus;
 		this.storage.Settings = Settings.Global;
 	},
-	methods:{
-		ClearErrors(){
+	methods: {
+		ClearErrors() {
 			this.storage.DegubText = null;
 			console.clear();
 		}

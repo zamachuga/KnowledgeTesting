@@ -8,6 +8,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import Router from './router.js';
 import App from './app/app.vue';
+import VueApexCharts from 'vue-apexcharts'
 
 // Подключаем стили Bootstrap.
 import 'bootstrap/dist/css/bootstrap.css';
@@ -16,6 +17,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 // Подключаем плагин для работы с Bootstrap (программная часть для использования
 // тэгов соответствующих компонентов Bootstrap).
 Vue.use(BootstrapVue);
+Vue.use(VueApexCharts);
 
 new Vue({
 	el: '#app',

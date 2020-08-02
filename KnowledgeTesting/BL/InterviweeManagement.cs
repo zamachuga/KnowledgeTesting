@@ -58,5 +58,26 @@ namespace KnowledgeTesting.BL
 			bool _IsExist = _FinKey != null || _FindText != null;
 			return _IsExist;
 		}
+
+		/// <summary>
+		/// Получить список тестов тестируемого.
+		/// </summary>
+		/// <param name="Interviwee"></param>
+		/// <returns></returns>
+		public DAO.Test[] GetCompleteTests(DAO.Interviwee Interviwee)
+		{
+			int[] IdTests = _DbContext
+				.InterviweeTests
+				.Where(x => x.InterviweeId == Interviwee.Id)
+				.Select(x => x.TestId)
+				.ToArray()
+				;
+
+			DAO.Test[] _DaoTests = (from t in _DbContext.Tests
+															where IdTests.Contains(t.Id)
+															select t).ToArray();
+
+			return _DaoTests;
+		}
 	}
 }
