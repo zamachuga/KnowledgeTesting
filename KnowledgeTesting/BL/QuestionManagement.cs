@@ -58,15 +58,10 @@ namespace KnowledgeTesting.BL
 		public void SetCorrectAnswer(DAO.Question Question, DAO.Answer Answer)
 		{
 			DAO.QuestionAnswers _QuestionAnswer = _DbContext.QuestionAnswers.Find(Question.Id, Answer.Id);
-			DAO.QuestionAnswers _CurrentCorrectAnswer = _DbContext.QuestionAnswers.SingleOrDefault(x => x.QuestionId == Question.Id & x.IsCorrect);
-
 			if (_QuestionAnswer == null) throw new Exception("Правильный ответ должен содержаться в вопросе.");
 
-			if (_CurrentCorrectAnswer != null)
-			{
-				if (_CurrentCorrectAnswer.AnswerId == Answer.Id) return;
-				else _CurrentCorrectAnswer.IsCorrect = false;
-			}
+			DAO.QuestionAnswers _CurrentCorrectAnswer = _DbContext.QuestionAnswers.SingleOrDefault(x => x.QuestionId == Question.Id & x.IsCorrect);
+			if (_CurrentCorrectAnswer != null) _CurrentCorrectAnswer.IsCorrect = false;
 
 			_QuestionAnswer.IsCorrect = true;
 			_DbContext.SaveChanges();
