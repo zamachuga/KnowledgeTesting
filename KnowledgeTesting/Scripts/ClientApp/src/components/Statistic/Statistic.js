@@ -44,8 +44,8 @@ export default {
 		};
 	},
 	created() {
-		this.storage.Bus.$on('EventAuth', this.EventAuth);
-		this.storage.Bus.$on('EventLogOut', this.EventLogOut);
+		//this.storage.Bus.$on('EventAuth', this.EventAuth);
+		//this.storage.Bus.$on('EventLogOut', this.EventLogOut);
 	},
 	methods: {
 		// Получить статистику прохождения теста.
