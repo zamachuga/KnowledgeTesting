@@ -9,8 +9,11 @@ namespace KnowledgeTesting.BL
 	/// <summary>
 	/// Управление вопросами.
 	/// </summary>
-	public class AnswerManagement
+	public class AnswerManagement : IAnswerManagement
 	{
+		private AnswerManagement() { }
+		public static IAnswerManagement Instance() { return new AnswerManagement(); }
+
 		DB.PgSql.DbPgSqlContext _DbContext = DB.PgSql.DbPgSqlContext.Instance();
 
 		/// <summary>
@@ -56,7 +59,7 @@ namespace KnowledgeTesting.BL
 		/// Получить все ответы.
 		/// </summary>
 		/// <returns></returns>
-		internal Answer[] GetAllAnswers()
+		public Answer[] GetAllAnswers()
 		{
 			return _DbContext.Answers.ToArray();
 		}

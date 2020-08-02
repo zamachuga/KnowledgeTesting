@@ -10,9 +10,14 @@ namespace KnowledgeTesting.Controllers
 {
 	public class TestManagementController : Controller
 	{
+		public TestManagementController(IAnswerManagement AnswerManagement)
+		{
+			m_AnswerManagement = AnswerManagement;
+		}
+
 		TestManagement m_TestManagement = new TestManagement();
 		QuestionManagement m_QuestionManagement = new QuestionManagement();
-		AnswerManagement m_AnswerManagement = new AnswerManagement();
+		IAnswerManagement m_AnswerManagement;
 		//BL.DB.PgSql.DbPgSqlContext _DbContext = BL.DB.PgSql.DbPgSqlContext.Instance();
 
 		/// <summary>
