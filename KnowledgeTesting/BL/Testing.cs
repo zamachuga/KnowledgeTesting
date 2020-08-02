@@ -21,30 +21,28 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		public DAO.InterviweeTests StartTesting(DAO.Interviwee Interviwee, DAO.Test Test)
 		{
-			DAO.InterviweeTests _InterviweeTest = null;
-
-			// Найдем незавершенный тест.
-			// Сначала необходимо завершить предыдущий, потом начинать заново.
-			_InterviweeTest = _DbContext.InterviweeTests
-				.Include(x => x.Test)
-				.Include(x => x.Interviwee)
-				.Include(x => x.TestingResults)
-				.Where(x => x.InterviweeId == Interviwee.Id & x.TestId == Test.Id & x.IsComplete == false)
-				.SingleOrDefault();
+			DAO.InterviweeTests _InterviweeTest = GetTesting(Interviwee, Test);
 
 			// Не нашли - создать прохождение теста.
-			if (_InterviweeTest == null)
-			{
-				_InterviweeTest = new DAO.InterviweeTests()
-				{
-					InterviweeId = Interviwee.Id,
-					TestId = Test.Id,
-					IsComplete = false
-				};
+			if (_InterviweeTest != null) return _InterviweeTest;
 
-				_InterviweeTest = _DbContext.InterviweeTests.Add(_InterviweeTest);
-				_DbContext.SaveChanges();
-			}
+			_InterviweeTest = new DAO.InterviweeTests()
+			{
+				InterviweeId = Interviwee.Id,
+				TestId = Test.Id,
+				IsComplete = false
+			};
+
+			return StartTesting(_InterviweeTest);
+		}
+
+		/// <summary>
+		/// Начать/получить процесс тестирования.
+		/// </summary>
+		private DAO.InterviweeTests StartTesting(DAO.InterviweeTests InterviweeTest)
+		{
+			DAO.InterviweeTests _InterviweeTest = _DbContext.InterviweeTests.Add(InterviweeTest);
+			_DbContext.SaveChanges();
 
 			return _InterviweeTest;
 		}
@@ -62,6 +60,25 @@ namespace KnowledgeTesting.BL
 				.Include(x => x.Interviwee)
 				.Include(x => x.TestingResults)
 				.Where(x => x.Id == Id)
+				.SingleOrDefault();
+
+			return _InterviweeTest;
+		}
+
+		/// <summary>
+		/// Получить процесс тестирования.
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+		internal InterviweeTests GetTesting(DAO.Interviwee Interviwee, DAO.Test Test)
+		{
+			// Найдем незавершенный тест.
+			// Сначала необходимо завершить предыдущий, потом начинать заново.
+			DAO.InterviweeTests _InterviweeTest = _DbContext.InterviweeTests
+				.Include(x => x.Test)
+				.Include(x => x.Interviwee)
+				.Include(x => x.TestingResults)
+				.Where(x => x.InterviweeId == Interviwee.Id & x.TestId == Test.Id & x.IsComplete == false)
 				.SingleOrDefault();
 
 			return _InterviweeTest;
