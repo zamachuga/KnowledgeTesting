@@ -254,7 +254,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\ClientApp\dist\build.js" />
+    <Content Include="Scripts\ClientApp\dist\build.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\ClientApp\dist\logo.png" />
     <Content Include="Scripts\ClientApp\index.html" />
     <Content Include="Scripts\ClientApp\node_modules\%40nuxt\opencollective\bin\opencollective.js" />
@@ -10790,7 +10792,9 @@
     <Content Include="Scripts\ClientApp\.babelrc" />
     <Content Include="Scripts\ClientApp\.editorconfig" />
     <Content Include="Scripts\ClientApp\.vscode\launch.json" />
-    <Content Include="Scripts\ClientApp\dist\build.js.map" />
+    <Content Include="Scripts\ClientApp\dist\build.js.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\ClientApp\node_modules\%40nuxt\opencollective\CHANGELOG.md" />
     <Content Include="Scripts\ClientApp\node_modules\%40nuxt\opencollective\dist\opencollective.cjs" />
     <Content Include="Scripts\ClientApp\node_modules\%40nuxt\opencollective\LICENSE" />
