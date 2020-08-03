@@ -15,6 +15,7 @@ namespace KnowledgeTesting.App_Start
 			Bind<IInterviweeManagement>().ToMethod(x => InterviweeManagement.Instance());
 			Bind<IQuestionManagement>().ToMethod(x => QuestionManagement.Instance());
 			Bind<IStatistic>().ToMethod(x => Statistic.Instance());
+			Bind<ITesting>().ToMethod(x => Testing.Instance());
 		}
 	}
 }

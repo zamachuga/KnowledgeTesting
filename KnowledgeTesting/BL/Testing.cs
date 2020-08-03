@@ -12,8 +12,11 @@ namespace KnowledgeTesting.BL
 	/// <summary>
 	/// Управление проведением тестирования.
 	/// </summary>
-	public class Testing
+	public class Testing : ITesting
 	{
+		private Testing() { }
+		public static ITesting Instance() { return new Testing(); }
+
 		private DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		/// <summary>
@@ -52,7 +55,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
-		internal InterviweeTests GetTesting(int Id)
+		public InterviweeTests GetTesting(int Id)
 		{
 			// Найдем незавершенный тест.
 			DAO.InterviweeTests _InterviweeTest = _DbContext.InterviweeTests
