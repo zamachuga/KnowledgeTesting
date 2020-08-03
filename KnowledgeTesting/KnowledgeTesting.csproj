@@ -211,6 +211,7 @@
     <Compile Include="BL\IInterviweeManagement.cs" />
     <Compile Include="BL\InterviweeManagement.cs" />
     <Compile Include="BL\IQuestionManagement.cs" />
+    <Compile Include="BL\IStatistic.cs" />
     <Compile Include="BL\QuestionManagement.cs" />
     <Compile Include="BL\Statistic.cs" />
     <Compile Include="BL\Testing.cs" />
