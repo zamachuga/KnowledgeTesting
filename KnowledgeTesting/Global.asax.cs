@@ -1,4 +1,8 @@
-﻿using System;
+﻿using KnowledgeTesting.App_Start;
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +20,11 @@ namespace KnowledgeTesting
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+			// Внедрение зависимостей.
+			NinjectModule _Registrations = new NinjectRegistrations();
+			var NinjectKernel = new StandardKernel(_Registrations);
+			DependencyResolver.SetResolver(new NinjectDependencyResolver(NinjectKernel));
 		}
 	}
 }

@@ -49,7 +49,7 @@ namespace KnowledgeTestingTests
 		public void AddAswerToQuestionTest()
 		{
 			QuestionManagement _QuestionManagement = new QuestionManagement();
-			AnswerManagement _AnswerManagement = new AnswerManagement();
+			IAnswerManagement _AnswerManagement = AnswerManagement.Instance();
 
 			DAO.Question _Question = _QuestionManagement.GetQuestion(StaticQuestions.Q1);
 			_QuestionManagement.AddAnswer(_Question, _AnswerManagement.GetAnswer(StaticAnswers.A1));

@@ -10,11 +10,14 @@ export default {
 
 			Proxy.CreateTest(
 				_This.ModelTest,
-				Data => { },
+				Data => {
+					_This.$emit('IsChanged');
+					_This.$emit('HideChildComponent');
+				},
 				Error => {
 					_This.ShowMessage("Ошибка <Proxy.CreateTest>: " + Error);
 				}
-			);
+			);			
 		},
 
 		// Сохранить изменения теста.

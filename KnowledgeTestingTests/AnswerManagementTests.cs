@@ -13,7 +13,7 @@ namespace KnowledgeTestingTests
 	[TestFixture]
 	class AnswerManagementTests
 	{
-		AnswerManagement _AnswerManagement = new AnswerManagement();
+		IAnswerManagement _AnswerManagement = AnswerManagement.Instance();
 		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		[Test]
