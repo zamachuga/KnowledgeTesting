@@ -14,10 +14,16 @@ namespace KnowledgeTesting.BL
 	/// <summary>
 	/// Управление тестами.
 	/// </summary>
-	public class TestManagement
+	public class TestManagement : ITestManagement
 	{
+		private TestManagement() { }
+		public static ITestManagement Instance() { return new TestManagement(); }
+
 		DB.PgSql.DbPgSqlContext _DbContext = DB.PgSql.DbPgSqlContext.Instance();
 
+		/// <summary>
+		/// Создать тест.
+		/// </summary>
 		public void CreateTest(DAO.Test Test)
 		{
 			if (IsExist(Test)) return;
@@ -48,14 +54,25 @@ namespace KnowledgeTesting.BL
 			return _DbContext.Entry(Test).State;
 		}
 
+		/// <summary>
+		/// Добавить вопрос в тест.
+		/// </summary>
+		/// <param name="Test"></param>
+		/// <param name="Question"></param>
 		public void AddQuestion(DAO.Test Test, DAO.Question Question)
 		{
-			if (Test.Questions.Where(x => x.QuestionId == Question.Id).Count() == 1) return;
-			if (Test.Questions.Count() >= 10) throw new Exception("В тесте максимум 10 вопрсов.");
-			if (Question.Answers.Where(x => x.IsCorrect).Count() == 0) throw new Exception("В вопросе не указан правильный ответ.");
+			if (Test.Questions.Where(x => x.QuestionId == Question.Id).Count() == 1) 
+				return;
+			if (Test.Questions.Count() >= 10) 
+				throw new Exception("В тесте максимум 10 вопрсов.");
+			if (Question.Answers.Where(x => x.IsCorrect).Count() == 0) 
+				throw new Exception("В вопросе не указан правильный ответ.");
 
-			DAO.TestQuestions _TestQuestion = new DAO.TestQuestions() { TestId = Test.Id, QuestionId = Question.Id };
-			
+			DAO.TestQuestions _TestQuestion = new DAO.TestQuestions() { 
+				TestId = Test.Id, 
+				QuestionId = Question.Id 
+			};
+
 			_DbContext.TestQuestions.Add(_TestQuestion);
 			_DbContext.SaveChanges();
 		}

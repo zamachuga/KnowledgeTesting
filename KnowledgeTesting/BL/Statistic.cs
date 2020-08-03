@@ -6,8 +6,14 @@ using System.Web;
 
 namespace KnowledgeTesting.BL
 {
-	public class Statistic
+	/// <summary>
+	/// Статистика.
+	/// </summary>
+	public class Statistic : IStatistic
 	{
+		private Statistic() { }
+		public static IStatistic Instance() { return new Statistic(); }
+
 		DbPgSqlContext _DbContext = DbPgSqlContext.Instance();
 
 		/// <summary>
