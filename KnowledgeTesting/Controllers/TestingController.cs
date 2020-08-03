@@ -18,17 +18,19 @@ namespace KnowledgeTesting.Controllers
 			IAnswerManagement AnswerManagement, 
 			IInterviweeManagement InterviweeManagement,
 			IQuestionManagement QuestionManagement,
-			ITesting Testing
+			ITesting Testing,
+			ITestManagement TestManagement
 			)
 		{
 			m_AnswerManagement = AnswerManagement;
 			m_InterviweeManagement = InterviweeManagement;
 			m_QuestionManagement = QuestionManagement;
 			m_Testing = Testing;
+			m_TestManagement = TestManagement;
 		}
 
 		IInterviweeManagement m_InterviweeManagement;
-		TestManagement m_TestManagement = new TestManagement();
+		ITestManagement m_TestManagement;
 		IQuestionManagement m_QuestionManagement;
 		IAnswerManagement m_AnswerManagement;
 		ITesting m_Testing;
