@@ -1,7 +1,5 @@
 # KnowledgeTesting
-Подключено: NUnit, Moq, EF6, PostgreSql
-
-В идеале подключить: Ninject
+Подключено: NUnit, Moq, EF6, PostgreSql, Ninject
 
 # Установка для разработчика
 1. Клонировать репозиторий.
