@@ -14,8 +14,11 @@ namespace KnowledgeTesting.BL
 	/// <summary>
 	/// Управление вопросами.
 	/// </summary>
-	public class QuestionManagement
+	public class QuestionManagement : IQuestionManagement
 	{
+		private QuestionManagement() { }
+		public static IQuestionManagement Instance() { return new QuestionManagement(); }
+
 		DB.PgSql.DbPgSqlContext _DbContext = DB.PgSql.DbPgSqlContext.Instance();
 
 		/// <summary>
@@ -108,7 +111,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		/// <param name="QuestionId">Код вопроса.</param>
 		/// <returns></returns>
-		internal Question GetQuestion(int QuestionId)
+		public Question GetQuestion(int QuestionId)
 		{
 			DAO.Question _FinKey = _DbContext.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
 			return _FinKey;
@@ -134,7 +137,7 @@ namespace KnowledgeTesting.BL
 		/// </summary>
 		/// <param name="FilterName">Фильтр по наименованию.</param>
 		/// <returns></returns>
-		internal DAO.Question[] GetAllQuestions(string FilterName)
+		public DAO.Question[] GetAllQuestions(string FilterName)
 		{
 			// TODO: настроить Like по запросу.
 			// эта черхарда и тут сопротивляется.
@@ -153,7 +156,7 @@ namespace KnowledgeTesting.BL
 		/// Удалить ответ из вопроса.
 		/// </summary>
 		/// <param name="QuestionAnswer"></param>
-		internal void RemoveAnswer(DAO.QuestionAnswers QuestionAnswer)
+		public void RemoveAnswer(DAO.QuestionAnswers QuestionAnswer)
 		{
 			_DbContext.QuestionAnswers.Remove(QuestionAnswer);
 			_DbContext.SaveChanges();
@@ -166,7 +169,7 @@ namespace KnowledgeTesting.BL
 		/// <param name="QuestionId">Код вопроса.</param>
 		/// <param name="AnswerId">Код ответа.</param>
 		/// <returns></returns>
-		internal QuestionAnswers GetAnswer(int QuestionId, int AnswerId)
+		public QuestionAnswers GetAnswer(int QuestionId, int AnswerId)
 		{
 			var _QuestionAnswer = _DbContext.QuestionAnswers.Where(x => x.QuestionId == QuestionId & x.AnswerId == AnswerId).FirstOrDefault();
 			return _QuestionAnswer;
@@ -176,7 +179,7 @@ namespace KnowledgeTesting.BL
 		/// Сохранить изменение вопроса.
 		/// </summary>
 		/// <param name="Question">Вопрос.</param>
-		internal void SaveQuestion(DAO.Question Question)
+		public void SaveQuestion(DAO.Question Question)
 		{
 			if (_DbContext.Entry(Question).State == EntityState.Detached)
 				_DbContext.Entry(Question).State = EntityState.Modified;

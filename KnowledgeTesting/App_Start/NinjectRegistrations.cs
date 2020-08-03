@@ -13,6 +13,7 @@ namespace KnowledgeTesting.App_Start
 		{
 			Bind<IAnswerManagement>().ToMethod(x => AnswerManagement.Instance());
 			Bind<IInterviweeManagement>().ToMethod(x => InterviweeManagement.Instance());
+			Bind<IQuestionManagement>().ToMethod(x => QuestionManagement.Instance());
 		}
 	}
 }
